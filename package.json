@@ -4,8 +4,11 @@
   "private": true,
   "dependencies": {
     "react": "^16.4.0",
+    "react-animated-css": "^1.0.4",
     "react-dom": "^16.4.0",
-    "react-scripts": "1.1.4"
+    "react-router-dom": "^4.3.0",
+    "react-scripts": "1.1.4",
+    "react-scroll": "^1.7.9"
   },
   "scripts": {
     "start": "react-scripts start",

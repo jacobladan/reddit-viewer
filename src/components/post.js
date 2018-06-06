@@ -19,7 +19,7 @@ export class Post extends React.Component {
         this.state = {
             posts: [],
             firstPostId: '',
-            lastPostId: ''
+            lastPostId: '',
         };
     }
 
@@ -46,31 +46,33 @@ export class Post extends React.Component {
                 lastPostId = post.data.id;
                 i++;
                 return (
-                    <div className='post-container' key={post.data.id}>
-                        <Thumbnail href={post.data.url} src={previewUrl}/>
-                        <PostInfo 
-                        link={post.data.url} 
-                        title={post.data.title}
-                        authorLink={authorLink}
-                        author={post.data.author} 
-                        domain={post.data.domain}
-                        created={createdDate}
-                        pinned={post.data.stickied}
-                        />
-                        <Points points={post.data.score}/>
-                    </div>
+                        <div className='post-container' key={post.data.id}>
+                            <Thumbnail href={post.data.url} src={previewUrl}/>
+                            <PostInfo 
+                            link={post.data.url} 
+                            title={post.data.title}
+                            authorLink={authorLink}
+                            author={post.data.author} 
+                            domain={post.data.domain}
+                            created={createdDate}
+                            pinned={post.data.stickied}
+                            />
+                            <Points points={post.data.score}/>
+                        </div>
                     );
                 })
                 this.setState({
                     posts: posts,
                     lastPostId: lastPostId,
-                    firstPostId: firstPostId
+                    firstPostId: firstPostId,
                 });
-                window.scrollTo(0, 0);
+                // window.scrollTo(0, 0);
             })
     }
 
     render() {
-        return <div className='content-container'>{this.state.posts}</div>
+        return (
+                <div className='content-container'>{this.state.posts}</div>
+        ) 
     }
 }

@@ -47,6 +47,12 @@ h3 {
     background: #000000c4;
 }
 
+.animation-styles {
+    animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+    -moz-animation-duration: 1s;
+}
+
 .thumbnail {
     float: left;
     margin: 1%;
@@ -77,6 +83,10 @@ h3 {
     color: inherit;
     font-size: 1.2em;
     display: inline-block;
+}
+
+.post-title:visited {
+    color: grey;
 }
 
 .author {
