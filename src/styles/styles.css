@@ -31,7 +31,6 @@ h3 {
 
 .logo {
     width: 30%;
-    /* height: auto; */
 }
 
 .post-container {
@@ -74,7 +73,6 @@ h3 {
     color: inherit;
     font-size: 1.2em;
     display: inline-block;
-    width: 100%;
 }
 
 .author {
@@ -96,6 +94,44 @@ h3 {
 
 .created {
     font-size: 0.7em;
+}
+
+.nav-container {
+    position: relative;
+    text-align: center;
+    margin-top: 4%;
+}
+
+.nav-icon-container {
+    display: inline-block;
+}
+
+.nav-icon {
+    height: auto;
+    width: 150%;
+}
+
+.nav-icon.left {
+    transform: rotate(180deg);
+}
+
+.nav-icon:hover {
+    cursor: pointer;
+}
+
+.page-number-container {
+    display: inline-block;
+    margin-right: 3%;
+    margin-left: 4%;
+}
+
+.page-number {
+    position: absolute;
+    color: white;
+    font-family: 'Teko', sans-serif;
+    font-size: 2.5em;
+    bottom: -20%;
+    left: 49.8%;
 }
 
 /* .footer {

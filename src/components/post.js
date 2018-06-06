@@ -31,7 +31,7 @@ export class Post extends React.Component {
         let firstPostId, lastPostId, i = 0;
         posts.then(data => {
             console.log(data);
-            if (data.data.children.length === 0) { return }
+            if (data.data.children.length <= 2) { return }
             let posts = data.data.children.map(post => {
                 let previewUrl;
                 if (i === 0) {firstPostId = post.data.id}
@@ -63,13 +63,13 @@ export class Post extends React.Component {
                     lastPostId: lastPostId,
                     firstPostId: firstPostId
                 });
+                window.scrollTo(0, 0);
             })
     }
 
     render() {
         console.log(this.state.firstPostId);
         console.log(this.state.lastPostId);
-        // console.log('rendered');
         return <div className='content-container'>{this.state.posts}</div>
     }
 }

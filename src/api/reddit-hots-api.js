@@ -5,7 +5,7 @@ export class RedditAPI {
                 return results.json();
             });
         } else if (direction === 'before') {
-            return fetch(`https://www.reddit.com/r/heroesofthestorm.json?limit=17&before=t3_${id}`).then(results => {
+            return fetch(`https://www.reddit.com/r/heroesofthestorm.json?limit=15&before=t3_${id}`).then(results => {
                 return results.json();
             });
         } else {
