@@ -2,6 +2,7 @@ import React from 'react';
 import { RedditAPI } from '../api/reddit-hots-api';
 import { Thumbnail } from './thumbnail';
 import { PostInfo } from './post-info';
+import { Points } from './points';
 
 let dateOptions = {
     weekday: 'long',
@@ -48,13 +49,15 @@ export class Post extends React.Component {
                     <div className='post-container' key={post.data.id}>
                         <Thumbnail href={post.data.url} src={previewUrl}/>
                         <PostInfo 
-                            link={post.data.url} 
-                            title={post.data.title}
-                            authorLink={authorLink}
-                            author={post.data.author} 
-                            score={post.data.score}
-                            created={createdDate}
+                        link={post.data.url} 
+                        title={post.data.title}
+                        authorLink={authorLink}
+                        author={post.data.author} 
+                        domain={post.data.domain}
+                        created={createdDate}
+                        pinned={post.data.stickied}
                         />
+                        <Points points={post.data.score}/>
                     </div>
                     );
                 })
@@ -68,8 +71,6 @@ export class Post extends React.Component {
     }
 
     render() {
-        console.log(this.state.firstPostId);
-        console.log(this.state.lastPostId);
         return <div className='content-container'>{this.state.posts}</div>
     }
 }

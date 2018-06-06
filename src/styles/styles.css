@@ -17,7 +17,7 @@ h3 {
 
 .page-container {
     background-image: url(../images/page-background2.jpg);
-    padding-bottom: 2%;
+    padding-bottom: 5%;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -35,11 +35,12 @@ h3 {
 
 .post-container {
     display: block;
+    position: relative;
     width: 70%;
     margin: 0 auto;
     margin-bottom: 1%;
     padding-right: 1%;
-    overflow: auto;
+    overflow: hidden;
     background-color: white;
     border-radius: 4px;
     color: white;
@@ -54,6 +55,7 @@ h3 {
     font-size: 0%;
     overflow: hidden;
     background-color: white;
+    border-radius: 4px;
 }
 
 .thumbnail-img {
@@ -65,6 +67,8 @@ h3 {
     overflow: hidden;
     margin-bottom: 0.8%;
     padding-top: 1.2%;
+    display: inline-block;
+    width: 75%;
 }
 
 .post-title {
@@ -86,14 +90,45 @@ h3 {
     color: white;
 }
 
-.points {
+.domain {
     display: inline-block;
     font-size: 0.7em;
     margin-bottom: 0.5%;
+    width: 60%;
 }
 
 .created {
     font-size: 0.7em;
+    display: inline-block;
+    width: 100%;
+}
+
+.pinned {
+    color: #02a702;
+    display: inline-block;
+    font-size: 0.7em;
+}
+
+.points-container {
+    float: right;
+    height: 75px;
+    width: 75px;
+    text-align: center;
+    margin-top: 1%;
+    color: white;
+    border-radius: 4px;
+    border: 2px solid white;
+}
+
+.points-label {
+    font-family: 'Teko', sans-serif;
+    font-size: 150%;
+    color: #bbbbbb;
+}
+
+.points {
+    font-family: 'Teko', sans-serif;
+    font-size: 150%;
 }
 
 .nav-container {
@@ -109,14 +144,21 @@ h3 {
 .nav-icon {
     height: auto;
     width: 150%;
+    transition: transform 100ms ease-in-out;
 }
 
 .nav-icon.left {
     transform: rotate(180deg);
 }
 
-.nav-icon:hover {
+.nav-icon.right:hover {
     cursor: pointer;
+    transform: translateX(3px);
+}
+
+.nav-icon.left:hover {
+    cursor: pointer;
+    transform:  rotate(180deg) translateX(3px);
 }
 
 .page-number-container {

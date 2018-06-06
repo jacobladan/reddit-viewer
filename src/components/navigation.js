@@ -1,5 +1,6 @@
 import React from 'react';
-import NavArrows from '../images/iconfinder-icon.svg';
+import RightArrows from '../images/right-arrows.svg';
+// import LeftArrows from '../images/left-arrows.svg';
 
 export class Navigation extends React.Component {
     
@@ -33,13 +34,13 @@ export class Navigation extends React.Component {
         return (
             <div className='nav-container'>
                 <div className='nav-icon-container'>
-                    <img src={NavArrows} alt="Previous Page" onClick={() => this.handleBackwardClick()} className='nav-icon left'/>
+                    <img src={RightArrows} alt="Previous Page" onClick={() => this.handleBackwardClick()} className='nav-icon left'/>
                 </div>
                 <div className='page-number-container'>
                     <p className='page-number'>{this.state.pageCount}</p>
                 </div>
                 <div className='nav-icon-container'>
-                    <img src={NavArrows} alt="Next Page" onClick={() => this.handleForwardClick()} className='nav-icon'/>
+                    <img src={RightArrows} alt="Next Page" onClick={() => this.handleForwardClick()} className='nav-icon right'/>
                 </div>
             </div>
         );
