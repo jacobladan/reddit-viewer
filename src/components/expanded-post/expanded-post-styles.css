@@ -1,0 +1,27 @@
+.expanded-post-container {
+    position: fixed;
+    overflow: scroll;
+    width: 72%;
+    height: 1000px;
+    background-color: white;
+    border-radius: 4px;
+    color: white;
+    background: #000000e0;
+    left: 50%; 
+    padding-top: 3%;
+    padding-left: 3%;
+    -webkit-transform: translate(-50%, 0);
+}
+
+.expanded-thumbnail {
+    width: 150px;
+}
+
+.expanded-img {
+    width: 150px;
+    height: 150px;
+}
+
+.expanded-title:visited {
+    color: white;
+}

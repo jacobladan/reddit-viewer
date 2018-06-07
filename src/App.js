@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Post } from './components/post';
-import { Logo } from './components/logo';
+import { Logo } from './components/main-page/logo';
+import { Post } from './components/main-page/post';
+import { Filter } from './components/main-page/filter';
 import { Animated } from "react-animated-css";
-import { Navigation } from './components/navigation';
+import { Navigation } from './components/main-page/navigation';
 import { animateScroll as scroll } from 'react-scroll';
-import './styles/styles.css';
-import { Filter } from './components/filter';
+import './components/main-page/main-page-styles.css';
+import { PostContainer } from './components/expanded-post/post-container';
+import { TestExpandedPost } from './components/expanded-post/test-expanded-post';
 
 class App extends Component {
 
@@ -13,18 +15,24 @@ class App extends Component {
     super(props);
     this.state = {
       filter: 'hot',
-      sortBy: ''
+      sortBy: '',
+      testExpandedPost: false
     };
     this.handleForwardClick = this.handleForwardClick.bind(this);
     this.handleBackwardClick = this.handleBackwardClick.bind(this);
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleSortByChange = this.handleSortByChange.bind(this);
+    this.handleCheck = this.handleCheck.bind(this);
+  }
+
+  handleCheck() {
+    this.setState({testExpandedPost: !this.state.testExpandedPost});
   }
 
   handleFilterChange(filter) {
     this.setState({filter: filter});
     if (filter === 'top') {
-      this.refs.post.generatePosts('after', '', filter, '&t=day');
+      this.refs.post.generatePosts('after', '', filter, '&t=hour');
     } else {
       this.refs.post.generatePosts('after', '', filter, '');
     }
@@ -48,17 +56,31 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div className='page-container'>
-        <Logo />
-        <Filter handleFilterChange={this.handleFilterChange} handleSortByChange={this.handleSortByChange}/>
-        <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
-          <Post ref='post' className='animation-props'/>
-        </Animated>
-        <Navigation ref='navigation' onForwardClick={this.handleForwardClick} onBackwardClick={this.handleBackwardClick}/>
-      </div>
-    );
+    if (this.state.testExpandedPost) {
+      return (
+        <div className='page-container'>
+          <TestExpandedPost onChange={this.handleCheck}/>
+          <Logo />
+          <PostContainer />
+        </div>
+      );
+    } else {
+      return(
+        <div className='page-container'>
+          <TestExpandedPost onChange={this.handleCheck}/>
+          <Logo />
+          <Filter handleFilterChange={this.handleFilterChange} handleSortByChange={this.handleSortByChange}/>
+          <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
+            <Post ref='post' className='animation-props'/>
+          </Animated>
+          <Navigation ref='navigation' onForwardClick={this.handleForwardClick} onBackwardClick={this.handleBackwardClick}/>
+        </div>
+      );
+    }
+
   }
 }
+
+
 
 export default App;

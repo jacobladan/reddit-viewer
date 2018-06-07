@@ -1,5 +1,5 @@
 import React from 'react';
-import { RedditAPI } from '../api/reddit-hots-api';
+import { RedditAPI } from '../../api/reddit-hots-api';
 import { Thumbnail } from './thumbnail';
 import { PostInfo } from './post-info';
 import { Points } from './points';
@@ -24,7 +24,7 @@ export class Post extends React.Component {
     }
 
     componentDidMount() {
-        this.generatePosts('after', this.state.lastPostId, 'hot', '');
+        this.generatePosts('after', '', 'hot', '');
     }
 
     generatePosts(direction, id, filter, sortBy) {

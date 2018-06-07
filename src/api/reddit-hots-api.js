@@ -15,3 +15,11 @@ export class RedditAPI {
         }
     }
 }
+
+export class PostAPI {
+    constructor(id) {
+        return fetch('https://www.reddit.com/r/heroesofthestorm/comments/8pbl0x.json').then(results => {
+            return results.json();
+        })
+    }
+}

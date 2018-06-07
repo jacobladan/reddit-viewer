@@ -1,0 +1,14 @@
+import React from 'react';
+
+export class Thumbnail extends React.Component {
+
+    render() {
+        let aClasses = `thumbnail ${this.props.aClass}`;
+        let imgClasses = `thumbnail-img ${this.props.imgClass}`;
+        return (
+            <a href={this.props.href} className={aClasses}>
+                <img src={this.props.src} alt="thumbnail" className={imgClasses} />
+            </a>
+        )
+    }
+}

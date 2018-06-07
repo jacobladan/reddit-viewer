@@ -1,6 +1,5 @@
 import React from 'react';
-import RightArrows from '../images/right-arrows.svg';
-// import LeftArrows from '../images/left-arrows.svg';
+import RightArrows from '../../images/right-arrows.svg';
 
 export class Navigation extends React.Component {
     
