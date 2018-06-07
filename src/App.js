@@ -5,6 +5,7 @@ import { Animated } from "react-animated-css";
 import { Navigation } from './components/navigation';
 import { animateScroll as scroll } from 'react-scroll';
 import './styles/styles.css';
+import { Filter } from './components/filter';
 
 class App extends Component {
 
@@ -28,6 +29,7 @@ class App extends Component {
     return (
       <div className='page-container'>
         <Logo />
+        <Filter />
         <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
           <Post ref='post' className='animation-props'/>
         </Animated>

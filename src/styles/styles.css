@@ -33,6 +33,34 @@ h3 {
     width: 30%;
 }
 
+.filter-container {
+    display: inline-block;
+    width: 100%;
+    margin-left: 17%;
+    margin-bottom: 1%;
+}
+
+.filter-button {
+    background-color: #000000c4;
+    color: white;
+    margin-right: 1%;
+    width: 5%;
+    height: 23px;
+    border-radius: 3px;
+    border-color: rgba(0, 0, 0, 0);
+    transition: 100ms ease-in-out;
+    outline: none;
+}
+
+.filter-button:hover {
+    background-color: #0000007d;
+    cursor: pointer;
+}
+
+.filter-button.selected {
+    background-color: #238cdd7a;
+}
+
 .post-container {
     display: block;
     position: relative;
