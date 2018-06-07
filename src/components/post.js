@@ -28,7 +28,7 @@ export class Post extends React.Component {
     }
 
     generatePosts(direction, id) {
-        const posts = new RedditAPI(direction, id);
+        const posts = new RedditAPI(direction, id, 'hot');
         let firstPostId, lastPostId, i = 0;
         posts.then(data => {
             console.log(data);

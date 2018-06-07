@@ -1,46 +1,86 @@
 import React from 'react';
 
-let topSelectedClasses = ['filter-button'];
-let risingSelectedClasses = ['filter-button'];
-let newSelectedClasses = ['filter-button'];
-let hotSelectedClasses = ['filter-button'];
+let selectedClasses = 'filter-button selected';
+let notSelectedClass = 'filter-button';
+let hotButtonStyle, newButtonStyle, risingButtonStyle, topButtonStyle;
 
 export class Filter extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            hotSelected: true,
+            newSelected: false,
+            risingSelected: false,
+            topSelected: false
+        };
+    }
+
     componentWillMount() {
-        hotSelectedClasses.push('selected');
-        hotSelectedClasses.join(' ');
+        newButtonStyle = notSelectedClass;
+        risingButtonStyle = notSelectedClass;
+        topButtonStyle = notSelectedClass;
+    }
+
+    componentWillUpdate() {
+        hotButtonStyle = notSelectedClass;
+        newButtonStyle = notSelectedClass;
+        risingButtonStyle = notSelectedClass;
+        topButtonStyle = notSelectedClass;
     }
 
     handleClick(e) {
         let value = e.target.value;
-        topSelectedClasses = ['filter-button'];
-        risingSelectedClasses = ['filter-button'];
-        newSelectedClasses = ['filter-button'];
-        hotSelectedClasses = ['filter-button'];
 
         if (value === 'hot') {
-            hotSelectedClasses.push('selected');
-            this.forceUpdate();
+            this.setState({
+                hotSelected: true,
+                newSelected: false,
+                risingSelected: false,
+                topSelected: false
+            });
         } else if (value === 'new') {
-            newSelectedClasses.push('selected');
-            this.forceUpdate();
+            this.setState({
+                hotSelected: false,
+                newSelected: true,
+                risingSelected: false,
+                topSelected: false
+            });
         } else if(value === 'rising') {
-            risingSelectedClasses.push('selected');
-            this.forceUpdate();
+            this.setState({
+                hotSelected: false,
+                newSelected: false,
+                risingSelected: true,
+                topSelected: false
+            });        
         } else if(value === 'top') {
-            topSelectedClasses.push('selected');
-            this.forceUpdate();
+                this.setState({
+                    hotSelected: false,
+                    newSelected: false,
+                    risingSelected: false,
+                    topSelected: true
+                });        
         }
     }
 
     render() {
+        console.log(this.state.newSelected);
+        if (this.state.hotSelected) {
+            hotButtonStyle = selectedClasses;
+        } else if (this.state.newSelected) {
+            newButtonStyle = selectedClasses;
+        } else if (this.state.risingSelected) {
+            risingButtonStyle = selectedClasses;
+        } else if (this.state.topSelected) {
+            topButtonStyle = selectedClasses;
+        }
+
         return(
             <div className='filter-container'>
-                <button className={hotSelectedClasses.join(' ')} onClick={(e) => this.handleClick(e)} value='hot'>Hot</button>
-                <button className={newSelectedClasses.join(' ')} onClick={(e) => this.handleClick(e)} value='new'>New</button>
-                <button className={risingSelectedClasses.join(' ')} onClick={(e) => this.handleClick(e)} value='rising'>Rising</button>
-                <button className={topSelectedClasses.join(' ')} onClick={(e) => this.handleClick(e)} value='top'>Top</button>
+                <button className={hotButtonStyle} onClick={(e) => this.handleClick(e)} value='hot'>Hot</button>
+                <button className={newButtonStyle} onClick={(e) => this.handleClick(e)} value='new'>New</button>
+                <button className={risingButtonStyle} onClick={(e) => this.handleClick(e)} value='rising'>Rising</button>
+                <button className={topButtonStyle} onClick={(e) => this.handleClick(e)} value='top'>Top</button>
             </div>
         );
     }
