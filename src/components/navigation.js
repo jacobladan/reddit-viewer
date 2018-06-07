@@ -30,6 +30,10 @@ export class Navigation extends React.Component {
         }
     }
 
+    resetPageCounter() {
+        this.setState({pageCount: 1});
+    }
+
     render() {
         return (
             <div className='nav-container'>

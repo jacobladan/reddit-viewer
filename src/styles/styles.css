@@ -35,8 +35,9 @@ h3 {
 
 .filter-container {
     display: inline-block;
+    box-sizing: border-box;
     width: 100%;
-    margin-left: 17%;
+    padding-left: 17%;
     margin-bottom: 1%;
 }
 

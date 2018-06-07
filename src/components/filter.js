@@ -61,10 +61,10 @@ export class Filter extends React.Component {
                     topSelected: true
                 });        
         }
+        this.props.handleFilterChange(value);
     }
 
     render() {
-        console.log(this.state.newSelected);
         if (this.state.hotSelected) {
             hotButtonStyle = selectedClasses;
         } else if (this.state.newSelected) {
@@ -74,10 +74,9 @@ export class Filter extends React.Component {
         } else if (this.state.topSelected) {
             topButtonStyle = selectedClasses;
         }
-
         return(
             <div className='filter-container'>
-                <button className={hotButtonStyle} onClick={(e) => this.handleClick(e)} value='hot'>Hot</button>
+                <button className={hotButtonStyle} onClick={(e) => this.handleClick(e)} value='hot' ref='hotButton'>Hot</button>
                 <button className={newButtonStyle} onClick={(e) => this.handleClick(e)} value='new'>New</button>
                 <button className={risingButtonStyle} onClick={(e) => this.handleClick(e)} value='rising'>Rising</button>
                 <button className={topButtonStyle} onClick={(e) => this.handleClick(e)} value='top'>Top</button>
