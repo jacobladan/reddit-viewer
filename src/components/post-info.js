@@ -10,7 +10,7 @@ export class PostInfo extends React.Component {
                 <p className='author'><b>Author: </b><a href={this.props.authorLink} className='author-link' target='_blank'>{this.props.author}</a></p>
                 <p className='domain'><b>Domain: </b>{this.props.domain}</p>
                 <p className='created'><b>Posted: </b>{this.props.created}</p>
-                {this.props.pinned && <p className='pinned'>pinned</p>}
+                {this.props.stickied && <p className='pinned'>pinned</p>}
             </div>
         )
     }

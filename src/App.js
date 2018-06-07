@@ -12,26 +12,38 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sortBy: 'hot'
+      filter: 'hot',
+      sortBy: ''
     };
     this.handleForwardClick = this.handleForwardClick.bind(this);
     this.handleBackwardClick = this.handleBackwardClick.bind(this);
     this.handleFilterChange = this.handleFilterChange.bind(this);
+    this.handleSortByChange = this.handleSortByChange.bind(this);
   }
 
-  handleFilterChange(sortBy) {
+  handleFilterChange(filter) {
+    this.setState({filter: filter});
+    if (filter === 'top') {
+      this.refs.post.generatePosts('after', '', filter, '&t=day');
+    } else {
+      this.refs.post.generatePosts('after', '', filter, '');
+    }
+    this.refs.navigation.resetPageCounter();
+  }
+
+  handleSortByChange(sortBy) {
     this.setState({sortBy: sortBy});
-    this.refs.post.generatePosts('after', '', sortBy);
+    this.refs.post.generatePosts('after', '', this.state.filter, sortBy);
     this.refs.navigation.resetPageCounter();
   }
 
   handleForwardClick() {
-    this.refs.post.generatePosts('after', this.refs.post.state.lastPostId, this.state.sortBy);
+    this.refs.post.generatePosts('after', this.refs.post.state.lastPostId, this.state.filter, this.state.sortBy);
     scroll.scrollToTop({duration: 300});
   }
 
   handleBackwardClick() {
-    this.refs.post.generatePosts('before', this.refs.post.state.firstPostId, this.state.sortBy);
+    this.refs.post.generatePosts('before', this.refs.post.state.firstPostId, this.state.filter, this.state.sortBy);
     scroll.scrollToTop({duration: 300});
   }
 
@@ -39,7 +51,7 @@ class App extends Component {
     return (
       <div className='page-container'>
         <Logo />
-        <Filter handleFilterChange={this.handleFilterChange}/>
+        <Filter handleFilterChange={this.handleFilterChange} handleSortByChange={this.handleSortByChange}/>
         <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
           <Post ref='post' className='animation-props'/>
         </Animated>

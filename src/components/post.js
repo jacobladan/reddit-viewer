@@ -24,11 +24,11 @@ export class Post extends React.Component {
     }
 
     componentDidMount() {
-        this.generatePosts('after', this.state.lastPostId, 'hot');
+        this.generatePosts('after', this.state.lastPostId, 'hot', '');
     }
 
-    generatePosts(direction, id, filter) {
-        const posts = new RedditAPI(direction, id, filter);
+    generatePosts(direction, id, filter, sortBy) {
+        const posts = new RedditAPI(direction, id, filter, sortBy);
         let firstPostId, lastPostId, i = 0;
         posts.then(data => {
             console.log(data);
@@ -55,7 +55,7 @@ export class Post extends React.Component {
                             author={post.data.author} 
                             domain={post.data.domain}
                             created={createdDate}
-                            pinned={post.data.stickied}
+                            stickied={post.data.stickied}
                             />
                             <Points points={post.data.score}/>
                         </div>

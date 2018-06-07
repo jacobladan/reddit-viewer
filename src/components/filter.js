@@ -1,4 +1,5 @@
 import React from 'react';
+import { TopFilter } from './top-filter';
 
 let selectedClasses = 'filter-button selected';
 let notSelectedClass = 'filter-button';
@@ -80,6 +81,7 @@ export class Filter extends React.Component {
                 <button className={newButtonStyle} onClick={(e) => this.handleClick(e)} value='new'>New</button>
                 <button className={risingButtonStyle} onClick={(e) => this.handleClick(e)} value='rising'>Rising</button>
                 <button className={topButtonStyle} onClick={(e) => this.handleClick(e)} value='top'>Top</button>
+                <TopFilter isTopSelected={this.state.topSelected} handleSortByChange={this.props.handleSortByChange}/>
             </div>
         );
     }
