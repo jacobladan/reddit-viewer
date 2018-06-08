@@ -13,7 +13,7 @@ let dateOptions = {
     minute: 'numeric',
 };
 
-export class PostContainer extends React.Component {
+export class ExpandedPostContainer extends React.Component {
 
     constructor(props) {
         super(props);

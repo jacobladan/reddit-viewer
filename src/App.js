@@ -6,8 +6,6 @@ import { Animated } from "react-animated-css";
 import { Navigation } from './components/main-page/navigation';
 import { animateScroll as scroll } from 'react-scroll';
 import './components/main-page/main-page-styles.css';
-import { PostContainer } from './components/expanded-post/post-container';
-import { TestExpandedPost } from './components/expanded-post/test-expanded-post';
 
 class App extends Component {
 
@@ -16,18 +14,14 @@ class App extends Component {
     this.state = {
       filter: 'hot',
       sortBy: '',
-      testExpandedPost: false
     };
     this.handleForwardClick = this.handleForwardClick.bind(this);
     this.handleBackwardClick = this.handleBackwardClick.bind(this);
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleSortByChange = this.handleSortByChange.bind(this);
-    this.handleCheck = this.handleCheck.bind(this);
   }
 
-  handleCheck() {
-    this.setState({testExpandedPost: !this.state.testExpandedPost});
-  }
+
 
   handleFilterChange(filter) {
     this.setState({filter: filter});
@@ -56,18 +50,8 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.testExpandedPost) {
-      return (
-        <div className='page-container'>
-          <TestExpandedPost onChange={this.handleCheck}/>
-          <Logo />
-          <PostContainer />
-        </div>
-      );
-    } else {
       return(
         <div className='page-container'>
-          <TestExpandedPost onChange={this.handleCheck}/>
           <Logo />
           <Filter handleFilterChange={this.handleFilterChange} handleSortByChange={this.handleSortByChange}/>
           <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
@@ -77,9 +61,8 @@ class App extends Component {
         </div>
       );
     }
-
-  }
 }
+
 
 
 

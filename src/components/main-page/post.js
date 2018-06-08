@@ -3,6 +3,7 @@ import { RedditAPI } from '../../api/reddit-hots-api';
 import { Thumbnail } from './thumbnail';
 import { PostInfo } from './post-info';
 import { Points } from './points';
+import { PostBody } from './post-body';
 
 let dateOptions = {
     weekday: 'long',
@@ -31,7 +32,7 @@ export class Post extends React.Component {
         const posts = new RedditAPI(direction, id, filter, sortBy);
         let firstPostId, lastPostId, i = 0;
         posts.then(data => {
-            console.log(data);
+            // console.log(data);
             if (data.data.children.length <= 2) { return }
             let posts = data.data.children.map(post => {
                 let previewUrl;
@@ -58,6 +59,7 @@ export class Post extends React.Component {
                             stickied={post.data.stickied}
                             />
                             <Points points={post.data.score}/>
+                            <PostBody postId={post.data.id}/>
                         </div>
                     );
                 })
@@ -66,13 +68,12 @@ export class Post extends React.Component {
                     lastPostId: lastPostId,
                     firstPostId: firstPostId,
                 });
-                // window.scrollTo(0, 0);
             })
     }
 
     render() {
         return (
-                <div className='content-container'>{this.state.posts}</div>
+            <div className='content-container'>{this.state.posts}</div>
         ) 
     }
 }

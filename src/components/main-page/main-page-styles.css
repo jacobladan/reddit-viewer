@@ -75,13 +75,21 @@ p {
     position: relative;
     width: 70%;
     margin: 0 auto;
-    margin-bottom: 1%;
+    margin-bottom: 0.5%;
     padding-right: 1%;
     overflow: hidden;
     background-color: white;
     border-radius: 4px;
     color: white;
     background: #000000c4;
+}
+
+.not-expanded {
+    display: none;
+}
+
+.expanded {
+    display: block;
 }
 
 .animation-styles {
