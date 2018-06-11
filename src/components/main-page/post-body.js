@@ -1,7 +1,9 @@
 import React from 'react';
 import { PostAPI } from "../../api/subreddit-api";
 import { ExpandedPost } from '../main-page/expand-post';
+import { GridLoader } from 'react-spinners';
 import ReactHtmlParser from 'react-html-parser';
+import '../../styles/comment-loader-styles.css';
 
 let decodeHTML = function (html) {
 	var txt = document.createElement('textarea');
@@ -17,17 +19,16 @@ export class PostBody extends React.Component {
             body: '',
             comments: [],
             isPostExpanded: false,
-            expandButtonText: 'EXPAND'
+            expandButtonText: 'EXPAND',
+            fetchInProgress: true,
+            isBodyLoaded: false
         };
-        this.handleChecked = this.handleChecked.bind(this);
-    }
-    
-    componentDidMount(){
-        this.generatePostBody('heroesofthestorm', this.props.postId)
+        this.handleClicked = this.handleClicked.bind(this);
     }
 
     generatePostBody(subreddit, Id) {
-        let getPost = new PostAPI(subreddit, Id);
+        this.setState({fetchInProgress: true});
+        const getPost = new PostAPI(subreddit, Id);
         getPost.then(data => {
             if (data === undefined) { return }
             let bodyText = data[0].data.children[0].data.selftext_html;
@@ -36,11 +37,16 @@ export class PostBody extends React.Component {
             }
             this.setState({
                 body: bodyText,
+                fetchInProgress: false,
+                isBodyLoaded: true
             });
         })
     }
 
-    handleChecked() {
+    handleClicked() {
+        if (!this.state.isBodyLoaded) {
+            this.generatePostBody('heroesofthestorm', this.props.postId);
+        }
         if (this.state.isPostExpanded) {
             this.setState({
                 isPostExpanded: false,
@@ -55,36 +61,33 @@ export class PostBody extends React.Component {
     }
 
     render() {
-        if (this.state.body !== null) {
-            if (this.state.isPostExpanded) {
-                let text = 'CLOSE';
-                return(
-                    <div className='expanded-post-container'>
-                    <ExpandedPost onClick={this.handleChecked} text={text}/>
-                        <div className='expanded'>
-                            <div className='post-body-container'>
-                                {this.state.body}
-                                <ExpandedPost onClick={this.handleChecked} text={text} isInPost={true}/>
-                            </div>
+        if (this.state.isPostExpanded) {
+            let text = 'CLOSE';
+            return (
+                <div className='expanded-post-container'>
+                    <ExpandedPost onClick={this.handleClicked} text={text}/>
+                    <div className='expanded'>
+                        <div className='post-body-container'>{
+                                this.state.fetchInProgress
+                                ? <GridLoader loading={true} color={"#44def3"} />
+                                : this.state.body
+                            }
+                            <ExpandedPost onClick={this.handleClicked} text={text} isInPost={true}/>
                         </div>
                     </div>
-                )
-            } else {
-                let text = 'EXPAND';
-                return(
-                    <div className='expanded-post-container'>
-                    <ExpandedPost onClick={this.handleChecked} text={text}/>
-                        <div className='not-expanded'>
-                            <div className='post-body-container'>
-                                {this.state.body}
-                                <ExpandedPost onClick={this.handleChecked} text={text} isInPost={true}/>
-                            </div>
-                        </div>
-                    </div>
-                )
-            } 
+                </div>
+            )
         } else {
-            return null;
-        }    
-    }
+            let text = 'EXPAND';
+            return(
+                <div className='expanded-post-container'>
+                <ExpandedPost onClick={this.handleClicked} text={text}/>
+                    <div className='not-expanded'>
+                        <div className='post-body-container'>
+                        </div>
+                    </div>
+                </div>
+            )
+        } 
+    } 
 }

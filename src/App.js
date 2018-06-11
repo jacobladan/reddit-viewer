@@ -5,7 +5,7 @@ import { Filter } from './components/main-page/filter';
 import { Animated } from "react-animated-css";
 import { Navigation } from './components/main-page/navigation';
 import { animateScroll as scroll } from 'react-scroll';
-import './components/main-page/main-page-styles.css';
+import './styles/main-page-styles.css';
 
 class App extends Component {
 

@@ -4,8 +4,9 @@ import { Thumbnail } from './thumbnail';
 import { PostInfo } from './post-info';
 import { Points } from './points';
 import { PostBody } from './post-body';
+import { GridLoader } from 'react-spinners';
 
-let dateOptions = {
+const dateOptions = {
     weekday: 'long',
     month: 'long',
     year: 'numeric',
@@ -21,6 +22,7 @@ export class Post extends React.Component {
             posts: [],
             firstPostId: '',
             lastPostId: '',
+            fetchInProgress: true,
         };
     }
 
@@ -29,23 +31,26 @@ export class Post extends React.Component {
     }
 
     generatePosts(subreddit, direction, id, filter, sortBy) {
-        const posts = new SubredditAPI(subreddit, direction, id, filter, sortBy);
         let firstPostId, lastPostId, i = 0;
+        this.setState({fetchInProgress: true});
+        const posts = new SubredditAPI(subreddit, direction, id, filter, sortBy);
         posts.then(data => {
             // console.log(data);
             if (data === undefined) { return }
             if (data.data.children.length <= 2) { return }
             let posts = data.data.children.map(post => {
                 let previewUrl;
+                let bodyText = post.data.selftext_html;
+                console.log(bodyText);
+                let authorLink = 'https://www.reddit.com/user/' + post.data.author;
+                let createdDate = new Date(post.data.created * 1000).toLocaleDateString("en-US", dateOptions);
                 if (i === 0) {firstPostId = post.data.id}
+                lastPostId = post.data.id;
                 if (typeof(post.data.preview) !== 'undefined'){
                     previewUrl = post.data.preview.images[0].source.url;
                 } else {
                     previewUrl = 'https://www.reddit.com/static/self_default2.png';
                 }
-                let authorLink = 'https://www.reddit.com/user/' + post.data.author;
-                let createdDate = new Date(post.data.created * 1000).toLocaleDateString("en-US", dateOptions);
-                lastPostId = post.data.id;
                 i++;
                 return (
                         <div className='post-container' key={post.data.id}>
@@ -60,7 +65,11 @@ export class Post extends React.Component {
                             stickied={post.data.stickied}
                             />
                             <Points points={post.data.score}/>
-                            <PostBody postId={post.data.id}/>
+                            {
+                                bodyText
+                                ? <PostBody postId={post.data.id} />
+                                : null
+                            }
                         </div>
                     );
                 })
@@ -68,13 +77,19 @@ export class Post extends React.Component {
                     posts: posts,
                     lastPostId: lastPostId,
                     firstPostId: firstPostId,
+                    fetchInProgress: false,
                 });
             })
     }
 
     render() {
         return (
-            <div className='content-container'>{this.state.posts}</div>
+            <div className='content-container'>{
+                this.state.fetchInProgress
+                ? <GridLoader loading={true} color={"#44def3"}/>
+                : this.state.posts
+            }
+            </div>
         ) 
     }
 }
