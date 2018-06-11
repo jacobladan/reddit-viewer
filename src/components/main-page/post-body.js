@@ -1,16 +1,13 @@
 import React from 'react';
-import { PostAPI } from "../../api/reddit-hots-api";
-import { TestExpandedPost } from '../expanded-post-not-used/test-expanded-post';
-// var HtmlToReactParser = require('html-to-react').Parser;
-// import { Parser } from 'html-to-react';
+import { PostAPI } from "../../api/subreddit-api";
+import { ExpandedPost } from '../main-page/expand-post';
+import ReactHtmlParser from 'react-html-parser';
 
-let parser = new DOMParser();
 let decodeHTML = function (html) {
 	var txt = document.createElement('textarea');
 	txt.innerHTML = html;
 	return txt.value;
 };
-// var htmlToReactParser = new Parser();
 
 export class PostBody extends React.Component {
 
@@ -25,22 +22,20 @@ export class PostBody extends React.Component {
     }
     
     componentDidMount(){
-        let getPost = new PostAPI(this.props.postId);
-        let y;
-        let x;
-        let z;
+        this.generatePostBody('heroesofthestorm', this.props.postId)
+    }
+
+    generatePostBody(subreddit, Id) {
+        let getPost = new PostAPI(subreddit, Id);
         getPost.then(data => {
             let post = data[0].data.children[0].data;
             // console.log(post);
             let bodyText = post.selftext_html;
             if (bodyText !== null) {
-                x = decodeHTML(bodyText);
-                y = parser.parseFromString(x, 'text/html');
-                z = [...y];
-                console.log(z);
+                bodyText = ReactHtmlParser(decodeHTML(bodyText));
             }
             this.setState({
-                body: y,
+                body: bodyText,
             });
         })
     }
@@ -50,23 +45,28 @@ export class PostBody extends React.Component {
     }
 
     render() {
-        // console.log(this.state.isPostExpanded);
-        if (this.state.isPostExpanded) {
-            return(
-                <div className='expanded-post-container'>
-                    <TestExpandedPost onChange={this.handleChecked}/>
-                    <div className='expanded'>
+        if (this.state.body !== null) {
+            if (this.state.isPostExpanded) {
+                return(
+                    <div className='expanded-post-container'>
+                    <ExpandedPost onClick={this.handleChecked}/>
+                        <div className='expanded'>
+                            <div className='post-body-container'>{this.state.body}</div>
+                        </div>
                     </div>
-                </div>
-            )
+                )
+            } else {
+                return(
+                    <div className='expanded-post-container'>
+                    <ExpandedPost onClick={this.handleChecked}/>
+                        <div className='not-expanded'>
+                            <div className='post-body-container'>{this.state.body}</div>
+                        </div>
+                    </div>
+                )
+            } 
         } else {
-            return(
-                <div className='expanded-post-container'>
-                    <TestExpandedPost onChange={this.handleChecked}/>
-                    <div className='not-expanded'>
-                    </div>
-                </div>
-            )
-        }
+            return null;
+        }    
     }
 }

@@ -26,26 +26,26 @@ class App extends Component {
   handleFilterChange(filter) {
     this.setState({filter: filter});
     if (filter === 'top') {
-      this.refs.post.generatePosts('after', '', filter, '&t=hour');
+      this.refs.post.generatePosts('heroesofthestorm', 'after', '', filter, '&t=hour');
     } else {
-      this.refs.post.generatePosts('after', '', filter, '');
+      this.refs.post.generatePosts('heroesofthestorm', 'after', '', filter, '');
     }
     this.refs.navigation.resetPageCounter();
   }
 
   handleSortByChange(sortBy) {
     this.setState({sortBy: sortBy});
-    this.refs.post.generatePosts('after', '', this.state.filter, sortBy);
+    this.refs.post.generatePosts('heroesofthestorm', 'after', '', this.state.filter, sortBy);
     this.refs.navigation.resetPageCounter();
   }
 
   handleForwardClick() {
-    this.refs.post.generatePosts('after', this.refs.post.state.lastPostId, this.state.filter, this.state.sortBy);
+    this.refs.post.generatePosts('heroesofthestorm', 'after', this.refs.post.state.lastPostId, this.state.filter, this.state.sortBy);
     scroll.scrollToTop({duration: 300});
   }
 
   handleBackwardClick() {
-    this.refs.post.generatePosts('before', this.refs.post.state.firstPostId, this.state.filter, this.state.sortBy);
+    this.refs.post.generatePosts('heroesofthestorm', 'before', this.refs.post.state.firstPostId, this.state.filter, this.state.sortBy);
     scroll.scrollToTop({duration: 300});
   }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { RedditAPI } from '../../api/reddit-hots-api';
+import { SubredditAPI } from '../../api/subreddit-api';
 import { Thumbnail } from './thumbnail';
 import { PostInfo } from './post-info';
 import { Points } from './points';
@@ -25,11 +25,11 @@ export class Post extends React.Component {
     }
 
     componentDidMount() {
-        this.generatePosts('after', '', 'hot', '');
+        this.generatePosts('heroesofthestorm', 'after', '', 'hot', '');
     }
 
-    generatePosts(direction, id, filter, sortBy) {
-        const posts = new RedditAPI(direction, id, filter, sortBy);
+    generatePosts(subreddit, direction, id, filter, sortBy) {
+        const posts = new SubredditAPI(subreddit, direction, id, filter, sortBy);
         let firstPostId, lastPostId, i = 0;
         posts.then(data => {
             // console.log(data);
