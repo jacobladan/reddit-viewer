@@ -30,9 +30,11 @@ export class PostBody extends React.Component {
         this.setState({fetchInProgress: true});
         const getPost = new PostAPI(subreddit, Id);
         getPost.then(data => {
-            if (data === undefined) { return }
             let bodyText = data[0].data.children[0].data.selftext_html;
+            if (data === undefined) { return }
             if (bodyText !== null) {
+                // Filter functions. 1. Converts any special characters to their raw form.
+                // 2. Converts the html string to valid JSX that can be rendered
                 bodyText = ReactHtmlParser(decodeHTML(bodyText));
             }
             this.setState({
@@ -44,6 +46,7 @@ export class PostBody extends React.Component {
     }
 
     handleClicked() {
+        // Checking so posts don't get loaded more than once
         if (!this.state.isBodyLoaded) {
             this.generatePostBody('heroesofthestorm', this.props.postId);
         }
@@ -61,24 +64,30 @@ export class PostBody extends React.Component {
     }
 
     render() {
+        // Toggles display: block and display: none for the post body
         if (this.state.isPostExpanded) {
-            let text = 'CLOSE';
+            let text = '▲';
+            // let text = '+';
+            // let text = 'CLOSE';
             return (
                 <div className='expanded-post-container'>
                     <ExpandedPost onClick={this.handleClicked} text={text}/>
                     <div className='expanded'>
                         <div className='post-body-container'>{
+                                // Displays loader icon while post body is fetched
                                 this.state.fetchInProgress
                                 ? <GridLoader loading={true} color={"#44def3"} />
                                 : this.state.body
                             }
-                            <ExpandedPost onClick={this.handleClicked} text={text} isInPost={true}/>
+                            <ExpandedPost onClick={this.handleClicked} text={text} isInPost='in-post'/>
                         </div>
                     </div>
                 </div>
             )
         } else {
-            let text = 'EXPAND';
+            let text = '▼';
+            // let text = '+';
+            // let text = 'EXPAND';
             return(
                 <div className='expanded-post-container'>
                 <ExpandedPost onClick={this.handleClicked} text={text}/>

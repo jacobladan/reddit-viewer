@@ -1,13 +1,6 @@
 import React from 'react';
 
 export class Points extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state ={
-            points: 0
-        };
-    }
-
     render() {
         return (
             <div className='points-container'>

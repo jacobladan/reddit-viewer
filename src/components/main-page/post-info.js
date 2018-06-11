@@ -2,6 +2,7 @@ import React from 'react';
 
 export class PostInfo extends React.Component {
     render() {
+        // Work around to add second class based on props
         let titleClass = `post-title ${this.props.titleClass}`;
         return (
             <div className='post-info'>

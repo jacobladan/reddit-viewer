@@ -16,20 +16,20 @@ export class Filter extends React.Component {
             topSelected: false
         };
     }
-
+    // Setting default styling to 'hot' button
     componentWillMount() {
         newButtonStyle = notSelectedClass;
         risingButtonStyle = notSelectedClass;
         topButtonStyle = notSelectedClass;
     }
-
+    // When filter is changed, this resets all of the buttons to 'not selected'
     componentWillUpdate() {
         hotButtonStyle = notSelectedClass;
         newButtonStyle = notSelectedClass;
         risingButtonStyle = notSelectedClass;
         topButtonStyle = notSelectedClass;
     }
-
+    // Sets selected class for which ever button has been clicked
     handleClick(e) {
         let value = e.target.value;
 
@@ -66,6 +66,7 @@ export class Filter extends React.Component {
     }
 
     render() {
+        // Setts which ever button should have selected class before rendering
         if (this.state.hotSelected) {
             hotButtonStyle = selectedClasses;
         } else if (this.state.newSelected) {

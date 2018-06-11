@@ -15,6 +15,12 @@ const dateOptions = {
     minute: 'numeric',
 };
 
+let decodeHTML = function (html) {
+	var txt = document.createElement('textarea');
+	txt.innerHTML = html;
+	return txt.value;
+};
+
 export class Post extends React.Component {
     constructor(props) {
         super(props);
@@ -31,21 +37,22 @@ export class Post extends React.Component {
     }
 
     generatePosts(subreddit, direction, id, filter, sortBy) {
+        // i is being used to track which post is first for use in navigating pages
         let firstPostId, lastPostId, i = 0;
         this.setState({fetchInProgress: true});
         const posts = new SubredditAPI(subreddit, direction, id, filter, sortBy);
         posts.then(data => {
-            // console.log(data);
             if (data === undefined) { return }
+            // Skips pinned posts
             if (data.data.children.length <= 2) { return }
             let posts = data.data.children.map(post => {
                 let previewUrl;
                 let bodyText = post.data.selftext_html;
-                console.log(bodyText);
                 let authorLink = 'https://www.reddit.com/user/' + post.data.author;
                 let createdDate = new Date(post.data.created * 1000).toLocaleDateString("en-US", dateOptions);
                 if (i === 0) {firstPostId = post.data.id}
                 lastPostId = post.data.id;
+                // Checks to set default thumbnail if none is set in the post
                 if (typeof(post.data.preview) !== 'undefined'){
                     previewUrl = post.data.preview.images[0].source.url;
                 } else {
@@ -57,7 +64,7 @@ export class Post extends React.Component {
                             <Thumbnail href={post.data.url} src={previewUrl}/>
                             <PostInfo 
                             link={post.data.url} 
-                            title={post.data.title}
+                            title={decodeHTML(post.data.title)}
                             authorLink={authorLink}
                             author={post.data.author} 
                             domain={post.data.domain}
@@ -66,6 +73,8 @@ export class Post extends React.Component {
                             />
                             <Points points={post.data.score}/>
                             {
+                                // Checking if post has a body. If not, then no expand button or
+                                // post body place holder is rendered
                                 bodyText
                                 ? <PostBody postId={post.data.id} />
                                 : null
@@ -85,6 +94,7 @@ export class Post extends React.Component {
     render() {
         return (
             <div className='content-container'>{
+                // Adds loader icon until the posts are fetched
                 this.state.fetchInProgress
                 ? <GridLoader loading={true} color={"#44def3"}/>
                 : this.state.posts

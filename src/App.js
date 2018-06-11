@@ -24,13 +24,15 @@ class App extends Component {
 
 
   handleFilterChange(filter) {
-    this.setState({filter: filter});
-    if (filter === 'top') {
-      this.refs.post.generatePosts('heroesofthestorm', 'after', '', filter, '&t=hour');
-    } else {
-      this.refs.post.generatePosts('heroesofthestorm', 'after', '', filter, '');
+    if (filter !== this.state.filter) {
+      this.setState({filter: filter});
+      if (filter === 'top') {
+        this.refs.post.generatePosts('heroesofthestorm', 'after', '', filter, '&t=hour');
+      } else {
+        this.refs.post.generatePosts('heroesofthestorm', 'after', '', filter, '');
+      }
+      this.refs.navigation.resetPageCounter();
     }
-    this.refs.navigation.resetPageCounter();
   }
 
   handleSortByChange(sortBy) {
