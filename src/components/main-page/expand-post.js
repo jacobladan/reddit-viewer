@@ -2,6 +2,12 @@ import React from 'react';
 
 export class ExpandedPost extends React.Component {
     render() {
-        return <button className='expand-post-button' onClick={this.props.onClick}>EXPAND</button>;
+        let classes;
+        if (!this.props.isInPost) {
+            classes = 'expand-post-button';
+        } else {
+            classes = 'expand-post-button in-post'
+        } 
+        return <button className={classes} onClick={this.props.onClick}>{this.props.text}</button>;
     }
 }

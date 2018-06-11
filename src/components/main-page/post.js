@@ -25,7 +25,7 @@ export class Post extends React.Component {
     }
 
     componentDidMount() {
-        this.generatePosts('heroesofthestorm', 'after', '', 'hot', '');
+        this.generatePosts('heroesofthestorm', '', '', 'hot', '');
     }
 
     generatePosts(subreddit, direction, id, filter, sortBy) {
@@ -33,6 +33,7 @@ export class Post extends React.Component {
         let firstPostId, lastPostId, i = 0;
         posts.then(data => {
             // console.log(data);
+            if (data === undefined) { return }
             if (data.data.children.length <= 2) { return }
             let posts = data.data.children.map(post => {
                 let previewUrl;

@@ -1,5 +1,5 @@
 import React from 'react';
-import RightArrows from '../../images/right-arrows.svg';
+import NavArrows from '../../images/nav-arrows.svg';
 
 export class Navigation extends React.Component {
     
@@ -34,16 +34,22 @@ export class Navigation extends React.Component {
     }
 
     render() {
+        let leftArrowVisible;
+        if (this.state.pageCount === 1) {
+            leftArrowVisible = {visibility: 'hidden'};
+        } else {
+            leftArrowVisible = {visibility: 'visible'};
+        }
         return (
             <div className='nav-container'>
                 <div className='nav-icon-container'>
-                    <img src={RightArrows} alt="Previous Page" onClick={() => this.handleBackwardClick()} className='nav-icon left'/>
+                    <img src={NavArrows} alt="Previous Page" onClick={() => this.handleBackwardClick()} className='nav-icon left' style={leftArrowVisible}/>
                 </div>
                 <div className='page-number-container'>
                     <p className='page-number'>{this.state.pageCount}</p>
                 </div>
                 <div className='nav-icon-container'>
-                    <img src={RightArrows} alt="Next Page" onClick={() => this.handleForwardClick()} className='nav-icon right'/>
+                    <img src={NavArrows} alt="Next Page" onClick={() => this.handleForwardClick()} className='nav-icon right'/>
                 </div>
             </div>
         );

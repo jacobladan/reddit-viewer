@@ -188,8 +188,13 @@ p {
     outline: none;
 }
 
+.expand-post-button.in-post {
+    margin: 0 auto;
+    margin-top: 2%;
+}
+
 .expand-post-button:hover {
-    background-color: #0000007d;
+    background-color: #6c7db8;
     cursor: pointer;
 }
 
@@ -220,6 +225,14 @@ p {
 .post-body-container p {
     margin-top: 1%;
     margin-bottom: 1%;
+}
+
+.post-body-container a {
+    color: #6c7db8;
+}
+
+.post-body-container a:visited {
+    color: #2142b8;
 }
 
 .nav-container {
