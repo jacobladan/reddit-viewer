@@ -33,7 +33,7 @@ export class PostBody extends React.Component {
             let bodyText = data[0].data.children[0].data.selftext_html;
             if (data === undefined) { return }
             if (bodyText !== null) {
-                // Filter functions. 1. Converts any special characters to their raw form.
+                // Filter methods. 1. Converts any special characters to their raw form.
                 // 2. Converts the html string to valid JSX that can be rendered
                 bodyText = ReactHtmlParser(decodeHTML(bodyText));
             }
@@ -66,9 +66,10 @@ export class PostBody extends React.Component {
     render() {
         // Toggles display: block and display: none for the post body
         if (this.state.isPostExpanded) {
-            let text = '▲';
-            // let text = '+';
+            // let text = '▲';
+            // let text = '-';
             // let text = 'CLOSE';
+            let text = '•••';
             return (
                 <div className='expanded-post-container'>
                     <ExpandedPost onClick={this.handleClicked} text={text}/>
@@ -85,9 +86,10 @@ export class PostBody extends React.Component {
                 </div>
             )
         } else {
-            let text = '▼';
+            // let text = '▼';
             // let text = '+';
             // let text = 'EXPAND';
+            let text = '•••';
             return(
                 <div className='expanded-post-container'>
                 <ExpandedPost onClick={this.handleClicked} text={text}/>

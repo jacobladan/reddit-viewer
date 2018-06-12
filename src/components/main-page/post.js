@@ -61,6 +61,7 @@ export class Post extends React.Component {
                 i++;
                 return (
                         <div className='post-container' key={post.data.id}>
+                        <div className='post-header'>
                             <Thumbnail href={post.data.url} src={previewUrl}/>
                             <PostInfo 
                             link={post.data.url} 
@@ -72,6 +73,7 @@ export class Post extends React.Component {
                             stickied={post.data.stickied}
                             />
                             <Points points={post.data.score}/>
+                        </div>
                             {
                                 // Checking if post has a body. If not, then no expand button or
                                 // post body place holder is rendered
