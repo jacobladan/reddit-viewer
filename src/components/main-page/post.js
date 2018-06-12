@@ -61,26 +61,26 @@ export class Post extends React.Component {
                 i++;
                 return (
                         <div className='post-container' key={post.data.id}>
-                        <div className='post-header'>
-                            <Thumbnail href={post.data.url} src={previewUrl}/>
-                            <PostInfo 
-                            link={post.data.url} 
-                            title={decodeHTML(post.data.title)}
-                            authorLink={authorLink}
-                            author={post.data.author} 
-                            domain={post.data.domain}
-                            created={createdDate}
-                            stickied={post.data.stickied}
-                            />
-                            <Points points={post.data.score}/>
-                        </div>
-                            {
-                                // Checking if post has a body. If not, then no expand button or
-                                // post body place holder is rendered
-                                bodyText
-                                ? <PostBody postId={post.data.id} />
-                                : null
-                            }
+                            <div className='post-header'>
+                                <Thumbnail href={post.data.url} src={previewUrl}/>
+                                <PostInfo 
+                                link={post.data.url} 
+                                title={decodeHTML(post.data.title)}
+                                authorLink={authorLink}
+                                author={post.data.author} 
+                                domain={post.data.domain}
+                                created={createdDate}
+                                stickied={post.data.stickied}
+                                />
+                                <Points points={post.data.score}/>
+                            </div>
+                                {
+                                    // Checking if post has a body. If not, then no expand button or
+                                    // post body place holder is rendered
+                                    bodyText
+                                    ? <PostBody postId={post.data.id} />
+                                    : null
+                                }
                         </div>
                     );
                 })

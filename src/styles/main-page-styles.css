@@ -2,6 +2,27 @@ p {
     margin: 0;
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #000000; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #28bce8; 
+    border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #00d9ff; 
+}
+
 .page-container {
     background-image: url(../images/page-background2.jpg);
     padding-bottom: 5%;
@@ -200,9 +221,6 @@ p {
     color: #28bce8;
     width: 100%;
     height: 20px;
-    -webkit-transition: 100ms ease-in-out;
-    -o-transition: 100ms ease-in-out;
-    transition: 100ms ease-in-out;
     outline: none;
     position: absolute;
     left: 0;
@@ -211,6 +229,11 @@ p {
     border-bottom-right-radius: 4px;
     font-size: 100%;
     padding-bottom: 2.5%;
+    background-image: linear-gradient(#00000000, #4e4e4e4f);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    transition: background-size .5s, color .5s;
 }
 
 .expand-post-button.in-post {
@@ -220,8 +243,8 @@ p {
 }
 
 .expand-post-button:hover {
-    background-color: #4e4e4e4f;
     cursor: pointer;
+    background-size: 100% 100%;
 }
 
 .comment-loader-container {
@@ -248,7 +271,28 @@ p {
     margin-bottom: 4%;
     margin-top: 2%;
     max-height: 340px;
-    overflow: scroll;
+    overflow-y: scroll;
+}
+
+/* width */
+.post-body-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.post-body-container::-webkit-scrollbar-track {
+    background: #00000000; 
+}
+ 
+/* Handle */
+.post-body-container::-webkit-scrollbar-thumb {
+    background: #28bce8; 
+    border-radius: 4px;
+}
+
+/* Handle on hover */
+.post-body-container::-webkit-scrollbar-thumb:hover {
+    background: #00d9ff; 
 }
 
 .post-body-container p {

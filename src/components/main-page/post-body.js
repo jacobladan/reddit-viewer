@@ -77,10 +77,10 @@ export class PostBody extends React.Component {
                                 // Displays loader icon while post body is fetched
                                 this.state.fetchInProgress
                                 ? <div className='comment-loader-container'><GridLoader loading={true} color={"#44def3"} /></div>
-                                : this.state.body
+                                :   <div>{this.state.body}</div>
                             }
-                            <ExpandedPost onClick={this.handleClicked} text={text} isInPost='in-post'/>
                         </div>
+                        <ExpandedPost onClick={this.handleClicked} text={text} isInPost='in-post'/>
                     </div>
                 </div>
             )

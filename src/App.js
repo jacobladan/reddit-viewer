@@ -6,6 +6,7 @@ import { Animated } from "react-animated-css";
 import { Navigation } from './components/main-page/navigation';
 import { animateScroll as scroll } from 'react-scroll';
 import './styles/main-page-styles.css';
+import './styles/customScroll.css';
 
 class App extends Component {
 
