@@ -3,7 +3,6 @@ import { PostAPI } from "../../api/subreddit-api";
 import { ExpandedPost } from '../main-page/expand-post';
 import { GridLoader } from 'react-spinners';
 import ReactHtmlParser from 'react-html-parser';
-import '../../styles/comment-loader-styles.css';
 
 let decodeHTML = function (html) {
 	var txt = document.createElement('textarea');
@@ -77,7 +76,7 @@ export class PostBody extends React.Component {
                         <div className='post-body-container'>{
                                 // Displays loader icon while post body is fetched
                                 this.state.fetchInProgress
-                                ? <GridLoader loading={true} color={"#44def3"} />
+                                ? <div className='comment-loader-container'><GridLoader loading={true} color={"#44def3"} /></div>
                                 : this.state.body
                             }
                             <ExpandedPost onClick={this.handleClicked} text={text} isInPost='in-post'/>

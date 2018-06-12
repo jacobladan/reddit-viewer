@@ -21,13 +21,11 @@ class App extends Component {
     this.handleSortByChange = this.handleSortByChange.bind(this);
   }
 
-
-
   handleFilterChange(filter) {
     if (filter !== this.state.filter) {
       this.setState({filter: filter});
       if (filter === 'top') {
-        this.refs.post.generatePosts('heroesofthestorm', 'after', '', filter, '&t=hour');
+        this.refs.post.generatePosts('heroesofthestorm', 'after', '', filter, 'hour');
       } else {
         this.refs.post.generatePosts('heroesofthestorm', 'after', '', filter, '');
       }
@@ -43,12 +41,12 @@ class App extends Component {
 
   handleForwardClick() {
     this.refs.post.generatePosts('heroesofthestorm', 'after', this.refs.post.state.lastPostId, this.state.filter, this.state.sortBy);
-    scroll.scrollToTop({duration: 300});
+    scroll.scrollToTop({duration: 500, smooth: true});
   }
 
   handleBackwardClick() {
     this.refs.post.generatePosts('heroesofthestorm', 'before', this.refs.post.state.firstPostId, this.state.filter, this.state.sortBy);
-    scroll.scrollToTop({duration: 300});
+    scroll.scrollToTop({duration: 500, smooth: true});
   }
 
   render() {

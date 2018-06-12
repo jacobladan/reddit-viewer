@@ -95,10 +95,10 @@ export class Post extends React.Component {
 
     render() {
         return (
-            <div className='content-container'>{
+            <div className='content-container' >{
                 // Adds loader icon until the posts are fetched
                 this.state.fetchInProgress
-                ? <GridLoader loading={true} color={"#44def3"}/>
+                ? <div className='post-loader-container'><GridLoader loading={true} color={"#44def3"}/></div>
                 : this.state.posts
             }
             </div>

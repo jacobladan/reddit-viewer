@@ -2,21 +2,21 @@ export class SubredditAPI {
     constructor(subreddit, direction, id, filter, sortBy) {
         try {
             if (direction === 'after') {
-                return fetch(`https://www.reddit.com/r/${subreddit}/${filter}.json?limit=15${sortBy}&after=t3_${id}`).then(this.handleErrors)
+                return fetch(`https://www.reddit.com/r/${subreddit}/${filter}.json?limit=15&t=${sortBy}&after=t3_${id}`).then(this.handleErrors)
                 .then(results => {
                     return results.json();
                 }).catch(() => {
                     console.log('Failed to fetch posts.');
                 });
             } else if (direction === 'before') {
-                return fetch(`https://www.reddit.com/r/${subreddit}/${filter}.json?limit=15${sortBy}&before=t3_${id}`).then(this.handleErrors)
+                return fetch(`https://www.reddit.com/r/${subreddit}/${filter}.json?limit=15&t=${sortBy}&before=t3_${id}`).then(this.handleErrors)
                 .then(results => {
                     return results.json();
                 }).catch(() => {
                     console.log('Failed to fetch posts.');
                 });
             } else {
-                return fetch(`https://www.reddit.com/r/${subreddit}/${filter}.json?limit=15${sortBy}`).then(this.handleErrors)
+                return fetch(`https://www.reddit.com/r/${subreddit}/${filter}.json?limit=15&t=${sortBy}`).then(this.handleErrors)
                 .then(results => {
                     return results.json();
                 }).catch(() => {
