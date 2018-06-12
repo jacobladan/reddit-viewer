@@ -5,6 +5,7 @@ import { Filter } from './components/main-page/filter';
 import { Animated } from "react-animated-css";
 import { Navigation } from './components/main-page/navigation';
 import { animateScroll as scroll } from 'react-scroll';
+import { subreddit } from './api/subreddit-api';
 import './styles/main-page-styles.css';
 import './styles/customScroll.css';
 
@@ -26,9 +27,9 @@ class App extends Component {
     if (filter !== this.state.filter) {
       this.setState({filter: filter});
       if (filter === 'top') {
-        this.refs.post.generatePosts('heroesofthestorm', 'after', '', filter, 'hour');
+        this.refs.post.generatePosts(subreddit, 'after', '', filter, 'hour');
       } else {
-        this.refs.post.generatePosts('heroesofthestorm', 'after', '', filter, '');
+        this.refs.post.generatePosts(subreddit, 'after', '', filter, '');
       }
       this.refs.navigation.resetPageCounter();
     }
@@ -36,17 +37,17 @@ class App extends Component {
 
   handleSortByChange(sortBy) {
     this.setState({sortBy: sortBy});
-    this.refs.post.generatePosts('heroesofthestorm', 'after', '', this.state.filter, sortBy);
+    this.refs.post.generatePosts(subreddit, 'after', '', this.state.filter, sortBy);
     this.refs.navigation.resetPageCounter();
   }
 
   handleForwardClick() {
-    this.refs.post.generatePosts('heroesofthestorm', 'after', this.refs.post.state.lastPostId, this.state.filter, this.state.sortBy);
+    this.refs.post.generatePosts(subreddit, 'after', this.refs.post.state.lastPostId, this.state.filter, this.state.sortBy);
     scroll.scrollToTop({duration: 500, smooth: true});
   }
 
   handleBackwardClick() {
-    this.refs.post.generatePosts('heroesofthestorm', 'before', this.refs.post.state.firstPostId, this.state.filter, this.state.sortBy);
+    this.refs.post.generatePosts(subreddit, 'before', this.refs.post.state.firstPostId, this.state.filter, this.state.sortBy);
     scroll.scrollToTop({duration: 500, smooth: true});
   }
 

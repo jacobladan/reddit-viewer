@@ -5,6 +5,7 @@ import { PostInfo } from './post-info';
 import { Points } from './points';
 import { PostBody } from './post-body';
 import { GridLoader } from 'react-spinners';
+import { subreddit } from '../../api/subreddit-api';
 
 const dateOptions = {
     weekday: 'long',
@@ -33,7 +34,7 @@ export class Post extends React.Component {
     }
 
     componentDidMount() {
-        this.generatePosts('heroesofthestorm', '', '', 'hot', '');
+        this.generatePosts(subreddit, '', '', 'hot', '');
     }
 
     generatePosts(subreddit, direction, id, filter, sortBy) {

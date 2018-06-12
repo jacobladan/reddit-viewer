@@ -3,12 +3,14 @@ import { PostAPI } from "../../api/subreddit-api";
 import { ExpandedPost } from '../main-page/expand-post';
 import { GridLoader } from 'react-spinners';
 import ReactHtmlParser from 'react-html-parser';
+import { subreddit } from '../../api/subreddit-api';
 
 let decodeHTML = function (html) {
 	var txt = document.createElement('textarea');
 	txt.innerHTML = html;
 	return txt.value;
 };
+
 
 export class PostBody extends React.Component {
 
@@ -47,7 +49,7 @@ export class PostBody extends React.Component {
     handleClicked() {
         // Checking so posts don't get loaded more than once
         if (!this.state.isBodyLoaded) {
-            this.generatePostBody('heroesofthestorm', this.props.postId);
+            this.generatePostBody(subreddit, this.props.postId);
         }
         if (this.state.isPostExpanded) {
             this.setState({

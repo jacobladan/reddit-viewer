@@ -57,3 +57,5 @@ export class PostAPI {
         return response;
     }
 }
+
+export const subreddit = 'heroesofthestorm';
