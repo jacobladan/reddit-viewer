@@ -44,19 +44,25 @@ p {
     width: 30%;
 }
 
-.filter-container {
+.options-container {
     display: inline-block;
-    box-sizing: border-box;
     width: 100%;
-    padding-left: 17%;
     margin-bottom: 1%;
+}
+
+.filter-container {
+    float: left;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 40%;
+    margin-left: 15%;
 }
 
 .filter-button {
     background-color: #000000c4;
     color: white;
     margin-right: 1%;
-    width: 5%;
+    width: 15%;
     height: 23px;
     border-radius: 3px;
     border-color: rgba(0, 0, 0, 0);
@@ -84,7 +90,7 @@ p {
     background-color: #000000c4;
     color: white;
     border-color: rgba(0, 0, 0, 0);
-    width: 10%;
+    width: 22%;
     height: 23px;
     padding-left: 8px;
     outline: none;
@@ -92,6 +98,47 @@ p {
     background-size: 20%;
     background-repeat: no-repeat;
     background-position: right center;
+}
+
+.subreddit-form-container {
+    float: right;
+    width: 25%;
+    margin-right: 15%;
+    text-align: right;
+}
+
+.subreddit-input {
+    -webkit-appearance: none;
+    border-radius: 4px;
+    background-color: #000000c4;
+    border-color: rgba(0, 0, 0, 0);
+    color: white;
+    outline: none;
+    height: 17px;
+    padding-left: 3%;
+    width: 60%;
+    font-size: 80%;
+}
+
+.browse-button {
+    background-color: #000000c4;
+    border-color: rgba(0, 0, 0, 0);
+    color: white;
+    border-radius: 3px;
+    border-color: rgba(0, 0, 0, 0);
+    -webkit-transition: 100ms ease-in-out;
+    -o-transition: 100ms ease-in-out;
+    transition: 100ms ease-in-out;
+    outline: none;
+    height: 23px;
+    width: 30%;
+    margin-left: 4%;
+    vertical-align: top;
+}
+
+.browse-button:hover {
+    background-color: #0000007d;
+    cursor: pointer;
 }
 
 .post-loader-container {
@@ -244,7 +291,8 @@ p {
     border: none;
     color: #28bce8;
     width: 100%;
-    height: 20px;
+    height: 30px;
+    padding-top: 0.5%;
     outline: none;
     position: absolute;
     left: 0;
@@ -252,7 +300,6 @@ p {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     font-size: 100%;
-    padding-bottom: 2.5%;
     background-image: linear-gradient(#00000000, #4e4e4e4f);
     background-position: 50% 50%;
     background-repeat: no-repeat;
@@ -266,9 +313,14 @@ p {
     color: #d85ddb;
 }
 
+.expand-post-button.in-post:hover {
+    color: #28bce8;
+}
+
 .expand-post-button:hover {
     cursor: pointer;
     background-size: 100% 100%;
+    color: #d85ddb;
 }
 
 .comment-loader-container {

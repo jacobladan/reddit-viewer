@@ -58,5 +58,4 @@ export class PostAPI {
     }
 }
 
-export const subreddit = 'heroesofthestorm';
-// export const subreddit = 'funny';
+export const subredditDefault = 'heroesofthestorm';

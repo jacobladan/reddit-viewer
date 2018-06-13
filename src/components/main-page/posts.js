@@ -1,11 +1,10 @@
 import React from 'react';
-import { SubredditAPI } from '../../api/subreddit-api';
+import { SubredditAPI, subredditDefault } from '../../api/subreddit-api';
 import { Thumbnail } from './thumbnail';
 import { PostInfo } from './post-info';
 import { Points } from './points';
 import { PostBody } from './post-body';
 import { GridLoader } from 'react-spinners';
-import { subreddit } from '../../api/subreddit-api';
 import SadFace from '../../images/sad-face.svg';
 
 const dateOptions = {
@@ -28,6 +27,7 @@ export class Posts extends React.Component {
         super(props);
         this.state = {
             posts: [],
+            subreddit: subredditDefault,
             firstPostId: '',
             lastPostId: '',
             fetchInProgress: true,
@@ -37,13 +37,13 @@ export class Posts extends React.Component {
     }
 
     componentDidMount() {
-        this.generatePosts(subreddit, '', '', 'hot', '');
+        this.generatePosts(this.state.subreddit, '', '', 'hot', '');
     }
 
     generatePosts(subreddit, direction, id, filter, sortBy) {
         // i is being used to track which post is first for use in navigating pages
         let firstPostId, lastPostId, i = 0, posts;
-        this.setState({fetchInProgress: true});
+        this.setState({fetchInProgress: true, postsWereFetched: true});
         const fetch = new SubredditAPI(subreddit, direction, id, filter, sortBy);
         fetch.then(data => {
             // console.log(data);
@@ -54,7 +54,6 @@ export class Posts extends React.Component {
                 this.setState({postsWereFetched: false, fetchInProgress: false}); 
                 this.props.removeForwardArrows();
             } else { 
-                this.setState({postsWereFetched: true});
                 posts = data.data.children.map(post => {
                     let previewUrl;
                     let bodyText = post.data.selftext_html;
@@ -100,14 +99,15 @@ export class Posts extends React.Component {
                             </div>
                         );
                     })
-            }
-            // Skips pinned posts
                 this.setState({
-                    posts: posts,
+                     posts: posts,
                     lastPostId: lastPostId,
                     firstPostId: firstPostId,
                     fetchInProgress: false,
+                    subredditWasFound: true,
                 });
+            }
+           
             })
     }
 
