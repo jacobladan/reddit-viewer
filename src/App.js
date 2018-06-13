@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Logo } from './components/main-page/logo';
-import { Post } from './components/main-page/post';
+import { Posts } from './components/main-page/posts';
 import { Filter } from './components/main-page/filter';
 import { Animated } from "react-animated-css";
 import { Navigation } from './components/main-page/navigation';
@@ -63,7 +63,7 @@ class App extends Component {
           <Logo />
           <Filter handleFilterChange={this.handleFilterChange} handleSortByChange={this.handleSortByChange}/>
           <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
-            <Post ref='post' className='animation-props' removeForwardArrows={this.removeForwardArrows}/>
+            <Posts ref='post' className='animation-props' removeForwardArrows={this.removeForwardArrows}/>
           </Animated>
           <Navigation 
             ref='navigation' 
