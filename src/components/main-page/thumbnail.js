@@ -7,7 +7,11 @@ export class Thumbnail extends React.Component {
         let imgClasses = `thumbnail-img ${this.props.imgClass}`;
         return (
             <a href={this.props.href} className={aClasses}>
-                <img src={this.props.src} alt="thumbnail" className={imgClasses} />
+                <img 
+                    src={this.props.src} 
+                    alt="thumbnail" 
+                    className={imgClasses} 
+                    onError={(e) => {e.target.src="https://www.reddit.com/static/self_default2.png"}}/>
             </a>
         )
     }

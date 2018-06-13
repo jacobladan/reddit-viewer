@@ -62,9 +62,9 @@ export class Posts extends React.Component {
                     let createdDate = new Date(post.data.created * 1000).toLocaleDateString("en-US", dateOptions);
                     if (i === 0) {firstPostId = post.data.id}
                     lastPostId = post.data.id;
-                    // Thumbnail checks. Some are broken
                     // console.log(post.data.title + ':');
                     // console.log(post.data)
+                    // Thumbnail checks
                     if (typeof(post.data.preview) !== 'undefined'){
                         if (post.data.thumbnail === 'self') {
                             previewUrl = post.data.preview.images[0].source.url;
