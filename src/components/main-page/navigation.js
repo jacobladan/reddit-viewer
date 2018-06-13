@@ -6,7 +6,8 @@ export class Navigation extends React.Component {
     constructor(props) {
         super(props);
         this.state ={
-            pageCount: 1
+            pageCount: 1,
+            atEnd: false
         }
     }
 
@@ -34,22 +35,29 @@ export class Navigation extends React.Component {
     }
 
     render() {
-        let leftArrowVisible;
+        let leftArrowsVisible;
         if (this.state.pageCount === 1) {
-            leftArrowVisible = {visibility: 'hidden'};
+            leftArrowsVisible = {visibility: 'hidden'};
         } else {
-            leftArrowVisible = {visibility: 'visible'};
+            leftArrowsVisible = {visibility: 'visible'};
+        }
+
+        let rightArrowsVisible;
+        if (this.props.atEnd) {
+            rightArrowsVisible = {visibility: 'hidden'};
+        } else {
+            rightArrowsVisible = {visibility: 'visible'};
         }
         return (
             <div className='nav-container'>
                 <div className='nav-icon-container'>
-                    <img src={NavArrows} alt="Previous Page" onClick={() => this.handleBackwardClick()} className='nav-icon left' style={leftArrowVisible}/>
+                    <img src={NavArrows} alt="Previous Page" onClick={() => this.handleBackwardClick()} className='nav-icon left' style={leftArrowsVisible}/>
                 </div>
                 <div className='page-number-container'>
                     <p className='page-number'>{this.state.pageCount}</p>
                 </div>
                 <div className='nav-icon-container'>
-                    <img src={NavArrows} alt="Next Page" onClick={() => this.handleForwardClick()} className='nav-icon right'/>
+                    <img src={NavArrows} alt="Next Page" onClick={() => this.handleForwardClick()} className='nav-icon right' style={rightArrowsVisible}/>
                 </div>
             </div>
         );

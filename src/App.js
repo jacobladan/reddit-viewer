@@ -7,7 +7,6 @@ import { Navigation } from './components/main-page/navigation';
 import { animateScroll as scroll } from 'react-scroll';
 import { subreddit } from './api/subreddit-api';
 import './styles/main-page-styles.css';
-import './styles/customScroll.css';
 
 class App extends Component {
 
@@ -16,11 +15,13 @@ class App extends Component {
     this.state = {
       filter: 'hot',
       sortBy: '',
+      atEnd: false
     };
     this.handleForwardClick = this.handleForwardClick.bind(this);
     this.handleBackwardClick = this.handleBackwardClick.bind(this);
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleSortByChange = this.handleSortByChange.bind(this);
+    this.removeForwardArrows = this.removeForwardArrows.bind(this);
   }
 
   handleFilterChange(filter) {
@@ -47,8 +48,13 @@ class App extends Component {
   }
 
   handleBackwardClick() {
+    this.setState({atEnd: false});
     this.refs.post.generatePosts(subreddit, 'before', this.refs.post.state.firstPostId, this.state.filter, this.state.sortBy);
     scroll.scrollToTop({duration: 500, smooth: true});
+  }
+
+  removeForwardArrows() {
+    this.setState({atEnd: true});
   }
 
   render() {
@@ -57,9 +63,13 @@ class App extends Component {
           <Logo />
           <Filter handleFilterChange={this.handleFilterChange} handleSortByChange={this.handleSortByChange}/>
           <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
-            <Post ref='post' className='animation-props'/>
+            <Post ref='post' className='animation-props' removeForwardArrows={this.removeForwardArrows}/>
           </Animated>
-          <Navigation ref='navigation' onForwardClick={this.handleForwardClick} onBackwardClick={this.handleBackwardClick}/>
+          <Navigation 
+            ref='navigation' 
+            onForwardClick={this.handleForwardClick} 
+            onBackwardClick={this.handleBackwardClick}
+            atEnd={this.state.atEnd}/>
         </div>
       );
     }
