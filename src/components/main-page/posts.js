@@ -34,10 +34,18 @@ export class Posts extends React.Component {
             postsWereFetched: true,
             subredditWasFound: true
         };
+        this.postBodyRefs = {};
+        this.scrollToTopOfPost = this.scrollToTopOfPost.bind(this);
     }
 
     componentDidMount() {
         this.generatePosts(this.state.subreddit, '', '', 'hot', '');
+    }
+
+    scrollToTopOfPost(id) {
+        // console.log(this.postBodyRefs[id].getBoundingClientRect().x);
+        // console.log(parseInt(document.documentElement.scrollTop,10))
+        window.scrollTo(0, this.postBodyRefs[id].getBoundingClientRect().x + parseInt(document.documentElement.scrollTop,10));
     }
 
     generatePosts(subreddit, direction, id, filter, sortBy) {
@@ -87,13 +95,16 @@ export class Posts extends React.Component {
                                     domain={post.data.domain}
                                     created={createdDate}
                                     stickied={post.data.stickied}
+                                    spoiler={post.data.spoiler}
                                     />
                                     <Points points={post.data.score}/>
                                 </div>{
                                         // Checking if post has a body. If not, then no expand button or
                                         // post body place holder is rendered
                                         bodyText
-                                        ? <PostBody postId={post.data.id} />
+                                        ? <div ref={node => { this.postBodyRefs[post.data.id] = node; }}><PostBody postId={post.data.id}
+                                            subreddit={post.data.subreddit}
+                                            scrollToTopOfPost={this.scrollToTopOfPost}/></div>
                                         : null
                                     }
                             </div>

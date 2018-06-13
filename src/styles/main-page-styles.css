@@ -262,6 +262,13 @@ p {
 .pinned {
     color: #02a702;
     font-size: 0.7em;
+    display: inline-block;
+}
+
+.spoilers {
+    color: #cac700;
+    font-size: 0.7em;
+    display: inline-block;
 }
 
 .points-container {
@@ -429,8 +436,12 @@ p {
     left: 49.8%;
 }
 
-/* .footer {
-    widows: 100%;
-    height: 100px;
-    background-color: black;
-} */
+.md-spoiler-text {
+    color: rgb(71, 71, 71);
+    background-color: rgb(71, 71, 71);
+}
+
+.md-spoiler-text:hover {
+    background-color: transparent;
+    color: white;
+}

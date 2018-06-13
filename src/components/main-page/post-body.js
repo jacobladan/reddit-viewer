@@ -11,7 +11,6 @@ let decodeHTML = function (html) {
 	return txt.value;
 };
 
-
 export class PostBody extends React.Component {
 
     constructor(props) {
@@ -21,7 +20,6 @@ export class PostBody extends React.Component {
             subreddit: subredditDefault,
             comments: [],
             isPostExpanded: false,
-            expandButtonText: 'EXPAND',
             fetchInProgress: true,
             isBodyLoaded: false
         };
@@ -32,6 +30,7 @@ export class PostBody extends React.Component {
         this.setState({fetchInProgress: true});
         const getPost = new PostAPI(subreddit, Id);
         getPost.then(data => {
+            // console.log(data);
             let bodyText = data[0].data.children[0].data.selftext_html;
             if (data === undefined) { return }
             if (bodyText !== null) {
@@ -48,19 +47,20 @@ export class PostBody extends React.Component {
     }
 
     handleClicked() {
+        if (this.state.isPostExpanded) {
+            this.props.scrollToTopOfPost(this.props.postId);
+        }
         // Checking so posts don't get loaded more than once
         if (!this.state.isBodyLoaded) {
-            this.generatePostBody(this.state.subreddit, this.props.postId);
+            this.generatePostBody(this.props.subreddit, this.props.postId);
         }
         if (this.state.isPostExpanded) {
             this.setState({
                 isPostExpanded: false,
-                expandButtonText: 'CLOSE'
             });
         } else {
             this.setState({
                 isPostExpanded: true,
-                expandButtonText: 'EXPAND'
             });
         }
     }
@@ -73,17 +73,17 @@ export class PostBody extends React.Component {
             // let text = 'CLOSE';
             let text = '•••';
             return (
-                <div className='expanded-post-container'>
+                <div className='expanded-post-container' >
                     <ExpandedPost onClick={this.handleClicked} text={text}/>
                     <div className='expanded'>
-                        <div className='post-body-container'>{
+                        <div className='post-body-container' >{
                                 // Displays loader icon while post body is fetched
                                 this.state.fetchInProgress
                                 ? <div className='comment-loader-container'><GridLoader loading={true} color={"#44def3"} /></div>
                                 :   <div>{this.state.body}</div>
                             }
                         </div>
-                        <ExpandedPost onClick={this.handleClicked} text={text} isInPost='in-post'/>
+                        <ExpandedPost onClick={this.handleClicked} text={text} isInPost='in-post' />
                     </div>
                 </div>
             )
