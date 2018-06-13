@@ -10,7 +10,7 @@ export class SubredditInput extends React.Component {
     }
 
     handleInputChange(e) {
-        this.setState({input: e.target.value});
+        this.setState({input: e.target.value.replace(/\s/g, '')});
     }
 
     handleSubmit() {
@@ -33,7 +33,8 @@ export class SubredditInput extends React.Component {
                         type="text" 
                         className='subreddit-input' 
                         onChange={(e) => this.handleInputChange(e)}
-                        placeholder='Enter a Subreddit..'/>
+                        placeholder='Enter a Subreddit..'
+                        value={this.state.input}/>
                     <input type='submit' className='browse-button' value='Browse' />
                 </form>
             </div>
