@@ -19,6 +19,7 @@ export class SubredditInput extends React.Component {
         } else {
             this.props.handleSubredditChange(this.state.input);
         }
+        this.setState({input: ''});
     }
 
     render() {

@@ -1,6 +1,11 @@
 import React from 'react';
 
 export class PostInfo extends React.Component {
+
+    handleClick() {
+        this.props.handleSubredditChange(this.props.postSubreddit);
+    }
+
     render() {
         // Work around to add second class based on props
         let titleClass = `post-title ${this.props.titleClass}`;
@@ -23,7 +28,7 @@ export class PostInfo extends React.Component {
                     (this.props.passedSubreddit === 'all') && 
                     <div className='subreddit-container'>
                         <p className='subreddit'><b>Subreddit: </b></p>
-                        <p className='subreddit-link'>/r/{this.props.postSubreddit}</p>
+                        <p className='subreddit-link' onClick={() => this.handleClick()}>/r/{this.props.postSubreddit}</p>
                     </div>
                 }
             </div>

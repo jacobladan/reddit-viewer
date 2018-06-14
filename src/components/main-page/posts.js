@@ -116,7 +116,7 @@ export class Posts extends React.Component {
                                     spoiler={post.data.spoiler}
                                     postSubreddit={post.data.subreddit}
                                     passedSubreddit={subreddit}
-
+                                    handleSubredditChange={this.props.handleSubredditChange}
                                     />
                                     <Points points={post.data.score}/>
                                 </div>{
