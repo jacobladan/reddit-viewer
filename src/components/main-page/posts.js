@@ -60,7 +60,6 @@ export class Posts extends React.Component {
     }
 
     clearPostRefs() {
-        console.log('called')
         for (const prop of Object.getOwnPropertyNames(this.postBodyRefs)) {
             delete this.postBodyRefs[prop];
         }
@@ -88,8 +87,8 @@ export class Posts extends React.Component {
                     let createdDate = new Date(post.data.created * 1000).toLocaleDateString("en-US", dateOptions);
                     if (i === 0) {firstPostId = post.data.id}
                     lastPostId = post.data.id;
-                    // console.log(post.data.title + ':');
-                    // console.log(post.data)
+                    // console.log(post.data.title + ': ' + post.data.id);
+                    // console.log(post.data.postId)
                     // Thumbnail checks
                     if (typeof(post.data.preview) !== 'undefined'){
                         if (post.data.thumbnail === 'self') {

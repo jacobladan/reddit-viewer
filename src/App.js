@@ -17,7 +17,7 @@ class App extends Component {
       filter: 'hot',
       sortBy: '',
       subreddit: subredditDefault,
-      atEnd: false
+      atEnd: false,
     };
     this.handleForwardClick = this.handleForwardClick.bind(this);
     this.handleBackwardClick = this.handleBackwardClick.bind(this);
@@ -25,6 +25,7 @@ class App extends Component {
     this.handleSortByChange = this.handleSortByChange.bind(this);
     this.removeForwardArrows = this.removeForwardArrows.bind(this);
     this.handleSubredditChange = this.handleSubredditChange.bind(this);
+    this.pageIds = {};
   }
 
   handleFilterChange(filter) {
@@ -43,16 +44,23 @@ class App extends Component {
     this.setState({sortBy: sortBy});
     this.refs.post.generatePosts(this.state.subreddit, 'after', '', this.state.filter, sortBy);
     this.refs.navigation.resetPageCounter();
-  }
-
-  handleForwardClick() {
+  } 
+  // TODO: Explain why the +1 and -1 works in the pageIds thingy
+  handleForwardClick(pageCount) {
+    // pageIds is used to store the last post ID of each page when navigating forward
+    // This is then referenced in handleBackwardClick() in order to know which post to load after
+    this.pageIds[pageCount + 1] = this.refs.post.state.lastPostId;
     this.refs.post.generatePosts(this.state.subreddit, 'after', this.refs.post.state.lastPostId, this.state.filter, this.state.sortBy);
     scroll.scrollToTop({duration: 500, smooth: true});
   }
 
-  handleBackwardClick() {
-    this.setState({atEnd: false});
-    this.refs.post.generatePosts(this.state.subreddit, 'before', this.refs.post.state.firstPostId, this.state.filter, this.state.sortBy);
+  handleBackwardClick(pageCount) {
+    if (this.state.atEnd === true) { this.setState({atEnd: false}) }
+    if (pageCount === 2) {
+      this.refs.post.generatePosts(this.state.subreddit, 'after', '', this.state.filter, this.state.sortBy);
+    } else {
+      this.refs.post.generatePosts(this.state.subreddit, 'after', this.pageIds[pageCount - 1], this.state.filter, this.state.sortBy);
+    }
     scroll.scrollToTop({duration: 500, smooth: true});
   }
 
@@ -63,6 +71,7 @@ class App extends Component {
   handleSubredditChange(subreddit) {
     this.setState({subreddit: subreddit, atEnd: false})
     this.refs.post.generatePosts(subreddit, 'after', '', 'hot', '');
+    this.refs.navigation.resetPageCounter();
   }
 
   render() {

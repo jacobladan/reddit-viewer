@@ -12,13 +12,13 @@ export class Navigation extends React.Component {
     }
 
     handleForwardClick() {
-        this.props.onForwardClick();
+        this.props.onForwardClick(this.state.pageCount);
         this.updatePageNumber('forward');
     }
 
     handleBackwardClick() {
         if (this.state.pageCount === 1) { return; }
-        this.props.onBackwardClick();
+        this.props.onBackwardClick(this.state.pageCount);
         this.updatePageNumber();
     }
 
