@@ -115,9 +115,10 @@ p {
     color: white;
     outline: none;
     height: 17px;
-    padding-left: 3%;
+    padding-right: 3%;
     width: 60%;
     font-size: 80%;
+    text-align: right;
 }
 
 .browse-button {
@@ -259,7 +260,30 @@ p {
 .created {
     font-size: 0.7em;
     display: inline-block;
-    width: 100%;
+}
+
+.subreddit-container {
+    display: inline-block;
+    width: 60%;
+    margin-left: 2%;
+}
+
+.subreddit {
+    font-size: 0.7em;
+    display: inline-block;
+}
+
+.subreddit-link {
+    font-size: 0.7em;
+    display: inline-block;
+    margin-left: 2%;
+    text-decoration: underline;
+    vertical-align: top;
+    padding-top: 3px;
+}
+
+.subreddit-link:hover {
+    cursor: pointer;
 }
 
 .pinned {

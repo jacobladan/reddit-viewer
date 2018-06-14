@@ -19,6 +19,13 @@ export class PostInfo extends React.Component {
                 <p className='author'><b>Author: </b><a href={this.props.authorLink} className='author-link' target='_blank'>{this.props.author}</a></p>
                 <p className='domain'><b>Domain: </b>{this.props.domain}</p>
                 <p className='created'><b>Posted: </b>{this.props.created}</p>
+                {
+                    (this.props.passedSubreddit === 'all') && 
+                    <div className='subreddit-container'>
+                        <p className='subreddit'><b>Subreddit: </b></p>
+                        <p className='subreddit-link'>/r/{this.props.postSubreddit}</p>
+                    </div>
+                }
             </div>
         )
     }

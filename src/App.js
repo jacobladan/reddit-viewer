@@ -25,7 +25,7 @@ class App extends Component {
     this.handleSortByChange = this.handleSortByChange.bind(this);
     this.removeForwardArrows = this.removeForwardArrows.bind(this);
     this.handleSubredditChange = this.handleSubredditChange.bind(this);
-    this.pageIds = {};
+    this.backwardsPageIds = {};
   }
 
   handleFilterChange(filter) {
@@ -45,11 +45,10 @@ class App extends Component {
     this.refs.post.generatePosts(this.state.subreddit, 'after', '', this.state.filter, sortBy);
     this.refs.navigation.resetPageCounter();
   } 
-  // TODO: Explain why the +1 and -1 works in the pageIds thingy
   handleForwardClick(pageCount) {
-    // pageIds is used to store the last post ID of each page when navigating forward
+    // backwardsPageIds is used to store the last post ID of each page when navigating forward
     // This is then referenced in handleBackwardClick() in order to know which post to load after
-    this.pageIds[pageCount + 1] = this.refs.post.state.lastPostId;
+    this.backwardsPageIds[pageCount + 1] = this.refs.post.state.lastPostId;
     this.refs.post.generatePosts(this.state.subreddit, 'after', this.refs.post.state.lastPostId, this.state.filter, this.state.sortBy);
     scroll.scrollToTop({duration: 500, smooth: true});
   }
@@ -59,7 +58,7 @@ class App extends Component {
     if (pageCount === 2) {
       this.refs.post.generatePosts(this.state.subreddit, 'after', '', this.state.filter, this.state.sortBy);
     } else {
-      this.refs.post.generatePosts(this.state.subreddit, 'after', this.pageIds[pageCount - 1], this.state.filter, this.state.sortBy);
+      this.refs.post.generatePosts(this.state.subreddit, 'after', this.backwardsPageIds[pageCount - 1], this.state.filter, this.state.sortBy);
     }
     scroll.scrollToTop({duration: 500, smooth: true});
   }
@@ -69,6 +68,7 @@ class App extends Component {
   }
 
   handleSubredditChange(subreddit) {
+    console.log(subreddit)
     this.setState({subreddit: subreddit, atEnd: false})
     this.refs.post.generatePosts(subreddit, 'after', '', 'hot', '');
     this.refs.navigation.resetPageCounter();
@@ -80,10 +80,15 @@ class App extends Component {
           <Logo />
           <div className='options-container'>
             <Filter handleFilterChange={this.handleFilterChange} handleSortByChange={this.handleSortByChange}/>
-            <SubredditInput handleSubredditChange={this.handleSubredditChange}/>
+            <SubredditInput handleSubredditChange={this.handleSubredditChange} subreddit={this.state.subreddit}/>
           </div>
           <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
-            <Posts ref='post' className='animation-props' removeForwardArrows={this.removeForwardArrows}/>
+            <Posts 
+              ref='post' 
+              className='animation-props' 
+              removeForwardArrows={this.removeForwardArrows}
+              subreddit={this.state.subreddit}
+              handleSubredditChange={this.handleSubredditChange}/>
           </Animated>
           <Navigation 
             ref='navigation' 

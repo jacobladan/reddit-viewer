@@ -15,7 +15,7 @@ export class SubredditInput extends React.Component {
 
     handleSubmit() {
         if (this.state.input === '') {
-            this.props.handleSubredditChange('all');
+            this.props.handleSubredditChange(this.props.subreddit);
         } else {
             this.props.handleSubredditChange(this.state.input);
         }
@@ -33,7 +33,7 @@ export class SubredditInput extends React.Component {
                         type="text" 
                         className='subreddit-input' 
                         onChange={(e) => this.handleInputChange(e)}
-                        placeholder='Enter a Subreddit..'
+                        placeholder={this.props.subreddit}
                         value={this.state.input}/>
                     <input type='submit' className='browse-button' value='Browse' />
                 </form>

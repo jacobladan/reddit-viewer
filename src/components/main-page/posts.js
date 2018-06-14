@@ -41,12 +41,12 @@ export class Posts extends React.Component {
     }
 
     componentDidMount() {
-        this.generatePosts(this.state.subreddit, '', '', 'hot', '');
+        this.generatePosts(this.props.subreddit, '', '', 'hot', '');
     }
 
     scrollToTopOfPost(id) {
         let height = this.postBodyRefs[id].clientHeight;
-        if (height > 500) {
+        if (height > 600) {
             window.scrollBy(0, height * -1);
         }
     }
@@ -67,9 +67,9 @@ export class Posts extends React.Component {
 
     generatePosts(subreddit, direction, id, filter, sortBy) {
         // i is being used to track which post is first for use in navigating pages
+        // console.log(subreddit);
         let firstPostId, lastPostId, i = 0, posts;
-        // this.clearPostRefs();
-        this.setState({fetchInProgress: true, postsWereFetched: true});
+        this.setState({fetchInProgress: true, postsWereFetched: true, highlightPost: ''});
         const fetch = new SubredditAPI(subreddit, direction, id, filter, sortBy);
         fetch.then(data => {
             // console.log(data);
@@ -114,6 +114,9 @@ export class Posts extends React.Component {
                                     created={createdDate}
                                     stickied={post.data.stickied}
                                     spoiler={post.data.spoiler}
+                                    postSubreddit={post.data.subreddit}
+                                    passedSubreddit={subreddit}
+
                                     />
                                     <Points points={post.data.score}/>
                                 </div>{
@@ -130,7 +133,7 @@ export class Posts extends React.Component {
                         );
                     })
                 this.setState({
-                     posts: posts,
+                    posts: posts,
                     lastPostId: lastPostId,
                     firstPostId: firstPostId,
                     fetchInProgress: false,
