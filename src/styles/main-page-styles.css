@@ -186,7 +186,10 @@ p {
     border-radius: 4px;
     color: white;
     background: #000000c4;
-    transition: 500ms ease-in-out;
+}
+
+.highlighted-post {
+    border: 2px solid #28bce8;
 }
 
 .animation-styles {

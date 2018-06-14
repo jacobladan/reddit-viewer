@@ -50,6 +50,7 @@ export class PostBody extends React.Component {
         if (this.state.isPostExpanded) {
             this.props.scrollToTopOfPost(this.props.postId);
         }
+        this.props.highlightPost(this.props.postId);
         // Checking so posts don't get loaded more than once
         if (!this.state.isBodyLoaded) {
             this.generatePostBody(this.props.subreddit, this.props.postId);

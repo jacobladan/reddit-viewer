@@ -30,12 +30,14 @@ export class Posts extends React.Component {
             subreddit: subredditDefault,
             firstPostId: '',
             lastPostId: '',
+            highlightPost: '',
             fetchInProgress: true,
             postsWereFetched: true,
-            subredditWasFound: true
+            subredditWasFound: true,
         };
         this.postBodyRefs = {};
         this.scrollToTopOfPost = this.scrollToTopOfPost.bind(this);
+        this.highlightPost = this.highlightPost.bind(this);
     }
 
     componentDidMount() {
@@ -43,14 +45,31 @@ export class Posts extends React.Component {
     }
 
     scrollToTopOfPost(id) {
-        // console.log(this.postBodyRefs[id].getBoundingClientRect().x);
-        // console.log(parseInt(document.documentElement.scrollTop,10))
-        window.scrollTo(0, this.postBodyRefs[id].getBoundingClientRect().x + parseInt(document.documentElement.scrollTop,10));
+        let height = this.postBodyRefs[id].clientHeight;
+        if (height > 500) {
+            window.scrollBy(0, height * -1);
+        }
+    }
+
+    highlightPost(id) {
+        if (this.state.highlightPost !== '') {
+            this.postBodyRefs[this.state.highlightPost].classList.remove('highlighted-post');
+        }
+        this.postBodyRefs[id].classList.add('highlighted-post');
+        this.setState({highlightPost: id});
+    }
+
+    clearPostRefs() {
+        console.log('called')
+        for (const prop of Object.getOwnPropertyNames(this.postBodyRefs)) {
+            delete this.postBodyRefs[prop];
+        }
     }
 
     generatePosts(subreddit, direction, id, filter, sortBy) {
         // i is being used to track which post is first for use in navigating pages
         let firstPostId, lastPostId, i = 0, posts;
+        // this.clearPostRefs();
         this.setState({fetchInProgress: true, postsWereFetched: true});
         const fetch = new SubredditAPI(subreddit, direction, id, filter, sortBy);
         fetch.then(data => {
@@ -84,7 +103,7 @@ export class Posts extends React.Component {
                     }
                     i++;
                     return (
-                            <div className='post-container' key={post.data.id}>
+                            <div className='post-container' key={post.data.id} ref={node => { this.postBodyRefs[post.data.id] = node; }}>
                                 <div className='post-header'>
                                     <Thumbnail href={post.data.url} src={previewUrl}/>
                                     <PostInfo 
@@ -102,9 +121,10 @@ export class Posts extends React.Component {
                                         // Checking if post has a body. If not, then no expand button or
                                         // post body place holder is rendered
                                         bodyText
-                                        ? <div ref={node => { this.postBodyRefs[post.data.id] = node; }}><PostBody postId={post.data.id}
+                                        ? <PostBody postId={post.data.id}
                                             subreddit={post.data.subreddit}
-                                            scrollToTopOfPost={this.scrollToTopOfPost}/></div>
+                                            scrollToTopOfPost={this.scrollToTopOfPost}
+                                            highlightPost={this.highlightPost}/>
                                         : null
                                     }
                             </div>
