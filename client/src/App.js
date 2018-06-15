@@ -48,9 +48,9 @@ class App extends Component {
     }
   }
 
-  handleSortByChange(sortBy) {
+  handleSortByChange(sortBy, isFromHistory) {
     this.setState({sortBy: sortBy});
-    this.refs.post.generatePosts(this.state.subreddit, 'after', '', this.state.filter, sortBy);
+    this.refs.post.generatePosts(this.state.subreddit, 'after', '', this.state.filter, sortBy, isFromHistory);
     this.refs.navigation.resetPageCounter();
   } 
 
@@ -85,11 +85,15 @@ class App extends Component {
 
   handleBackButtonClick(e) {
     if (this.state.subreddit !== e.state.subreddit) {
-      this.handleSubredditChange(e.state.subreddit, true)
+      this.handleSubredditChange(e.state.subreddit, true);
+      this.setState({subreddit: e.state.subreddit});
     } else if (this.state.filter !== e.state.filter) {
       this.handleFilterChange(e.state.filter, true)
+      this.setState({filter: e.state.filter});
+    } else if (this.state.sortBy !== e.state.sortBy) {
+      this.handleSortByChange(e.state.sortBy, true);
+      this.setState({sortBy: e.state.sortBy});
     }
-    // this.refs.post.generatePosts(e.state.subreddit, e.state.id, '', e.state.filter, e.state.sortBy, true);
   }
 
   render() {
@@ -97,7 +101,7 @@ class App extends Component {
         <div className='page-container'>
           <Logo />
           <div className='options-container'>
-            <Filter ref='filter' handleFilterChange={this.handleFilterChange} handleSortByChange={this.handleSortByChange}/>
+            <Filter ref='filter' handleFilterChange={this.handleFilterChange} handleSortByChange={this.handleSortByChange} sortBy={this.state.sortBy}/>
             <SubredditInput handleSubredditChange={this.handleSubredditChange} subreddit={this.state.subreddit}/>
           </div>
           <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
