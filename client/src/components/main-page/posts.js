@@ -41,7 +41,7 @@ export class Posts extends React.Component {
     }
 
     componentDidMount() {
-        this.generatePosts(this.props.subreddit, '', '', 'hot', '');
+        this.generatePosts(this.state.subreddit, '', '', 'hot', '')
     }
 
     scrollToTopOfPost(id) {
@@ -65,11 +65,28 @@ export class Posts extends React.Component {
         }
     }
 
-    generatePosts(subreddit, direction, id, filter, sortBy) {
+    setHistory(subreddit, id, filter, sortBy) {
+        let url;
+        if (sortBy) {
+            url = subreddit + '+' + id + '+' + filter + '+' + sortBy;
+        } else {
+            url = subreddit + '+' + id + '+' + filter;
+        }
+        let data = {
+            subreddit: subreddit,
+            id: id,
+            filter: filter,
+            sortBy: sortBy
+        }
+        window.history.pushState(data, null, url);
+    }
+
+    generatePosts(subreddit, direction, id, filter, sortBy, isFromHistory) {
         // i is being used to track which post is first for use in navigating pages
         // console.log(subreddit);
         let firstPostId, lastPostId, i = 0, posts;
         this.setState({fetchInProgress: true, postsWereFetched: true, highlightPost: ''});
+        if (!isFromHistory) { this.setHistory(subreddit, id, filter, sortBy) }
         const fetch = new SubredditAPI(subreddit, direction, id, filter, sortBy);
         fetch.then(data => {
             // console.log(data);

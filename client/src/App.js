@@ -29,14 +29,20 @@ class App extends Component {
     this.backwardsPageIds = {};
   }
 
-  handleFilterChange(filter) {
+  componentDidMount() {
+    window.onpopstate = this.handleBackButtonClick.bind(this);
+  }
+
+  handleFilterChange(filter, isFromHistory) {
     this.setState({atEnd: false});
     if (filter !== this.state.filter) {
       this.setState({filter: filter});
       if (filter === 'top') {
-        this.refs.post.generatePosts(this.state.subreddit, 'after', '', filter, 'hour');
+        this.refs.post.generatePosts(this.state.subreddit, 'after', '', filter, 'hour', isFromHistory);
+        this.refs.filter.setFilter(filter);
       } else {
-        this.refs.post.generatePosts(this.state.subreddit, 'after', '', filter, '');
+        this.refs.post.generatePosts(this.state.subreddit, 'after', '', filter, '', isFromHistory);
+        this.refs.filter.setFilter(filter);
       }
       this.refs.navigation.resetPageCounter();
     }
@@ -47,6 +53,7 @@ class App extends Component {
     this.refs.post.generatePosts(this.state.subreddit, 'after', '', this.state.filter, sortBy);
     this.refs.navigation.resetPageCounter();
   } 
+
   handleForwardClick(pageCount) {
     // backwardsPageIds is used to store the last post ID of each page when navigating forward
     // This is then referenced in handleBackwardClick() in order to know which post to load after
@@ -64,16 +71,25 @@ class App extends Component {
     }
     scroll.scrollToTop({duration: 500, smooth: true});
   }
+  
+  handleSubredditChange(subreddit, isFromHistory) {
+    this.setState({subreddit: subreddit, atEnd: false, filter: 'hot'})
+    this.refs.post.generatePosts(subreddit, 'after', '', 'hot', '', isFromHistory);
+    this.refs.navigation.resetPageCounter();
+    this.refs.filter.resetFilter();
+  }
 
   removeForwardArrows() {
     this.setState({atEnd: true});
   }
 
-  handleSubredditChange(subreddit) {
-    this.setState({subreddit: subreddit, atEnd: false, filter: 'hot'})
-    this.refs.post.generatePosts(subreddit, 'after', '', 'hot', '');
-    this.refs.navigation.resetPageCounter();
-    this.refs.filter.resetFilter();
+  handleBackButtonClick(e) {
+    if (this.state.subreddit !== e.state.subreddit) {
+      this.handleSubredditChange(e.state.subreddit, true)
+    } else if (this.state.filter !== e.state.filter) {
+      this.handleFilterChange(e.state.filter, true)
+    }
+    // this.refs.post.generatePosts(e.state.subreddit, e.state.id, '', e.state.filter, e.state.sortBy, true);
   }
 
   render() {

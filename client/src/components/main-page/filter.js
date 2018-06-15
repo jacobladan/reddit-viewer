@@ -32,36 +32,7 @@ export class Filter extends React.Component {
     // Sets selected class for which ever button has been clicked
     handleClick(e) {
         let value = e.target.value;
-
-        if (value === 'hot') {
-            this.setState({
-                hotSelected: true,
-                newSelected: false,
-                risingSelected: false,
-                topSelected: false
-            });
-        } else if (value === 'new') {
-            this.setState({
-                hotSelected: false,
-                newSelected: true,
-                risingSelected: false,
-                topSelected: false
-            });
-        } else if(value === 'rising') {
-            this.setState({
-                hotSelected: false,
-                newSelected: false,
-                risingSelected: true,
-                topSelected: false
-            });        
-        } else if(value === 'top') {
-                this.setState({
-                    hotSelected: false,
-                    newSelected: false,
-                    risingSelected: false,
-                    topSelected: true
-                });        
-        }
+        this.setFilter(value);
         this.props.handleFilterChange(value);
     }
 
@@ -72,6 +43,38 @@ export class Filter extends React.Component {
             risingSelected: false,
             topSelected: false
         });
+    }
+
+    setFilter(filter) {
+        if (filter === 'hot') {
+            this.setState({
+                hotSelected: true,
+                newSelected: false,
+                risingSelected: false,
+                topSelected: false
+            });
+        } else if (filter === 'new') {
+            this.setState({
+                hotSelected: false,
+                newSelected: true,
+                risingSelected: false,
+                topSelected: false
+            });
+        } else if(filter === 'rising') {
+            this.setState({
+                hotSelected: false,
+                newSelected: false,
+                risingSelected: true,
+                topSelected: false
+            });        
+        } else if(filter === 'top') {
+                this.setState({
+                    hotSelected: false,
+                    newSelected: false,
+                    risingSelected: false,
+                    topSelected: true
+                });        
+        }
     }
 
     render() {
