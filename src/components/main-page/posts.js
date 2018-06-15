@@ -80,12 +80,14 @@ export class Posts extends React.Component {
                 this.setState({postsWereFetched: false, fetchInProgress: false}); 
                 this.props.removeForwardArrows();
             } else { 
+                let numPosts = data.data.children.length;
                 posts = data.data.children.map(post => {
                     let previewUrl;
                     let bodyText = post.data.selftext_html;
                     let authorLink = 'https://www.reddit.com/user/' + post.data.author;
                     let createdDate = new Date(post.data.created * 1000).toLocaleDateString("en-US", dateOptions);
                     if (i === 0) {firstPostId = post.data.id}
+                    if (numPosts <= 15) { this.props.removeForwardArrows() }
                     lastPostId = post.data.id;
                     // console.log(post.data.title + ': ' + post.data.id);
                     // console.log(post.data.postId)

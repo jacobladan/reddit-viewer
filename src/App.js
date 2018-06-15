@@ -29,6 +29,7 @@ class App extends Component {
   }
 
   handleFilterChange(filter) {
+    this.setState({atEnd: false});
     if (filter !== this.state.filter) {
       this.setState({filter: filter});
       if (filter === 'top') {
@@ -68,10 +69,10 @@ class App extends Component {
   }
 
   handleSubredditChange(subreddit) {
-    console.log(subreddit)
-    this.setState({subreddit: subreddit, atEnd: false})
+    this.setState({subreddit: subreddit, atEnd: false, filter: 'hot'})
     this.refs.post.generatePosts(subreddit, 'after', '', 'hot', '');
     this.refs.navigation.resetPageCounter();
+    this.refs.filter.resetFilter();
   }
 
   render() {
@@ -79,7 +80,7 @@ class App extends Component {
         <div className='page-container'>
           <Logo />
           <div className='options-container'>
-            <Filter handleFilterChange={this.handleFilterChange} handleSortByChange={this.handleSortByChange}/>
+            <Filter ref='filter' handleFilterChange={this.handleFilterChange} handleSortByChange={this.handleSortByChange}/>
             <SubredditInput handleSubredditChange={this.handleSubredditChange} subreddit={this.state.subreddit}/>
           </div>
           <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>

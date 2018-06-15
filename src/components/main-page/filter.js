@@ -65,8 +65,17 @@ export class Filter extends React.Component {
         this.props.handleFilterChange(value);
     }
 
+    resetFilter() {
+        this.setState({
+            hotSelected: true,
+            newSelected: false,
+            risingSelected: false,
+            topSelected: false
+        });
+    }
+
     render() {
-        // Setts which ever button should have selected class before rendering
+        // Sets which ever button should have selected class before rendering
         if (this.state.hotSelected) {
             hotButtonStyle = selectedClasses;
         } else if (this.state.newSelected) {

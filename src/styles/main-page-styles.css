@@ -68,6 +68,7 @@ p {
     border-color: rgba(0, 0, 0, 0);
     transition: 100ms ease-in-out;
     outline: none;
+    max-width: 76px;
 }
 
 .filter-button:hover {
@@ -119,6 +120,7 @@ p {
     width: 60%;
     font-size: 80%;
     text-align: right;
+    max-width: 200px;
 }
 
 .browse-button {
