@@ -16,9 +16,13 @@ class App extends Component {
     super(props);
     this.state = {
       filter: 'hot',
-      sortBy: '',
+      sortBy: 'hour',
       subreddit: subredditDefault,
       atEnd: false,
+      previousSubreddit: {
+        filter: '',
+        sortBy: '',
+      }
     };
     this.handleForwardClick = this.handleForwardClick.bind(this);
     this.handleBackwardClick = this.handleBackwardClick.bind(this);
@@ -38,7 +42,7 @@ class App extends Component {
     if (filter !== this.state.filter) {
       this.setState({filter: filter});
       if (filter === 'top') {
-        this.refs.post.generatePosts(this.state.subreddit, 'after', '', filter, 'hour', isFromHistory);
+        this.refs.post.generatePosts(this.state.subreddit, 'after', '', filter, this.state.sortBy, isFromHistory);
         this.refs.filter.setFilter(filter);
       } else {
         this.refs.post.generatePosts(this.state.subreddit, 'after', '', filter, '', isFromHistory);
@@ -71,12 +75,26 @@ class App extends Component {
     }
     scroll.scrollToTop({duration: 500, smooth: true});
   }
-  
+  // TODO: Add forward and backward check. When navigating forward, filter shouldn't keep previous'
+  // Add timestamp to pushState data object. Compare it when popStating to one set in app State
   handleSubredditChange(subreddit, isFromHistory) {
-    this.setState({subreddit: subreddit, atEnd: false, filter: 'hot'})
-    this.refs.post.generatePosts(subreddit, 'after', '', 'hot', '', isFromHistory);
+    if (isFromHistory) {
+      this.setState({sortBy: this.state.previousSubreddit.sortBy});
+      this.refs.filter.setFilter(this.state.previousSubreddit.filter);
+      this.refs.post.generatePosts(subreddit, 'after', '', this.state.previousSubreddit.filter, '', isFromHistory)
+    } else {
+      this.setState({subreddit: subreddit,
+        atEnd: false, 
+        filter: 'hot',
+        previousSubreddit: {
+          filter: this.state.filter,
+          sortBy: this.state.sortBy
+        }
+      })
+      this.refs.post.generatePosts(subreddit, 'after', '', 'hot', '', isFromHistory);
+      this.refs.filter.resetFilter();
+    }
     this.refs.navigation.resetPageCounter();
-    this.refs.filter.resetFilter();
   }
 
   removeForwardArrows() {

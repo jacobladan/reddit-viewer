@@ -68,12 +68,12 @@ export class Filter extends React.Component {
                 topSelected: false
             });        
         } else if(filter === 'top') {
-                this.setState({
-                    hotSelected: false,
-                    newSelected: false,
-                    risingSelected: false,
-                    topSelected: true
-                });        
+            this.setState({
+                hotSelected: false,
+                newSelected: false,
+                risingSelected: false,
+                topSelected: true
+            });        
         }
     }
 
