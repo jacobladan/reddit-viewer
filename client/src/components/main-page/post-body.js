@@ -3,7 +3,6 @@ import { PostAPI } from "../../api/subreddit-api";
 import { ExpandedPost } from '../main-page/expand-post';
 import { GridLoader } from 'react-spinners';
 import ReactHtmlParser from 'react-html-parser';
-import { subredditDefault } from '../../api/subreddit-api';
 
 let decodeHTML = function (html) {
 	var txt = document.createElement('textarea');
@@ -17,7 +16,7 @@ export class PostBody extends React.Component {
         super(props);
         this.state = {
             body: '',
-            subreddit: subredditDefault,
+            subreddit: 'heroesofthestorm',
             comments: [],
             isPostExpanded: false,
             fetchInProgress: true,

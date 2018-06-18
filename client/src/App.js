@@ -27,7 +27,6 @@ class App extends Component {
     // Used to update GUI for next generatePosts when using popstate
     this.nextListing = {
       subreddit: '',
-      id: '',
       filter: '',
       sortBy: '',
       timestamp: '',
@@ -39,21 +38,18 @@ class App extends Component {
     this.removeForwardArrows = this.removeForwardArrows.bind(this);
     this.handleSubredditChange = this.handleSubredditChange.bind(this);
     this.setHistory = this.setHistory.bind(this);
-    this.firstPostId = '';
-    // this.backwardsPageIds = {};
   }
 
   componentDidMount() {
     window.onpopstate = this.handlePopState.bind(this);
   }
 
-  setHistory(subreddit, id, filter, sortBy) {
-    let url = subreddit + '+' + id + '+' + filter + '+' + sortBy;
+  setHistory(subreddit, firstId, lastId, filter, sortBy) {
+    let url = subreddit + '+' + filter + '+' + sortBy;
     let timestamp = Date.now();
     this.setState({
       currentListing: {
         subreddit: subreddit,
-        id: id,
         filter: filter,
         sortBy: sortBy,
         timestamp: timestamp
@@ -61,16 +57,13 @@ class App extends Component {
     });
     let data = {
         subreddit: subreddit,
-        id: id,
+        firstId: firstId,
+        lastId: lastId,
         filter: filter,
         sortBy: sortBy,
         timestamp: timestamp
     };
-    // Only pushing history if id has been used to generate posts. Gets around double render from <Posts />
-    if (id !== '') {
-      // console.log('History Pushed');
-      window.history.pushState(data, null, url);
-    }
+    window.history.pushState(data, null, url);
   }
 
   // TODO: Add forward and backward check. When navigating forward, filter shouldn't keep previous'
@@ -103,16 +96,16 @@ class App extends Component {
   } 
 
   handleForwardClick() {
-    this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'after', this.refs.posts.state.lastPostId, this.state.currentListing.filter, this.state.currentListing.sortBy);
+    this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'after', this.refs.posts.state.lastPostId, this.state.currentListing.filter, this.state.currentListing.sortBy, true);
     scroll.scrollToTop({duration: 500, smooth: true});
   }
 
   handleBackwardClick(pageCount) {
     if (this.state.atEnd === true) { this.setState({atEnd: false}) }
     if (pageCount === 2) {
-      this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'after', '', this.state.currentListing.filter, this.state.currentListing.sortBy);
+      this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'after', '', this.state.currentListing.filter, this.state.currentListing.sortBy, true);
     } else {
-      this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'before', this.refs.posts.state.firstPostId, this.state.currentListing.filter, this.state.currentListing.sortBy);
+      this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'before', this.refs.posts.state.firstPostId, this.state.currentListing.filter, this.state.currentListing.sortBy, true);
     }
     scroll.scrollToTop({duration: 500, smooth: true});
   }
@@ -122,24 +115,30 @@ class App extends Component {
   }
 
   handlePopState(e) {
-    this.nextListing = {
-      subreddit: e.state.subreddit,
-      id: e.state.id,
-      filter: e.state.filter,
-      sortBy: e.state.sortBy,
-      timestamp: e.state.timestamp,
-    }
-    if (this.state.currentListing.filter !== e.state.filter) { this.refs.filter.setFilter(e.state.filter); }
-    this.setState({
-      currentListing: {
+    console.log(this.state.currentListing);
+    console.log(e.state);
+    try {
+      this.nextListing = {
         subreddit: e.state.subreddit,
-        id: e.state.id,
         filter: e.state.filter,
         sortBy: e.state.sortBy,
-        timestamp: e.state.timestamp
+        timestamp: e.state.timestamp,
       }
-    });
-    this.refs.posts.generatePosts(e.state.subreddit, 'after', e.state.id, e.state.filter, e.state.sortBy, true);
+      // Used to set proper filter
+      if (this.state.currentListing.filter !== e.state.filter) { this.refs.filter.setFilter(e.state.filter); }
+  
+      this.refs.posts.generatePosts(e.state.subreddit, 'after', '', e.state.filter, e.state.sortBy, true);
+      this.setState({
+        currentListing: {
+          subreddit: e.state.subreddit,
+          filter: e.state.filter,
+          sortBy: e.state.sortBy,
+          timestamp: e.state.timestamp
+        }
+      });
+    } catch(e) {
+      console.log('No more posts to load');
+    }
   }
 
   render() {

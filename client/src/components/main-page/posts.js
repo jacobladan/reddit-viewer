@@ -1,5 +1,5 @@
 import React from 'react';
-import { SubredditAPI, subredditDefault } from '../../api/subreddit-api';
+import { SubredditAPI } from '../../api/subreddit-api';
 import { Thumbnail } from './thumbnail';
 import { PostInfo } from './post-info';
 import { Points } from './points';
@@ -27,7 +27,7 @@ export class Posts extends React.Component {
         super(props);
         this.state = {
             posts: [],
-            subreddit: subredditDefault,
+            subreddit: 'heroesofthestorm',
             firstPostId: '',
             lastPostId: '',
             highlightPost: '',
@@ -72,7 +72,6 @@ export class Posts extends React.Component {
         const fetch = new SubredditAPI(subreddit, direction, id, filter, sortBy);
         fetch.then(data => {
             console.log(data);
-            firstPostId = data.data.children[0].data.id;
             if (typeof(data) === 'undefined') {
                 this.setState({subredditWasFound: false, fetchInProgress: false}); 
                 this.props.removeForwardArrows();
@@ -80,6 +79,7 @@ export class Posts extends React.Component {
                 this.setState({postsWereFetched: false, fetchInProgress: false}); 
                 this.props.removeForwardArrows();
             } else { 
+                firstPostId = data.data.children[0].data.id;
                 let numPosts = data.data.children.length;
                 posts = data.data.children.map(post => {
                     let previewUrl;
@@ -140,7 +140,7 @@ export class Posts extends React.Component {
                         subredditWasFound: true,
                     });
                 }
-            if (!isFromHistory) { this.props.setHistory(subreddit, firstPostId, filter, sortBy) }
+            if (!isFromHistory) { this.props.setHistory(subreddit, firstPostId, lastPostId, filter, sortBy) }
         })
     }
 
