@@ -23,6 +23,11 @@ export class SubredditInput extends React.Component {
     }
 
     render() {
+        // So undefined does not get used as placeholder for input
+        let placeholder;
+        if (typeof(this.props.subreddit) === 'undefined') { placeholder = '' }
+        else { placeholder = this.props.subreddit }
+
         return (
             <div className='subreddit-form-container'>
                 <form onSubmit={(e) => {
@@ -34,7 +39,7 @@ export class SubredditInput extends React.Component {
                         type="text" 
                         className='subreddit-input' 
                         onChange={(e) => this.handleInputChange(e)}
-                        placeholder={'Subreddit: ' + this.props.subreddit}
+                        placeholder={'Subreddit: ' + placeholder}
                         value={this.state.input}/>
                     <input type='submit' className='browse-button' value='Browse' />
                 </form>
