@@ -19,7 +19,7 @@ class App extends Component {
         subreddit: 'heroesofthestorm',
         id: '',
         filter: '',
-        sortBy: '',
+        sortBy: 'hour',
         timestamp: ''
       }
     };
@@ -39,7 +39,8 @@ class App extends Component {
     this.removeForwardArrows = this.removeForwardArrows.bind(this);
     this.handleSubredditChange = this.handleSubredditChange.bind(this);
     this.setHistory = this.setHistory.bind(this);
-    this.backwardsPageIds = {};
+    this.firstPostId = '';
+    // this.backwardsPageIds = {};
   }
 
   componentDidMount() {
@@ -64,10 +65,12 @@ class App extends Component {
         filter: filter,
         sortBy: sortBy,
         timestamp: timestamp
-    }
+    };
     // Only pushing history if id has been used to generate posts. Gets around double render from <Posts />
-    if (id === '') { window.history.pushState(data, null, url); }
-    console.log(this.state.currentListing);
+    if (id !== '') {
+      // console.log('History Pushed');
+      window.history.pushState(data, null, url);
+    }
   }
 
   // TODO: Add forward and backward check. When navigating forward, filter shouldn't keep previous'
@@ -75,7 +78,7 @@ class App extends Component {
   handleSubredditChange(subreddit) {
     this.setState({ atEnd: false, subreddit: subreddit });
     this.refs.filter.resetFilter();
-    this.refs.posts.generatePosts(subreddit, 'after', '', 'hot', '');
+    this.refs.posts.generatePosts(subreddit, 'after', '', 'hot', this.state.currentListing.sortBy);
     this.refs.navigation.resetPageCounter();
   }
 
@@ -85,7 +88,7 @@ class App extends Component {
         this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'after', '', filter, this.state.currentListing.sortBy);
         this.refs.filter.setFilter(filter);
       } else {
-        this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'after', '', filter, '');
+        this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'after', '', filter, this.state.currentListing.sortBy);
         this.refs.filter.setFilter(filter);
       }
       this.setState({currentListing: {filter: filter}, atEnd: false});
@@ -95,14 +98,11 @@ class App extends Component {
 
   handleSortByChange(sortBy) {
     this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'after', '', 'top', sortBy);
-    this.setState({currentListing: {sortBy: sortBy}});
+    this.setState({currentListing: {sortBy: sortBy}, atEnd: false});
     this.refs.navigation.resetPageCounter();
   } 
 
-  handleForwardClick(pageCount) {
-    // backwardsPageIds is used to store the last post ID of each page when navigating forward
-    // This is then referenced in handleBackwardClick() in order to know which post to load after
-    this.backwardsPageIds[pageCount + 1] = this.refs.posts.state.lastPostId;
+  handleForwardClick() {
     this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'after', this.refs.posts.state.lastPostId, this.state.currentListing.filter, this.state.currentListing.sortBy);
     scroll.scrollToTop({duration: 500, smooth: true});
   }
@@ -112,7 +112,7 @@ class App extends Component {
     if (pageCount === 2) {
       this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'after', '', this.state.currentListing.filter, this.state.currentListing.sortBy);
     } else {
-      this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'after', this.backwardsPageIds[pageCount - 1], this.state.currentListing.filter, this.state.currentListing.sortBy);
+      this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'before', this.refs.posts.state.firstPostId, this.state.currentListing.filter, this.state.currentListing.sortBy);
     }
     scroll.scrollToTop({duration: 500, smooth: true});
   }
@@ -143,30 +143,35 @@ class App extends Component {
   }
 
   render() {
-      return(
-        <div className='page-container'>
-          <Logo />
-          <div className='options-container'>
-            <Filter ref='filter' handleFilterChange={this.handleFilterChange} handleSortByChange={this.handleSortByChange} sortBy={this.state.currentListing.sortBy}/>
-            <SubredditInput handleSubredditChange={this.handleSubredditChange} subreddit={this.state.currentListing.subreddit}/>
-          </div>
-          <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
-            <Posts 
-              ref='posts' 
-              className='animation-props' 
-              removeForwardArrows={this.removeForwardArrows}
-              subreddit={this.state.subreddit}
-              handleSubredditChange={this.handleSubredditChange}
-              setHistory={this.setHistory}/>
-          </Animated>
-          <Navigation 
-            ref='navigation' 
-            onForwardClick={this.handleForwardClick} 
-            onBackwardClick={this.handleBackwardClick}
-            atEnd={this.state.atEnd}/>
+    return(
+      <div className='page-container'>
+        <Logo />
+        <div className='options-container'>
+          <Filter ref='filter' 
+            handleFilterChange={this.handleFilterChange} 
+            handleSortByChange={this.handleSortByChange} 
+            sortBy={this.state.currentListing.sortBy}/>
+          <SubredditInput 
+            handleSubredditChange={this.handleSubredditChange} 
+            subreddit={this.state.currentListing.subreddit}/>
         </div>
-      );
-    }
+        <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
+          <Posts 
+            ref='posts' 
+            className='animation-props' 
+            removeForwardArrows={this.removeForwardArrows}
+            subreddit={this.state.subreddit}
+            handleSubredditChange={this.handleSubredditChange}
+            setHistory={this.setHistory}/>
+        </Animated>
+        <Navigation 
+          ref='navigation' 
+          onForwardClick={this.handleForwardClick} 
+          onBackwardClick={this.handleBackwardClick}
+          atEnd={this.state.atEnd}/>
+      </div>
+    );
+  }
 }
 
 export default App;

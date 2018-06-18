@@ -66,14 +66,13 @@ export class Posts extends React.Component {
     }
 
     generatePosts(subreddit, direction, id, filter, sortBy, isFromHistory) {
-        // i is being used to track which post is first for use in navigating pages
-        // console.log(subreddit);
-        let firstPostId, lastPostId, i = 0, posts;
+        // first and lastIds are being used to track page navigation. See ../../api/subreddit-api.js
+        let firstPostId, lastPostId, posts;
         this.setState({fetchInProgress: true, postsWereFetched: true, highlightPost: ''});
-        if (!isFromHistory) { this.props.setHistory(subreddit, id, filter, sortBy) }
         const fetch = new SubredditAPI(subreddit, direction, id, filter, sortBy);
         fetch.then(data => {
-            // console.log(data);
+            console.log(data);
+            firstPostId = data.data.children[0].data.id;
             if (typeof(data) === 'undefined') {
                 this.setState({subredditWasFound: false, fetchInProgress: false}); 
                 this.props.removeForwardArrows();
@@ -87,8 +86,7 @@ export class Posts extends React.Component {
                     let bodyText = post.data.selftext_html;
                     let authorLink = 'https://www.reddit.com/user/' + post.data.author;
                     let createdDate = new Date(post.data.created * 1000).toLocaleDateString("en-US", dateOptions);
-                    if (i === 0) {firstPostId = post.data.id}
-                    if (numPosts < 15) { this.props.removeForwardArrows() }
+                    if (numPosts < 15) { this.props.removeForwardArrows(); }
                     lastPostId = post.data.id;
                     // console.log(post.data.title + ': ' + post.data.id);
                     // console.log(post.data.postId)
@@ -103,7 +101,6 @@ export class Posts extends React.Component {
                     } else { 
                         previewUrl = 'https://www.reddit.com/static/self_default2.png'; 
                     }
-                    i++;
                     return (
                             <div className='post-container' key={post.data.id} ref={node => { this.postBodyRefs[post.data.id] = node; }}>
                                 <div className='post-header'>
@@ -135,17 +132,16 @@ export class Posts extends React.Component {
                             </div>
                         );
                     })
-                if (!isFromHistory) { this.props.setHistory(subreddit, firstPostId, filter, sortBy) }
-                this.setState({
-                    posts: posts,
-                    lastPostId: lastPostId,
-                    firstPostId: firstPostId,
-                    fetchInProgress: false,
-                    subredditWasFound: true,
-                });
-            }
-           
-            })
+                    this.setState({
+                        posts: posts,
+                        firstPostId: firstPostId,
+                        lastPostId: lastPostId,
+                        fetchInProgress: false,
+                        subredditWasFound: true,
+                    });
+                }
+            if (!isFromHistory) { this.props.setHistory(subreddit, firstPostId, filter, sortBy) }
+        })
     }
 
     render() {
