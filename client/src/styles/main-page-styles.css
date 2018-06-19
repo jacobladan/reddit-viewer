@@ -321,7 +321,7 @@ p {
 .points-label {
     font-family: 'Teko', sans-serif;
     font-size: 150%;
-    color: rgb(95, 95, 95);
+    color: rgb(138, 138, 138);
 }
 
 .points {
@@ -343,27 +343,28 @@ p {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     font-size: 100%;
+
     background-image: linear-gradient(#00000000, #bbbbbb4f);
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: 0% 100%;
-    transition: background-size .5s, color .5s;
+    transition: background-size .5s, color .5s;    
+}
+
+.expand-post-button:hover {
+    cursor: pointer;
+    color: #5ddb63;
+    background-size: 100% 100%;
 }
 
 .expand-post-button.in-post {
     margin: 0 auto;
     margin-top: 2%;
-    color: #d85ddb;
+    color: #5ddb63;
 }
 
 .expand-post-button.in-post:hover {
     color: #28bce8;
-}
-
-.expand-post-button:hover {
-    cursor: pointer;
-    background-size: 100% 100%;
-    color: #d85ddb;
 }
 
 .comment-loader-container {
@@ -469,7 +470,7 @@ p {
     font-size: 2.5em;
     bottom: -20%;
     left: 49.8%;
-    color: #7d7d7d;
+    color: #8a8a8a;
 }
 
 .md-spoiler-text {

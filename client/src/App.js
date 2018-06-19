@@ -19,7 +19,6 @@ class App extends Component {
         id: '',
         filter: '',
         sortBy: 'hour',
-        timestamp: ''
       }
     };
 
@@ -28,7 +27,6 @@ class App extends Component {
       subreddit: '',
       filter: '',
       sortBy: '',
-      timestamp: '',
     }
     this.handleForwardClick = this.handleForwardClick.bind(this);
     this.handleBackwardClick = this.handleBackwardClick.bind(this);
@@ -37,21 +35,23 @@ class App extends Component {
     this.removeForwardArrows = this.removeForwardArrows.bind(this);
     this.handleSubredditChange = this.handleSubredditChange.bind(this);
     this.setHistory = this.setHistory.bind(this);
+    this.filter = React.createRef();
+    this.posts = React.createRef();
+    this.navigation = React.createRef();
   }
 
   componentDidMount() {
+    // Assigning popstate to my own handle
     window.onpopstate = this.handlePopState.bind(this);
   }
 
   setHistory(subreddit, firstId, lastId, filter, sortBy) {
     let url = subreddit + '+' + filter + '+' + sortBy;
-    let timestamp = Date.now();
     this.setState({
       currentListing: {
         subreddit: subreddit,
         filter: filter,
         sortBy: sortBy,
-        timestamp: timestamp
       }
     });
     let data = {
@@ -60,51 +60,48 @@ class App extends Component {
         lastId: lastId,
         filter: filter,
         sortBy: sortBy,
-        timestamp: timestamp
     };
     window.history.pushState(data, null, url);
   }
 
-  // TODO: Add forward and backward check. When navigating forward, filter shouldn't keep previous'
-  // Add timestamp to pushState data object. Compare it when popStating to one set in app State
   handleSubredditChange(subreddit) {
     this.setState({ atEnd: false, subreddit: subreddit });
-    this.refs.filter.resetFilter();
-    this.refs.posts.generatePosts(subreddit, 'after', '', 'hot', this.state.currentListing.sortBy);
-    this.refs.navigation.resetPageCounter();
+    this.filter.current.resetFilter();
+    this.posts.current.generatePosts(subreddit, 'after', '', 'hot', this.state.currentListing.sortBy);
+    this.navigation.current.resetPageCounter();
   }
 
   handleFilterChange(filter) {
     if (filter !== this.state.currentListing.filter) {
       if (filter === 'top') {
-        this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'after', '', filter, this.state.currentListing.sortBy);
-        this.refs.filter.setFilter(filter);
+        this.posts.current.generatePosts(this.state.currentListing.subreddit, 'after', '', filter, this.state.currentListing.sortBy);
+        this.filter.current.setFilter(filter);
       } else {
-        this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'after', '', filter, this.state.currentListing.sortBy);
-        this.refs.filter.setFilter(filter);
+        this.posts.current.generatePosts(this.state.currentListing.subreddit, 'after', '', filter, this.state.currentListing.sortBy);
+        this.filter.current.setFilter(filter);
       }
       this.setState({currentListing: {filter: filter}, atEnd: false});
-      this.refs.navigation.resetPageCounter();
+      this.navigation.current.resetPageCounter();
     }
   }
 
   handleSortByChange(sortBy) {
-    this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'after', '', 'top', sortBy);
+    this.posts.current.generatePosts(this.state.currentListing.subreddit, 'after', '', 'top', sortBy);
     this.setState({currentListing: {sortBy: sortBy}, atEnd: false});
-    this.refs.navigation.resetPageCounter();
+    this.navigation.current.resetPageCounter();
   } 
 
   handleForwardClick() {
-    this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'after', this.refs.posts.state.lastPostId, this.state.currentListing.filter, this.state.currentListing.sortBy, true);
+    this.posts.current.generatePosts(this.state.currentListing.subreddit, 'after', this.posts.current.state.lastPostId, this.state.currentListing.filter, this.state.currentListing.sortBy, true);
     scroll.scrollToTop({duration: 500, smooth: true});
   }
 
   handleBackwardClick(pageCount) {
     if (this.state.atEnd === true) { this.setState({atEnd: false}) }
     if (pageCount === 2) {
-      this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'after', '', this.state.currentListing.filter, this.state.currentListing.sortBy, true);
+      this.posts.current.generatePosts(this.state.currentListing.subreddit, 'after', '', this.state.currentListing.filter, this.state.currentListing.sortBy, true);
     } else {
-      this.refs.posts.generatePosts(this.state.currentListing.subreddit, 'before', this.refs.posts.state.firstPostId, this.state.currentListing.filter, this.state.currentListing.sortBy, true);
+      this.posts.current.generatePosts(this.state.currentListing.subreddit, 'before', this.posts.current.state.firstPostId, this.state.currentListing.filter, this.state.currentListing.sortBy, true);
     }
     scroll.scrollToTop({duration: 500, smooth: true});
   }
@@ -114,24 +111,22 @@ class App extends Component {
   }
 
   handlePopState(e) {
-    this.refs.navigation.resetPageCounter();
+    this.navigation.current.resetPageCounter();
     try {
       this.nextListing = {
         subreddit: e.state.subreddit,
         filter: e.state.filter,
         sortBy: e.state.sortBy,
-        timestamp: e.state.timestamp,
       }
       // Used to set proper filter
-      if (this.state.currentListing.filter !== e.state.filter) { this.refs.filter.setFilter(e.state.filter); }
+      if (this.state.currentListing.filter !== e.state.filter) { this.filter.current.setFilter(e.state.filter); }
   
-      this.refs.posts.generatePosts(e.state.subreddit, 'after', '', e.state.filter, e.state.sortBy, true);
+      this.posts.current.generatePosts(e.state.subreddit, 'after', '', e.state.filter, e.state.sortBy, true);
       this.setState({
         currentListing: {
           subreddit: e.state.subreddit,
           filter: e.state.filter,
           sortBy: e.state.sortBy,
-          timestamp: e.state.timestamp
         },
         atEnd: false
       });
@@ -144,7 +139,8 @@ class App extends Component {
     return(
       <div className='page-container'>
         <div className='options-container'>
-          <Filter ref='filter' 
+          <Filter 
+            ref={this.filter} 
             handleFilterChange={this.handleFilterChange} 
             handleSortByChange={this.handleSortByChange} 
             sortBy={this.state.currentListing.sortBy}/>
@@ -154,7 +150,7 @@ class App extends Component {
         </div>
         <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
           <Posts 
-            ref='posts' 
+            ref={this.posts} 
             className='animation-props' 
             removeForwardArrows={this.removeForwardArrows}
             subreddit={this.state.subreddit}
@@ -162,7 +158,7 @@ class App extends Component {
             setHistory={this.setHistory}/>
         </Animated>
         <Navigation 
-          ref='navigation' 
+          ref={this.navigation} 
           onForwardClick={this.handleForwardClick} 
           onBackwardClick={this.handleBackwardClick}
           atEnd={this.state.atEnd}/>

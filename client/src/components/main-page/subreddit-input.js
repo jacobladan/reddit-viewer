@@ -7,6 +7,7 @@ export class SubredditInput extends React.Component {
         this.state = {
             input: ''
         };
+        this.input = React.createRef();
     }
 
     handleInputChange(e) {
@@ -15,11 +16,12 @@ export class SubredditInput extends React.Component {
 
     handleSubmit() {
         if (this.state.input === '') {
-            this.props.handleSubredditChange(this.props.subreddit);
+            return;
         } else {
             this.props.handleSubredditChange(this.state.input);
         }
         this.setState({input: ''});
+        this.input.current.blur();
     }
 
     render() {
@@ -36,6 +38,7 @@ export class SubredditInput extends React.Component {
                         this.handleSubmit();
                     }}>
                     <input 
+                        ref={this.input}
                         type="text" 
                         className='subreddit-input' 
                         onChange={(e) => this.handleInputChange(e)}
