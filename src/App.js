@@ -16,7 +16,7 @@ class App extends Component {
     this.state = {
       atEnd: false,
       currentListing: {
-        subreddit: 'heroesofthestorm',
+        subreddit: 'all',
         id: '',
         filter: '',
         sortBy: 'hour',

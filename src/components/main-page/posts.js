@@ -27,7 +27,7 @@ export class Posts extends React.Component {
         super(props);
         this.state = {
             posts: [],
-            subreddit: 'heroesofthestorm',
+            subreddit: 'all',
             firstPostId: '',
             lastPostId: '',
             highlightPost: '',

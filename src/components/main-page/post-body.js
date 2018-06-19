@@ -16,7 +16,7 @@ export class PostBody extends React.Component {
         super(props);
         this.state = {
             body: '',
-            subreddit: 'heroesofthestorm',
+            subreddit: 'all',
             comments: [],
             isPostExpanded: false,
             fetchInProgress: true,
