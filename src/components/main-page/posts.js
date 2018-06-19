@@ -117,6 +117,7 @@ export class Posts extends React.Component {
                                     postSubreddit={post.data.subreddit}
                                     passedSubreddit={subreddit}
                                     handleSubredditChange={this.props.handleSubredditChange}
+                                    permaLink={post.data.permalink}
                                     />
                                     <Points points={post.data.score}/>
                                 </div>{

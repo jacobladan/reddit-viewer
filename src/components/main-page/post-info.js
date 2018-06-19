@@ -23,7 +23,7 @@ export class PostInfo extends React.Component {
                 </div>
                 <p className='author'><b>Author: </b><a href={this.props.authorLink} className='author-link' target='_blank'>{this.props.author}</a></p>
                 <p className='domain'><b>Domain: </b>{this.props.domain}</p>
-                <p className='created'><b>Posted: </b>{this.props.created}</p>
+                <p className='posted'><b>Posted: </b>{this.props.created}</p>
                 {
                     (this.props.passedSubreddit === 'all') && 
                     <div className='subreddit-container'>
@@ -31,7 +31,8 @@ export class PostInfo extends React.Component {
                         <p className='subreddit-link' onClick={() => this.handleClick()}>/r/{this.props.postSubreddit}</p>
                     </div>
                 }
-            </div>
+                </div>
         )
     }
 }
+    // <a className='comments-link' href={'https://reddit.com' + this.props.permaLink} target='_blank'>comments</a>

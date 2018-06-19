@@ -60,9 +60,10 @@ p {
 }
 
 .filter-button {
-    background-color: #f1f1f1;
+    /* background-color: #f1f1f1; */
+    background-color: white;
     color: black;
-    margin-right: 1%;
+    margin-right: 2%;
     width: 15%;
     height: 23px;
     border-radius: 3px;
@@ -74,12 +75,13 @@ p {
 }
 
 .filter-button:hover {
-    background-color: #dadada;
+    background-color: #c3f1ff;
     cursor: pointer;
 }
 
 .filter-button.selected {
     background-color: #5adaff;
+    color: white;
 }
 
 .select-container {
@@ -90,7 +92,8 @@ p {
     appearance: none;
     -webkit-appearance: none;
     border-radius: 3px;
-    background-color: #f1f1f1;
+    /* background-color: #f1f1f1; */
+    background-color: white;
     color: black;
     border-color: rgba(0, 0, 0, 0);
     width: 22%;
@@ -116,6 +119,7 @@ p {
     -webkit-appearance: none;
     border-radius: 4px;
     background-color: #f1f1f1;
+    background-color: white;
     border-color: rgba(0, 0, 0, 0);
     color: black;
     outline: none;
@@ -129,7 +133,8 @@ p {
 }
 
 .browse-button {
-    background-color: #f1f1f1;
+    background-color: white;
+    /* background-color: #f1f1f1; */
     border-color: rgba(0, 0, 0, 0);
     color: black;
     border-radius: 3px;
@@ -146,7 +151,7 @@ p {
 }
 
 .browse-button:hover {
-    background-color: #dadada;
+    background-color: #c3f1ff;
     cursor: pointer;
 }
 
@@ -195,12 +200,16 @@ p {
     overflow: hidden;
     border-radius: 4px;
     color: black;
-    background: #f1f1f1;
+    /* background: #f1f1f1; */
+    background: white;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
 }
 
 .highlighted-post {
-    border: 2px solid #28bce8;
+    border: 2px solid #949494;
+    /* border-right: 2px solid #949494;
+    border-left: 2px solid #949494; */
+    border-top: 2px solid #d0d0d0;
 }
 
 .animation-styles {
@@ -232,8 +241,6 @@ p {
 
 .post-info {
     overflow: hidden;
-    margin-bottom: 0.8%;
-    padding-top: 0.3%;
     display: inline-block;
     width: 75%;
 }
@@ -268,9 +275,16 @@ p {
     width: 60%;
 }
 
-.created {
+.posted {
     font-size: 0.7em;
     display: inline-block;
+}
+
+.comments-link {
+    font-size: 0.7em;
+    color: black;
+    display: inline-block;
+    width: 100%;
 }
 
 .subreddit-container {
@@ -336,7 +350,7 @@ p {
     border: none;
     color: #28bce8;
     width: 100%;
-    height: 30px;
+    height: 35px;
     padding-top: 0.5%;
     outline: none;
     position: absolute;
@@ -344,19 +358,20 @@ p {
     bottom: 0;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
-    font-size: 100%;
+    font-size: 150%;
+    transition: 150ms ease-in-out;
 
-    background-image: linear-gradient(#00000000, #bbbbbb4f);
+    /* background-image: linear-gradient(#00000000, #bbbbbb4f);
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: 0% 100%;
-    transition: background-size .5s, color .5s;    
+    transition: background-size .5s, color .5s;     */
 }
 
 .expand-post-button:hover {
     cursor: pointer;
     color: #5ddb63;
-    background-size: 100% 100%;
+    /* background-size: 100% 100%; */
 }
 
 .expand-post-button.in-post {
@@ -427,7 +442,7 @@ p {
 }
 
 .post-body-container a:visited {
-    color: #2142b8;
+    color: #4562cc;
 }
 
 .nav-container {
@@ -472,7 +487,7 @@ p {
     font-size: 2.5em;
     bottom: -20%;
     left: 49.8%;
-    color: #8a8a8a;
+    color: black;
 }
 
 .md-spoiler-text {
