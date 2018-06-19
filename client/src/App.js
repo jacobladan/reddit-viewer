@@ -7,7 +7,7 @@ import { animateScroll as scroll } from 'react-scroll';
 import { SubredditInput } from './components/main-page/subreddit-input';
 import './styles/main-page-styles.css';
 // import './server';
-
+// comment
 class App extends Component {
 
   constructor(props) {
