@@ -42,7 +42,7 @@ export class SubredditInput extends React.Component {
                         type="text" 
                         className='subreddit-input' 
                         onChange={(e) => this.handleInputChange(e)}
-                        placeholder={'Subreddit: ' + placeholder}
+                        placeholder={'/r/' + placeholder}
                         value={this.state.input}/>
                     <input type='submit' className='browse-button' value='Browse' />
                 </form>

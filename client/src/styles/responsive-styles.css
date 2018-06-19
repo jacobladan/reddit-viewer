@@ -1,0 +1,84 @@
+@media only screen and (max-width: 760px) {
+
+    .page-container {
+        padding-top: 0%;
+    }
+
+    .filter-container {
+        margin-left: 0%;
+        width: 80%;
+    }
+
+    .filter-button {
+        background-color: white;
+        font-size: 100%;
+        margin-right: 0%;
+        width: 23%;
+        height: 50px;
+        border: none;
+        border-radius: 0px;
+        box-shadow: none;
+    }
+
+    .filter-button:hover {
+        background-color: white;
+    }
+
+    .filter-button.selected:hover {
+        background-color: #5adaff;
+    }
+
+    .top-sort {
+        background-color: white;
+        border-radius: 0px;
+        box-shadow: none;
+        height: 48px;
+        font-size: 100%;
+        margin-left: 3%;
+        width: 30%;
+    }
+
+    .subreddit-form-container {
+        display: none;
+    }
+
+    .post-container {
+        border: none;
+        border-bottom: 2px solid black;
+        border-radius: 0px;
+        box-shadow: none;
+        width: 100%;
+        padding: 0%;
+        padding-top: 2%;
+        padding-bottom: 2%;
+        margin: 0%;
+        background-color: white;
+        min-width: 600px;
+    }
+
+    .thumbnail {
+        margin-top: 1%;
+        margin-left: 1%;
+    }
+
+    .post-info {
+        width: 70%;
+    }
+
+    .points-container {
+        margin-right: 1%;
+        margin-top: 1%;
+    }
+
+    .expand-post-button {
+        background-image: none;
+    }
+
+    .expand-post-button:hover {
+        color: #28bce8;
+    }
+
+    .expand-post-button.in-post:hover {
+        color: #5ddb63;
+    }
+}
