@@ -1,5 +1,6 @@
 import React from 'react';
-import NavArrows from '../../images/nav-arrows.svg';
+// import NavArrows from '../../images/nav-arrows-white.svg';
+import NavArrows from '../../images/nav-arrows-grey.svg';
 
 export class Navigation extends React.Component {
     

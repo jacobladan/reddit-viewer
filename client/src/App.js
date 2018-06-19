@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Logo } from './components/main-page/logo';
 import { Posts } from './components/main-page/posts';
 import { Filter } from './components/main-page/filter';
 import { Animated } from "react-animated-css";
@@ -115,8 +114,7 @@ class App extends Component {
   }
 
   handlePopState(e) {
-    console.log(this.state.currentListing);
-    console.log(e.state);
+    this.refs.navigation.resetPageCounter();
     try {
       this.nextListing = {
         subreddit: e.state.subreddit,
@@ -144,7 +142,6 @@ class App extends Component {
   render() {
     return(
       <div className='page-container'>
-        <Logo />
         <div className='options-container'>
           <Filter ref='filter' 
             handleFilterChange={this.handleFilterChange} 

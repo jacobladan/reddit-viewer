@@ -9,7 +9,7 @@ p {
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #000000; 
+    background: #f1f1f1; 
 }
  
 /* Handle */
@@ -24,7 +24,8 @@ p {
 }
 
 .page-container {
-    background-image: url(../images/page-background2.jpg);
+    /* background-image: url(../images/page-background2.jpg); */
+    padding-top: 5%;
     padding-bottom: 5%;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -59,8 +60,8 @@ p {
 }
 
 .filter-button {
-    background-color: #000000c4;
-    color: white;
+    background-color: #f1f1f1;
+    color: black;
     margin-right: 1%;
     width: 15%;
     height: 23px;
@@ -69,10 +70,11 @@ p {
     transition: 100ms ease-in-out;
     outline: none;
     max-width: 76px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
 }
 
 .filter-button:hover {
-    background-color: #0000007d;
+    background-color: #dadada;
     cursor: pointer;
 }
 
@@ -88,8 +90,8 @@ p {
     appearance: none;
     -webkit-appearance: none;
     border-radius: 3px;
-    background-color: #000000c4;
-    color: white;
+    background-color: #f1f1f1;
+    color: black;
     border-color: rgba(0, 0, 0, 0);
     width: 22%;
     height: 23px;
@@ -99,6 +101,7 @@ p {
     background-size: 20%;
     background-repeat: no-repeat;
     background-position: right center;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
 }
 
 .subreddit-form-container {
@@ -111,9 +114,9 @@ p {
 .subreddit-input {
     -webkit-appearance: none;
     border-radius: 4px;
-    background-color: #000000c4;
+    background-color: #f1f1f1;
     border-color: rgba(0, 0, 0, 0);
-    color: white;
+    color: black;
     outline: none;
     height: 17px;
     padding-right: 3%;
@@ -121,12 +124,13 @@ p {
     font-size: 80%;
     text-align: right;
     max-width: 200px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
 }
 
 .browse-button {
-    background-color: #000000c4;
+    background-color: #f1f1f1;
     border-color: rgba(0, 0, 0, 0);
-    color: white;
+    color: black;
     border-radius: 3px;
     border-color: rgba(0, 0, 0, 0);
     -webkit-transition: 100ms ease-in-out;
@@ -137,10 +141,11 @@ p {
     width: 30%;
     margin-left: 4%;
     vertical-align: top;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
 }
 
 .browse-button:hover {
-    background-color: #0000007d;
+    background-color: #dadada;
     cursor: pointer;
 }
 
@@ -164,11 +169,12 @@ p {
     overflow: hidden;
     background-color: white;
     border-radius: 4px;
-    color: white;
-    background: #000000c4;
+    color: black;
+    background: #f1f1f1;
     /* transition: 500ms ease-in-out; */
     text-align: center;
     font-size: 150%;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
 }
 
 .sad-face-img {
@@ -183,12 +189,12 @@ p {
     margin: 0 auto;
     padding: 1%;
     padding-bottom: 1%;
-    margin-bottom: 0.5%;
+    margin-bottom: 1%;
     overflow: hidden;
-    background-color: white;
     border-radius: 4px;
-    color: white;
-    background: #000000c4;
+    color: black;
+    background: #f1f1f1;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
 }
 
 .highlighted-post {
@@ -214,6 +220,7 @@ p {
     overflow: hidden;
     background-color: white;
     border-radius: 4px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
 }
 
 .thumbnail-img {
@@ -238,7 +245,7 @@ p {
 }
 
 .post-title:visited {
-    color: #969696;
+    color: #6b6b6b;
 }
 
 .author {
@@ -249,7 +256,7 @@ p {
 
 .author-link {
     text-decoration: underline;
-    color: white;
+    color: black;
 }
 
 .domain {
@@ -306,15 +313,15 @@ p {
     width: 76px;
     text-align: center;
     margin-top: 0.5%;
-    color: white;
+    color: black;
     border-radius: 4px;
-    border: 2px solid white;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
 }
 
 .points-label {
     font-family: 'Teko', sans-serif;
     font-size: 150%;
-    color: #bbbbbb;
+    color: rgb(95, 95, 95);
 }
 
 .points {
@@ -336,7 +343,7 @@ p {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     font-size: 100%;
-    background-image: linear-gradient(#00000000, #4e4e4e4f);
+    background-image: linear-gradient(#00000000, #bbbbbb4f);
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: 0% 100%;
@@ -376,7 +383,7 @@ p {
 .post-body-container {
     padding: 2%;
     width: 91%;
-    color: white;
+    color: black;
     margin: 0 auto;
     border-radius: 4px;
     /* border: 2px solid white; */
@@ -458,11 +465,11 @@ p {
 
 .page-number {
     position: absolute;
-    color: white;
     font-family: 'Teko', sans-serif;
     font-size: 2.5em;
     bottom: -20%;
     left: 49.8%;
+    color: #7d7d7d;
 }
 
 .md-spoiler-text {
