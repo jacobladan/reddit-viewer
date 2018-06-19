@@ -132,7 +132,8 @@ class App extends Component {
           filter: e.state.filter,
           sortBy: e.state.sortBy,
           timestamp: e.state.timestamp
-        }
+        },
+        atEnd: false
       });
     } catch(e) {
       console.log('No more posts to load');
