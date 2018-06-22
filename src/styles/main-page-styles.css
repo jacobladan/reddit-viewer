@@ -57,8 +57,6 @@ p {
     color: black;
 }
 
-.sub-title:hover {}
-
 .options-container {
     display: inline-block;
     width: 100%;
@@ -82,7 +80,7 @@ p {
     height: 23px;
     border-radius: 3px;
     border-color: rgba(0, 0, 0, 0);
-    transition: 100ms ease-in-out;
+    transition: 150ms ease-in-out;
     outline: none;
     max-width: 76px;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
@@ -155,7 +153,7 @@ p {
     border-color: rgba(0, 0, 0, 0);
     -webkit-transition: 100ms ease-in-out;
     -o-transition: 100ms ease-in-out;
-    transition: 100ms ease-in-out;
+    transition: 150ms ease-in-out;
     outline: none;
     height: 23px;
     width: 30%;
@@ -180,12 +178,12 @@ p {
 .no-posts-container {
     display: block;
     position: relative;
-    width: 30%;
+    width: 40%;
     margin: 0 auto;
     padding: 1%;
     padding-bottom: 1%;
     margin-bottom: 20%;
-    margin-top: 5%;
+    margin-top: 2%;
     overflow: hidden;
     background-color: white;
     border-radius: 4px;
@@ -197,9 +195,43 @@ p {
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
 }
 
+.no-posts-message {
+    display: inline-block;
+    width: 86%;
+}
+
 .sad-face-img {
-    width: 50%;
+    width: 25%;
     margin-top: 2%;
+}
+
+.horizontal-line {
+    border-bottom: 1px solid black;
+    margin: 3% auto;
+    width: 60%;
+}
+
+.suggestions-container {
+    margin-top: 3%;
+}
+
+.sub-suggestion-container {
+    margin: 2.5% auto;
+    width: 56%;
+    padding: 0.5% 1% 0.5% 1%;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 
+                0 3px 1px -2px rgba(0,0,0,.12), 
+                0 1px 5px 0 rgba(0,0,0,.2);
+}
+
+.sub-suggestion-container:hover {
+    background-color: #c3f1ff;
+    cursor: pointer;
+    transition: 150ms ease-in-out;
+}
+
+.sub-suggestion {
+    font-size: 75%;
 }
 
 .post-container {

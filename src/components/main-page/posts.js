@@ -6,6 +6,7 @@ import { Points } from './points';
 import { PostBody } from './post-body';
 import { GridLoader } from 'react-spinners';
 import SadFace from '../../images/sad-face.svg';
+import { SubredditSuggestion } from './subreddit-suggestion';
 
 const dateOptions = {
     weekday: 'long',
@@ -71,13 +72,13 @@ export class Posts extends React.Component {
         this.setState({fetchInProgress: true, postsWereFetched: true, highlightPost: ''});
         const fetch = new SubredditAPI(subreddit, direction, id, filter, sortBy);
         fetch.then(data => {
-            console.log(data);
+            // console.log(data);
             if (typeof(data) === 'undefined') {
-                this.setState({subredditWasFound: false, fetchInProgress: false}); 
-                this.props.removeForwardArrows();
+                this.setState({subredditWasFound: false, fetchInProgress: false, subreddit: subreddit}); 
+                this.props.removeForwardArrows(true);
             } else if (data.data.children.length === 0) { 
                 this.setState({postsWereFetched: false, fetchInProgress: false}); 
-                this.props.removeForwardArrows();
+                this.props.removeForwardArrows(true);
             } else { 
                 firstPostId = data.data.children[0].data.id;
                 let numPosts = data.data.children.length;
@@ -88,8 +89,6 @@ export class Posts extends React.Component {
                     let createdDate = new Date(post.data.created * 1000).toLocaleDateString("en-US", dateOptions);
                     if (numPosts < 15) { this.props.removeForwardArrows(); }
                     lastPostId = post.data.id;
-                    // console.log(post.data.title + ': ' + post.data.id);
-                    // console.log(post.data.postId)
                     // Thumbnail checks
                     if (typeof(post.data.preview) !== 'undefined'){
                         if (post.data.thumbnail === 'self') {
@@ -135,6 +134,7 @@ export class Posts extends React.Component {
                     })
                     this.setState({
                         posts: posts,
+                        subreddit: subreddit,
                         firstPostId: firstPostId,
                         lastPostId: lastPostId,
                         fetchInProgress: false,
@@ -149,14 +149,16 @@ export class Posts extends React.Component {
         if (!this.state.subredditWasFound){
             return (
                 <div className='no-posts-container'>
-                    <p>that subreddit does not exist</p>
                     <img src={SadFace} alt='sad face' className='sad-face-img'/>
+                    <p className='no-posts-message'>That subreddit doesn't exist</p>
+                    <p className='no-posts-message'>Maybe you meant one of these...</p>
+                    <SubredditSuggestion subreddit={this.state.subreddit} handleSubredditChange={this.props.handleSubredditChange}/>
                 </div>
             );
         } else if (!this.state.postsWereFetched) {
             return (
                 <div className='no-posts-container'>
-                    <p>you've reached the end</p>
+                    <p>There doesn't seem to be anything here...</p>
                     <img src={SadFace} alt='sad face' className='sad-face-img'/>
                 </div>
             );

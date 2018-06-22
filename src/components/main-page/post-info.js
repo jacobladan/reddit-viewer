@@ -15,7 +15,7 @@ export class PostInfo extends React.Component {
         return (
             <div className='post-info'>
                 <div className='title-container'>
-                    <a href={this.props.link} className={titleClass} target='_blank'>{this.props.title}</a>
+                    <a href={'https://reddit.com' + this.props.permaLink} className={titleClass} target='_blank'>{this.props.title}</a>
                 </div>
                 <div>
                     {this.props.stickied && <p className='pinned'>pinned</p>}
@@ -31,8 +31,8 @@ export class PostInfo extends React.Component {
                         <p className='subreddit-link' onClick={() => this.handleClick()}>/r/{this.props.postSubreddit}</p>
                     </div>
                 }
-                </div>
+            </div>
         )
     }
 }
-    // <a className='comments-link' href={'https://reddit.com' + this.props.permaLink} target='_blank'>comments</a>
+        // <a className='comments-link' href={'https://reddit.com' + this.props.permaLink} target='_blank'>comments</a>

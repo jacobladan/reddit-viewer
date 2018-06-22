@@ -16,6 +16,7 @@ class App extends Component {
     super(props);
     this.state = {
       atEnd: false,
+      subNotFound: false,
       currentListing: {
         subreddit: 'all',
         id: '',
@@ -71,6 +72,7 @@ class App extends Component {
     this.filter.current.resetFilter();
     this.posts.current.generatePosts(subreddit, 'after', '', 'hot', this.state.currentListing.sortBy);
     this.navigation.current.resetPageCounter();
+    scroll.scrollToTop({duration: 500, smooth: true});
   }
 
   handleFilterChange(filter) {
@@ -108,8 +110,12 @@ class App extends Component {
     scroll.scrollToTop({duration: 500, smooth: true});
   }
 
-  removeForwardArrows() {
-    this.setState({atEnd: true});
+  removeForwardArrows(subNotFound) {
+    if (subNotFound) {
+      this.setState({atEnd: true, subNotFound: true})
+    } else {
+      this.setState({atEnd: true});
+    }
   }
 
   handlePopState(e) {
@@ -164,7 +170,8 @@ class App extends Component {
           ref={this.navigation} 
           onForwardClick={this.handleForwardClick} 
           onBackwardClick={this.handleBackwardClick}
-          atEnd={this.state.atEnd}/>
+          atEnd={this.state.atEnd}
+          subNotFound={this.state.subNotFound}/>
       </div>
     );
   }

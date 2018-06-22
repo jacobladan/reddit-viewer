@@ -57,3 +57,18 @@ export class PostAPI {
         return response;
     }
 }
+
+export class SubredditSearchAPI {
+    constructor(subreddit) {
+        try {
+           return fetch(`https://www.reddit.com/subreddits/search.json?q=${subreddit}&limit=5`).then(this.handleErrors)
+           .then(results => {
+               return results.json();
+           }).catch(() => {
+               console.log('Failed to fetch subreddits');
+           });
+        } catch(e) {
+            console.log('Could not fetch subreddits');
+        }
+    }
+}

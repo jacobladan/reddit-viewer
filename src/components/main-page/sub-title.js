@@ -8,7 +8,6 @@ export class SubTitle extends React.Component {
     render() {
         // So the first render of title does not show undefined
         if (this.props.subreddit !== undefined) {
-            console.log('called')
             this.subreddit = this.props.subreddit;
         }
         return (
