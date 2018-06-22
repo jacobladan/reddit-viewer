@@ -71,4 +71,11 @@ export class SubredditSearchAPI {
             console.log('Could not fetch subreddits');
         }
     }
+
+    handleErrors(response) {
+        if (!response.ok) {
+            throw Error(response.statusText);
+        }
+        return response;
+    }
 }

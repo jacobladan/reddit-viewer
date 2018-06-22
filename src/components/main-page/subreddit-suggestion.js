@@ -1,4 +1,5 @@
 import React from 'react';
+import { GridLoader } from 'react-spinners';
 import { SubredditSearchAPI } from '../../api/subreddit-api';
 
 export class SubredditSuggestion extends React.Component {
@@ -6,16 +7,9 @@ export class SubredditSuggestion extends React.Component {
         super(props);
         this.state = {
             suggestions: [],
+            fetchInProgress: true,
             numSuggestions: 0
         }
-    }
-
-    componentWillReceiveProps() {
-        this.getSuggestions(this.props.subreddit);
-    }
-
-    componentDidMount() {
-        this.getSuggestions(this.props.subreddit);
     }
 
     handleClick(subreddit) {
@@ -23,11 +17,16 @@ export class SubredditSuggestion extends React.Component {
     }
 
     getSuggestions(subreddit) {
+        let suggestions, i = 0, rightMargin;
         const fetch = new SubredditSearchAPI(subreddit);
+        this.setState({fetchInProgress: true});
         fetch.then(data => {
-            let suggestions = data.data.children.map( subreddit => {
+            suggestions = data.data.children.map( subreddit => {
+                    if (i % 2 === 1) { rightMargin = {marginRight: '0%'} }
+                    else { rightMargin = {marginRight: '2%'} }
+                    i++;
                     return(
-                        <div className='sub-suggestion-container' 
+                        <div className='sub-suggestion-container' style={rightMargin}
                             key={subreddit.data.id} 
                             onClick={() => this.handleClick(subreddit.data.display_name)}>
                             <p className='sub-suggestion'>{subreddit.data.display_name}</p>
@@ -35,15 +34,28 @@ export class SubredditSuggestion extends React.Component {
                     );
                 }
             );
-            this.setState({suggestions: suggestions});
+            this.setState({
+                suggestions: suggestions,
+                fetchInProgress: false,
+                numSuggestions: suggestions.length
+            });
         });
     }
 
     render() {
-        return (
-            <div className='suggestions-container'>
-                {this.state.suggestions}
-            </div>
-        );
+        if (this.state.numSuggestions === 0) {
+            return <p className='no-posts-message'>No suggestions were found</p>;
+        } else {
+            return (
+                this.state.fetchInProgress
+                ? <div className='suggestion-loader-container'><GridLoader loading={true} color={"#44def3"}/></div>
+                : <div>
+                    <p className='no-posts-message'>Maybe you meant one of these...</p>
+                    <div className='suggestions-container'>
+                        { this.state.suggestions }
+                    </div>
+                </div>
+            );
+        }
     }
 }

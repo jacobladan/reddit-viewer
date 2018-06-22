@@ -39,6 +39,7 @@ export class Posts extends React.Component {
         this.postBodyRefs = {};
         this.scrollToTopOfPost = this.scrollToTopOfPost.bind(this);
         this.highlightPost = this.highlightPost.bind(this);
+        this.SubredditSuggestion = React.createRef();
     }
 
     componentDidMount() {
@@ -69,12 +70,13 @@ export class Posts extends React.Component {
     generatePosts(subreddit, direction, id, filter, sortBy, isFromHistory) {
         // first and lastIds are being used to track page navigation. See ../../api/subreddit-api.js
         let firstPostId, lastPostId, posts;
-        this.setState({fetchInProgress: true, postsWereFetched: true, highlightPost: ''});
+        this.setState({fetchInProgress: true, postsWereFetched: true, subredditWasFound: true, highlightPost: ''});
         const fetch = new SubredditAPI(subreddit, direction, id, filter, sortBy);
         fetch.then(data => {
             console.log(data);
             if (typeof(data) === 'undefined') {
-                this.setState({subredditWasFound: false, fetchInProgress: false, subreddit: subreddit}); 
+                this.setState({subredditWasFound: false, fetchInProgress: false});
+                this.SubredditSuggestion.current.getSuggestions(subreddit); 
                 this.props.removeForwardArrows(true);
             } else if (data.data.children.length === 0) { 
                 this.setState({postsWereFetched: false, fetchInProgress: false}); 
@@ -152,8 +154,10 @@ export class Posts extends React.Component {
                 <div className='no-posts-container'>
                     <img src={SadFace} alt='sad face' className='sad-face-img'/>
                     <p className='no-posts-message'>That subreddit doesn't exist</p>
-                    <p className='no-posts-message'>Maybe you meant one of these...</p>
-                    <SubredditSuggestion subreddit={this.state.subreddit} handleSubredditChange={this.props.handleSubredditChange}/>
+                    <SubredditSuggestion 
+                        ref={this.SubredditSuggestion}
+                        subreddit={this.state.subreddit} 
+                        handleSubredditChange={this.props.handleSubredditChange}/>
                 </div>
             );
         } else if (!this.state.postsWereFetched) {
