@@ -133,7 +133,7 @@ p {
     left: 9%;
     top: 10%;
     font-size: 90%;
-    font-weight: bold;
+    /* font-weight: bold; */
     color: grey;
 }
 
@@ -218,7 +218,7 @@ p {
 .horizontal-line {
     border-bottom: 1px solid black;
     margin: 3% auto;
-    width: 60%;
+    width: 50%;
 }
 
 .suggestion-loader-container {
@@ -536,7 +536,7 @@ p {
 
 .nav-icon {
     height: auto;
-    transition: transform 100ms ease-in-out;
+    transition: transform 200ms ease-in-out;
 }
 
 .nav-icon.left {

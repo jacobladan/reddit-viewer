@@ -154,6 +154,7 @@ export class Posts extends React.Component {
                 <div className='no-posts-container'>
                     <img src={SadFace} alt='sad face' className='sad-face-img'/>
                     <p className='no-posts-message'>That subreddit doesn't exist</p>
+                    <div className='horizontal-line'></div>
                     <SubredditSuggestion 
                         ref={this.SubredditSuggestion}
                         subreddit={this.state.subreddit} 
