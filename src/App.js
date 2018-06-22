@@ -7,6 +7,7 @@ import { animateScroll as scroll } from 'react-scroll';
 import { SubredditInput } from './components/main-page/subreddit-input';
 import './styles/main-page-styles.css';
 import './styles/responsive-styles.css';
+import { SubTitle } from './components/main-page/sub-title';
 // import './server';
 
 class App extends Component {
@@ -139,6 +140,7 @@ class App extends Component {
   render() {
     return(
       <div className='page-container'>
+        <SubTitle subreddit={this.state.currentListing.subreddit}/>
         <div className='options-container'>
           <Filter 
             ref={this.filter} 

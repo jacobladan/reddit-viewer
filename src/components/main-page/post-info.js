@@ -15,7 +15,7 @@ export class PostInfo extends React.Component {
         return (
             <div className='post-info'>
                 <div className='title-container'>
-                    <a href={this.props.link} className={titleClass}>{this.props.title}</a>
+                    <a href={this.props.link} className={titleClass} target='_blank'>{this.props.title}</a>
                 </div>
                 <div>
                     {this.props.stickied && <p className='pinned'>pinned</p>}

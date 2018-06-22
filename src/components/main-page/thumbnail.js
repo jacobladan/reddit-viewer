@@ -6,7 +6,7 @@ export class Thumbnail extends React.Component {
         let aClasses = `thumbnail ${this.props.aClass}`;
         let imgClasses = `thumbnail-img ${this.props.imgClass}`;
         return (
-            <a href={this.props.href} className={aClasses}>
+            <a href={this.props.href} className={aClasses} target='_blank'>
                 <img 
                     src={this.props.src} 
                     alt="thumbnail" 
