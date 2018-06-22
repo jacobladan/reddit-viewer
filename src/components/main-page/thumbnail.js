@@ -6,7 +6,7 @@ export class Thumbnail extends React.Component {
         let aClasses = `thumbnail ${this.props.aClass}`;
         let imgClasses = `thumbnail-img ${this.props.imgClass}`;
         let nsfwBlur;
-        if (this.props.over_18) { nsfwBlur={filter: 'blur(5px)'} }
+        if (this.props.over_18) { nsfwBlur = {filter: 'blur(5px)'} }
         return (
             <a href={this.props.href} className={aClasses} target='_blank'>
                 <img 

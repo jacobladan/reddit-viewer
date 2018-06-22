@@ -5,7 +5,8 @@ export class SubredditInput extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            input: ''
+            input: '',
+            rStyle: {}
         };
         this.input = React.createRef();
         this.subreddit = 'all';
@@ -26,6 +27,14 @@ export class SubredditInput extends React.Component {
         this.input.current.blur();
     }
 
+    handleFocus() {
+        this.setState({rStyle: {color: 'black'}});
+    }
+
+    handleBlur() {
+        this.setState({rStyle: {color: 'grey'}})
+    }
+
     render() {
         // So undefined does not get used as placeholder for input
         if (this.props.subreddit !== undefined) {
@@ -39,13 +48,16 @@ export class SubredditInput extends React.Component {
                         e.stopPropagation();
                         this.handleSubmit();
                     }}>
+                    <p className='floating-r' style={this.state.rStyle}>/r/</p>
                     <input 
                         ref={this.input}
                         type="text" 
                         className='subreddit-input' 
                         onChange={(e) => this.handleInputChange(e)}
-                        placeholder={'/r/' + this.subreddit}
-                        value={this.state.input}/>
+                        placeholder={this.subreddit}
+                        value={this.state.input}
+                        onFocus={() => this.handleFocus()}
+                        onBlur={() => this.handleBlur()}/>
                     <input type='submit' className='browse-button' value='Browse' />
                 </form>
             </div>
