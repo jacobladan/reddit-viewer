@@ -72,7 +72,7 @@ export class Posts extends React.Component {
         this.setState({fetchInProgress: true, postsWereFetched: true, highlightPost: ''});
         const fetch = new SubredditAPI(subreddit, direction, id, filter, sortBy);
         fetch.then(data => {
-            // console.log(data);
+            console.log(data);
             if (typeof(data) === 'undefined') {
                 this.setState({subredditWasFound: false, fetchInProgress: false, subreddit: subreddit}); 
                 this.props.removeForwardArrows(true);
@@ -103,7 +103,7 @@ export class Posts extends React.Component {
                     return (
                             <div className='post-container' key={post.data.id} ref={node => { this.postBodyRefs[post.data.id] = node; }}>
                                 <div className='post-header'>
-                                    <Thumbnail href={post.data.url} src={previewUrl}/>
+                                    <Thumbnail href={post.data.url} src={previewUrl} over_18={post.data.over_18}/>
                                     <PostInfo 
                                     link={post.data.url} 
                                     title={decodeHTML(post.data.title)}
@@ -117,6 +117,7 @@ export class Posts extends React.Component {
                                     passedSubreddit={subreddit}
                                     handleSubredditChange={this.props.handleSubredditChange}
                                     permaLink={post.data.permalink}
+                                    over_18={post.data.over_18}
                                     />
                                     <Points points={post.data.score}/>
                                 </div>{

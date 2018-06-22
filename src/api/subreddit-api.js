@@ -61,7 +61,7 @@ export class PostAPI {
 export class SubredditSearchAPI {
     constructor(subreddit) {
         try {
-           return fetch(`https://www.reddit.com/subreddits/search.json?q=${subreddit}&limit=5`).then(this.handleErrors)
+           return fetch(`https://www.reddit.com/subreddits/search.json?q=${subreddit}&limit=10`).then(this.handleErrors)
            .then(results => {
                return results.json();
            }).catch(() => {

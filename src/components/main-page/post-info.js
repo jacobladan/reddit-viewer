@@ -10,8 +10,11 @@ export class PostInfo extends React.Component {
         // Work around to add second class based on props
         let titleClass = `post-title ${this.props.titleClass}`;
         // Adds space between spoiler and sticked tag if both are present
-        let spoilerMargin;
-        if (this.props.stickied) { spoilerMargin = {marginLeft: '1%'};}
+        let spoilerMargin, nsfwMargin, nsfw = false;
+        if (this.props.stickied) { spoilerMargin = {marginLeft: '1%'}; }
+        if (this.props.stickied) { nsfwMargin = {marginLeft: '1%'}; }
+        if (this.props.over_18) { nsfw = true; }
+        
         return (
             <div className='post-info'>
                 <div className='title-container'>
@@ -20,6 +23,7 @@ export class PostInfo extends React.Component {
                 <div>
                     {this.props.stickied && <p className='pinned'>pinned</p>}
                     {this.props.spoiler && <p className='spoilers' style={spoilerMargin}>spoilers</p>}
+                    {nsfw && <p className='nsfw' style={nsfwMargin}>nsfw</p>}
                 </div>
                 <p className='author'><b>Author: </b><a href={this.props.authorLink} className='author-link' target='_blank'>{this.props.author}</a></p>
                 <p className='domain'><b>Domain: </b>{this.props.domain}</p>

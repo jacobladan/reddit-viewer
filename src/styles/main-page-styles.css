@@ -371,6 +371,12 @@ p {
     display: inline-block;
 }
 
+.nsfw {
+    color: #e704b6;
+    font-size: 0.7em;
+    display: inline-block;
+}
+
 .points-container {
     float: right;
     height: 76px;
