@@ -3,6 +3,9 @@ import { PostAPI } from "../../api/subreddit-api";
 import { ExpandedPost } from '../main-page/expand-post';
 import { GridLoader } from 'react-spinners';
 import ReactHtmlParser from 'react-html-parser';
+import { EmbeddedImage } from './embedded-image';
+import { EmbeddedVideo } from './embedded-video';
+import { EmbeddedLink } from './embedded-link';
 
 let decodeHTML = function (html) {
 	var txt = document.createElement('textarea');
@@ -27,23 +30,31 @@ export class PostBody extends React.Component {
         this.setState({fetchInProgress: true});
         const getPost = new PostAPI(subreddit, Id);
         getPost.then(data => {
-            console.log(data);
-            let body, bodyType;
+            // console.log(data);
             if (data === undefined) { return }
 
-            if (data[0].data.children[0].data.media !== null) { 
-                body = data[0].data.children[0].data.media_embed.content;
-                bodyType = 'video';
-            } else {
-                body = data[0].data.children[0].data.selftext_html;
-                bodyType = 'text';
-            }
-
-            if (body !== null) {
+            let body, bodyType;
+            let postHint = data[0].data.children[0].data.post_hint;
+            // console.log(postHint);
+            if (postHint === 'rich:video') { 
                 // Filter methods. 1. Converts any special characters to their raw form.
                 // 2. Converts the html string to valid JSX that can be rendered
-                body = ReactHtmlParser(decodeHTML(body));
+                let html = ReactHtmlParser(decodeHTML(data[0].data.children[0].data.media_embed.content));
+                body = <EmbeddedVideo html={html}/>
+                bodyType = 'video';
+            } else if (postHint === 'image') {
+                body = <EmbeddedImage src={data[0].data.children[0].data.url}/>;
+                bodyType = 'image';
+            } else if (postHint === 'link') {
+                let src = data[0].data.children[0].data.url;
+                body = <EmbeddedLink src={src.replace('gifv', 'mp4')}/>
+                console.log(data[0].data.children[0].data.url);
+                bodyType = 'link';
+            } else if (data[0].data.children[0].data.selftext_html !== null) {
+                body = ReactHtmlParser(decodeHTML(data[0].data.children[0].data.selftext_html));
+                bodyType = 'text';
             }
+            
             this.setState({
                 body: body,
                 bodyType: bodyType,
@@ -75,8 +86,6 @@ export class PostBody extends React.Component {
 
     render() {
         // Toggles display: block and display: none for the post body
-        let videoContainer;
-        if (this.state.bodyType === 'video') { videoContainer = {textAlign: 'center'} }
         if (this.state.isPostExpanded) {
             let text = '•••';
             return (
@@ -87,7 +96,7 @@ export class PostBody extends React.Component {
                                 // Displays loader icon while post body is fetched
                                 this.state.fetchInProgress
                                 ? <div className='comment-loader-container'><GridLoader loading={true} color={"#44def3"} /></div>
-                                :   <div style={videoContainer}>{this.state.body}</div>
+                                :   <div>{this.state.body}</div>
                             }
                         </div>
                         <ExpandedPost onClick={this.handleClicked} text={text} isInPost='in-post' />

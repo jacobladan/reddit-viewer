@@ -49,7 +49,7 @@ export class Posts extends React.Component {
     scrollToTopOfPost(id) {
         let height = this.postBodyRefs[id].clientHeight;
         if (height > 600) {
-            window.scrollBy(0, height * -1);
+            window.scrollBy(0, (height * -1) + 200);
         }
     }
 
@@ -85,9 +85,16 @@ export class Posts extends React.Component {
                 firstPostId = data.data.children[0].data.id;
                 let numPosts = data.data.children.length;
                 posts = data.data.children.map(post => {
-                    let previewUrl;
-                    let body = post.data.selftext_html;
-                    if (post.data.media !== null) { body = post.data.media.oembed }
+
+                    let previewUrl, domain = post.data.domain;
+                    let body = false;
+                    // Checks for post body. TODO: Try and find a more universal way of identifying post body
+                    if (domain === 'i.imgur.com' || domain === 'v.reddit.com' || domain === 'gfycat.com' 
+                        || domain === `self.${post.data.subreddit}` || domain === 'i.redd.it'  || domain === 'v.redd.it'
+                        || post.data.media !== null || post.data.selftext_html) {
+                        body = true;
+                    }
+
                     let authorLink = 'https://www.reddit.com/user/' + post.data.author;
                     let createdDate = new Date(post.data.created * 1000).toLocaleDateString("en-US", dateOptions);
                     if (numPosts < 15) { this.props.removeForwardArrows(); }
@@ -112,7 +119,7 @@ export class Posts extends React.Component {
                                     title={decodeHTML(post.data.title)}
                                     authorLink={authorLink}
                                     author={post.data.author} 
-                                    domain={post.data.domain}
+                                    domain={domain}
                                     created={createdDate}
                                     stickied={post.data.stickied}
                                     spoiler={post.data.spoiler}
