@@ -73,7 +73,7 @@ export class Posts extends React.Component {
         this.setState({fetchInProgress: true, postsWereFetched: true, subredditWasFound: true, highlightPost: ''});
         const fetch = new SubredditAPI(subreddit, direction, id, filter, sortBy);
         fetch.then(data => {
-            console.log(data);
+            // console.log(data);
             if (typeof(data) === 'undefined') {
                 this.setState({subredditWasFound: false, fetchInProgress: false});
                 this.SubredditSuggestion.current.getSuggestions(subreddit); 
@@ -86,7 +86,8 @@ export class Posts extends React.Component {
                 let numPosts = data.data.children.length;
                 posts = data.data.children.map(post => {
                     let previewUrl;
-                    let bodyText = post.data.selftext_html;
+                    let body = post.data.selftext_html;
+                    if (post.data.media !== null) { body = post.data.media.oembed }
                     let authorLink = 'https://www.reddit.com/user/' + post.data.author;
                     let createdDate = new Date(post.data.created * 1000).toLocaleDateString("en-US", dateOptions);
                     if (numPosts < 15) { this.props.removeForwardArrows(); }
@@ -125,7 +126,7 @@ export class Posts extends React.Component {
                                 </div>{
                                         // Checking if post has a body. If not, then no expand button or
                                         // post body place holder is rendered
-                                        bodyText
+                                        body
                                         ? <PostBody postId={post.data.id}
                                             subreddit={post.data.subreddit}
                                             scrollToTopOfPost={this.scrollToTopOfPost}

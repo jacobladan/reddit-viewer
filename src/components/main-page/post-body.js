@@ -16,8 +16,6 @@ export class PostBody extends React.Component {
         super(props);
         this.state = {
             body: '',
-            subreddit: 'all',
-            comments: [],
             isPostExpanded: false,
             fetchInProgress: true,
             isBodyLoaded: false
@@ -29,16 +27,26 @@ export class PostBody extends React.Component {
         this.setState({fetchInProgress: true});
         const getPost = new PostAPI(subreddit, Id);
         getPost.then(data => {
-            // console.log(data);
-            let bodyText = data[0].data.children[0].data.selftext_html;
+            console.log(data);
+            let body, bodyType;
             if (data === undefined) { return }
-            if (bodyText !== null) {
+
+            if (data[0].data.children[0].data.media !== null) { 
+                body = data[0].data.children[0].data.media_embed.content;
+                bodyType = 'video';
+            } else {
+                body = data[0].data.children[0].data.selftext_html;
+                bodyType = 'text';
+            }
+
+            if (body !== null) {
                 // Filter methods. 1. Converts any special characters to their raw form.
                 // 2. Converts the html string to valid JSX that can be rendered
-                bodyText = ReactHtmlParser(decodeHTML(bodyText));
+                body = ReactHtmlParser(decodeHTML(body));
             }
             this.setState({
-                body: bodyText,
+                body: body,
+                bodyType: bodyType,
                 fetchInProgress: false,
                 isBodyLoaded: true
             });
@@ -67,10 +75,9 @@ export class PostBody extends React.Component {
 
     render() {
         // Toggles display: block and display: none for the post body
+        let videoContainer;
+        if (this.state.bodyType === 'video') { videoContainer = {textAlign: 'center'} }
         if (this.state.isPostExpanded) {
-            // let text = '▲';
-            // let text = '-';
-            // let text = 'CLOSE';
             let text = '•••';
             return (
                 <div className='expanded-post-container' >
@@ -80,7 +87,7 @@ export class PostBody extends React.Component {
                                 // Displays loader icon while post body is fetched
                                 this.state.fetchInProgress
                                 ? <div className='comment-loader-container'><GridLoader loading={true} color={"#44def3"} /></div>
-                                :   <div>{this.state.body}</div>
+                                :   <div style={videoContainer}>{this.state.body}</div>
                             }
                         </div>
                         <ExpandedPost onClick={this.handleClicked} text={text} isInPost='in-post' />
@@ -88,9 +95,6 @@ export class PostBody extends React.Component {
                 </div>
             )
         } else {
-            // let text = '▼';
-            // let text = '+';
-            // let text = 'EXPAND';
             let text = '•••';
             return(
                 <div className='expanded-post-container'>
