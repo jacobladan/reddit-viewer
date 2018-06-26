@@ -30,7 +30,7 @@ export class PostBody extends React.Component {
         this.setState({fetchInProgress: true});
         const getPost = new PostAPI(subreddit, Id);
         getPost.then(data => {
-            console.log(data);
+            // console.log(data);
             if (data === undefined) { return }
 
             let body, bodyType;

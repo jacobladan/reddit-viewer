@@ -8,14 +8,14 @@ import { GridLoader } from 'react-spinners';
 import SadFace from '../../images/sad-face.svg';
 import { SubredditSuggestion } from './subreddit-suggestion';
 
-const dateOptions = {
-    weekday: 'long',
-    month: 'long',
-    year: 'numeric',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-};
+// const dateOptions = {
+//     weekday: 'long',
+//     month: 'long',
+//     year: 'numeric',
+//     day: 'numeric',
+//     hour: 'numeric',
+//     minute: 'numeric',
+// };
 
 let decodeHTML = function (html) {
 	var txt = document.createElement('textarea');
@@ -96,7 +96,6 @@ export class Posts extends React.Component {
                     }
 
                     let authorLink = 'https://www.reddit.com/user/' + post.data.author;
-                    let createdDate = new Date(post.data.created * 1000).toLocaleDateString("en-US", dateOptions);
                     if (numPosts < 15) { this.props.removeForwardArrows(); }
                     lastPostId = post.data.id;
                     // Thumbnail checks
@@ -120,7 +119,7 @@ export class Posts extends React.Component {
                                     authorLink={authorLink}
                                     author={post.data.author} 
                                     domain={domain}
-                                    created={createdDate}
+                                    created={post.data.created_utc}
                                     stickied={post.data.stickied}
                                     spoiler={post.data.spoiler}
                                     postSubreddit={post.data.subreddit}
@@ -128,6 +127,7 @@ export class Posts extends React.Component {
                                     handleSubredditChange={this.props.handleSubredditChange}
                                     permaLink={post.data.permalink}
                                     over_18={post.data.over_18}
+                                    num_comments={post.data.num_comments}
                                     />
                                     <Points points={post.data.score}/>
                                 </div>{

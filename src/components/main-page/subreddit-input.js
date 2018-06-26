@@ -13,7 +13,7 @@ export class SubredditInput extends React.Component {
     }
 
     handleInputChange(e) {
-        this.setState({input: e.target.value.replace(/[!@#$%^&*\s()]/g, '')});
+        this.setState({input: e.target.value.replace(/[^a-zA-Z0-9_]/g, '')});
     }
 
     handleSubmit() {
