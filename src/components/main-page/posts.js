@@ -5,8 +5,8 @@ import { PostInfo } from './post-info';
 import { Points } from './points';
 import { PostBody } from './post-body';
 import { GridLoader } from 'react-spinners';
-import SadFace from '../../images/sad-face.svg';
 import { SubredditSuggestion } from './subreddit-suggestion';
+import SadFace from '../../images/sad-face.svg';
 
 let decodeHTML = function (html) {
 	var txt = document.createElement('textarea');
@@ -98,7 +98,7 @@ export class Posts extends React.Component {
                             previewUrl = post.data.thumbnail;
                         }
                     } else { 
-                        previewUrl = 'https://www.reddit.com/static/self_default2.png'; 
+                        previewUrl = 'default'; 
                     }
                     return (
                             <div className='post-container' key={post.data.id} ref={node => { this.postBodyRefs[post.data.id] = node; }}>

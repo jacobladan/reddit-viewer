@@ -1,20 +1,22 @@
 import React from 'react';
+import DefaultThumbnail from '../../images/default-thumbnail.png';
 
 export class Thumbnail extends React.Component {
 
     render() {
-        let aClasses = `thumbnail ${this.props.aClass}`;
-        let imgClasses = `thumbnail-img ${this.props.imgClass}`;
-        let nsfwBlur;
+        let nsfwBlur, src;
         if (this.props.over_18) { nsfwBlur = {filter: 'blur(5px)'} }
+        if (this.props.src === 'default') { src = DefaultThumbnail }
+        else { src = this.props.src }
         return (
-            <a href={this.props.href} className={aClasses} target='_blank'>
+            <a href={this.props.href} className='thumbnail' target='_blank'>
                 <img 
-                    src={this.props.src} 
+                    src={src} 
                     alt="thumbnail" 
-                    className={imgClasses} 
-                    onError={(e) => {e.target.src="https://www.reddit.com/static/self_default2.png"}}
-                    style={nsfwBlur}/>
+                    className='thumbnail-img'
+                    onError={DefaultThumbnail}
+                    style={nsfwBlur}
+                />
             </a>
         )
     }
