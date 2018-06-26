@@ -277,12 +277,8 @@ p {
 }
 
 .highlighted-post {
-    /* border-right: 2px solid #949494;
-    border-left: 2px solid #949494; */
-    /* border: 2px solid #949494; */
-    /* border-top: 2px solid #d0d0d0; */
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2);
-    transition: 400ms ease-in-out;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,.55);
+    transition: 300ms ease-in-out;
 }
 
 .animation-styles {
@@ -316,6 +312,11 @@ p {
     overflow: hidden;
     display: inline-block;
     width: 75%;
+}
+
+.info-container {
+    display: inline-block;
+    width: 100%;
 }
 
 .post-title {
