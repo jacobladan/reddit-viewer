@@ -69,8 +69,7 @@ class App extends Component {
 
   handleSubredditChange(subreddit) {
     this.setState({ atEnd: false, subreddit: subreddit, subNotFound: false });
-    this.filter.current.resetFilter();
-    this.posts.current.generatePosts(subreddit, 'after', '', 'hot', this.state.currentListing.sortBy);
+    this.posts.current.generatePosts(subreddit, 'after', '', this.state.currentListing.filter, this.state.currentListing.sortBy);
     this.navigation.current.resetPageCounter();
     scroll.scrollToTop({duration: 500, smooth: true});
   }

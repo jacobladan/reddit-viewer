@@ -36,14 +36,14 @@ export class Filter extends React.Component {
         this.props.handleFilterChange(value);
     }
 
-    resetFilter() {
-        this.setState({
-            hotSelected: true,
-            newSelected: false,
-            risingSelected: false,
-            topSelected: false
-        });
-    }
+    // resetFilter() {
+    //     this.setState({
+    //         hotSelected: true,
+    //         newSelected: false,
+    //         risingSelected: false,
+    //         topSelected: false
+    //     });
+    // }
 
     setFilter(filter) {
         if (filter === 'hot') {

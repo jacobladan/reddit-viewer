@@ -8,15 +8,6 @@ import { GridLoader } from 'react-spinners';
 import SadFace from '../../images/sad-face.svg';
 import { SubredditSuggestion } from './subreddit-suggestion';
 
-// const dateOptions = {
-//     weekday: 'long',
-//     month: 'long',
-//     year: 'numeric',
-//     day: 'numeric',
-//     hour: 'numeric',
-//     minute: 'numeric',
-// };
-
 let decodeHTML = function (html) {
 	var txt = document.createElement('textarea');
 	txt.innerHTML = html;

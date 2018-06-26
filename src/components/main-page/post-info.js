@@ -7,14 +7,10 @@ export class PostInfo extends React.Component {
         this.timeSincePost = 0;
     }
 
-    handleClick() {
-        this.props.handleSubredditChange(this.props.postSubreddit);
-    }
-
     componentWillMount() {
         let timeNow = Math.round(Date.now() / 1000);
         let timeDif = (timeNow - (this.props.created)) / 60;
-        console.log(this.props.title + ': ' + timeDif)
+        // console.log(this.props.title + ': ' + timeDif)
         if (timeDif >= 2 && timeDif <= 60) {
             // Between 2 minutes and an hour
             this.timeSincePost = Math.floor(timeDif) + ' minutes ago';
@@ -47,6 +43,14 @@ export class PostInfo extends React.Component {
             this.timeSincePost = 'now';
         }
     }
+
+    handleSubredditClick() {
+        this.props.handleSubredditChange(this.props.postSubreddit);
+    }
+
+    handleCommentsClick() {
+        console.log('clicked')
+    }
     
     render() {
         // Work around to add second class based on props
@@ -59,7 +63,7 @@ export class PostInfo extends React.Component {
         return (
             <div className='post-info'>
                 <p className='title-container'>
-                    <a href={'https://reddit.com' + this.props.permaLink} className={titleClass} target='_blank'>{this.props.title}</a>
+                    <a href={this.props.link} className={titleClass} target='_blank'>{this.props.title}</a>
                     <span className='domain'>({this.props.domain})</span>
                 </p>
                 <div>
@@ -74,14 +78,16 @@ export class PostInfo extends React.Component {
                         (this.props.passedSubreddit === 'all') && 
                         <div className='subreddit-container'>
                             <p className='subreddit'><b>To: </b></p>
-                            <span className='subreddit-link' onClick={() => this.handleClick()}>/r/{this.props.postSubreddit}</span>
+                            <span className='subreddit-link' onClick={() => this.handleSubredditClick()}>/r/{this.props.postSubreddit}</span>
                         </div>
                     }
                 </div>
                 <div className='info-container'>
-                    <p className='comments'>Comments ({this.props.num_comments})</p>
+                    <a href={'https://reddit.com' + this.props.permaLink} target='_blank' className='comments'>Comments ({this.props.num_comments})</a>
                 </div>
             </div>
         )
     }
 }
+// <p className='comments' onClick={() => this.handleCommentsClick()}>Comments ({this.props.num_comments})</p>
+
