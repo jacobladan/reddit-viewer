@@ -30,7 +30,7 @@ export class PostBody extends React.Component {
         this.setState({fetchInProgress: true});
         const getPost = new PostAPI(subreddit, Id);
         getPost.then(data => {
-            // console.log(data);
+            console.log(data);
             if (data === undefined) { return }
 
             let body, bodyType;
@@ -42,19 +42,26 @@ export class PostBody extends React.Component {
                 let html = ReactHtmlParser(decodeHTML(data[0].data.children[0].data.media_embed.content));
                 body = <EmbeddedVideo html={html}/>
                 bodyType = 'video';
-            } else if (postHint === 'image') {
+            } else if (postHint === 'image' || data[0].data.children[0].data.domain === 'i.redd.it') {
                 body = <EmbeddedImage src={data[0].data.children[0].data.url}/>;
                 bodyType = 'image';
             } else if (postHint === 'link') {
                 let src = data[0].data.children[0].data.url;
-                body = <EmbeddedLink src={src.replace('gifv', 'mp4')}/>
-                console.log(data[0].data.children[0].data.url);
+                if (src.includes('gifv')) {
+                    body = <EmbeddedLink src={src.replace('gifv', 'mp4')}/>
+                } else {
+                    body = null;
+                }
                 bodyType = 'link';
             } else if (data[0].data.children[0].data.selftext_html !== null) {
                 body = ReactHtmlParser(decodeHTML(data[0].data.children[0].data.selftext_html));
                 bodyType = 'text';
+            } else {
+                // Catch for undefined postHint. So far it's always an image
+                body = body = <EmbeddedImage src={data[0].data.children[0].data.url}/>;
+                bodyType= 'image';
             }
-            
+
             this.setState({
                 body: body,
                 bodyType: bodyType,

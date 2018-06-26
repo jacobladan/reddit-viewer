@@ -21,7 +21,7 @@ export class SubredditInput extends React.Component {
             return;
         } else {
             // Removing anything that isn't a letter or number
-            this.props.handleSubredditChange(this.state.input.replace(/[^a-zA-Z0-9]/,''));
+            this.props.handleSubredditChange(this.state.input.replace(/[^a-zA-Z0-9_]/,''));
         }
         this.setState({input: ''});
         this.input.current.blur();
@@ -48,7 +48,7 @@ export class SubredditInput extends React.Component {
                         e.stopPropagation();
                         this.handleSubmit();
                     }}>
-                    <p className='floating-r' style={this.state.rStyle}>/r/</p>
+                    <p className='floating-r' style={this.state.rStyle}><b>/r/</b></p>
                     <input 
                         ref={this.input}
                         type="text" 
