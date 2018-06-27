@@ -14,7 +14,7 @@ export class Thumbnail extends React.Component {
                     src={src} 
                     alt="thumbnail" 
                     className='thumbnail-img'
-                    onError={DefaultThumbnail}
+                    onError={(e)=>{e.target.src=DefaultThumbnail}}
                     style={nsfwBlur}
                 />
             </a>

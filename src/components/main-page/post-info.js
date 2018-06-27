@@ -74,20 +74,21 @@ export class PostInfo extends React.Component {
                 <div className='info-container'>
                     <p className='posted'><b>Posted: </b>{this.timeSincePost}</p>
                     <p className='author'><b>By: </b><a href={this.props.authorLink} className='author-link' target='_blank'>{this.props.author}</a></p>
-                    {
-                        (this.props.passedSubreddit === 'all') && 
-                        <div className='subreddit-container'>
-                            <p className='subreddit'><b>To: </b></p>
-                            <span className='subreddit-link' onClick={() => this.handleSubredditClick()}>/r/{this.props.postSubreddit}</span>
-                        </div>
-                    }
+                    {(this.props.passedSubreddit === 'all') && <p className='subreddit'><b>To: </b></p>}
+                    {(this.props.passedSubreddit === 'all') && <p className='subreddit-link' onClick={() => this.handleSubredditClick()}>/r/{this.props.postSubreddit}</p>}
+                    <a href={'https://reddit.com' + this.props.permaLink} target='_blank' className='comments'>Comments ({this.props.num_comments})</a>
                 </div>
                 <div className='info-container'>
-                    <a href={'https://reddit.com' + this.props.permaLink} target='_blank' className='comments'>Comments ({this.props.num_comments})</a>
                 </div>
             </div>
         )
     }
 }
 // <p className='comments' onClick={() => this.handleCommentsClick()}>Comments ({this.props.num_comments})</p>
-
+// {
+//     (this.props.passedSubreddit === 'all') && 
+//     <div className='subreddit-container'>
+//         <p className='subreddit'><b>To: </b></p>
+//         <span className='subreddit-link' onClick={() => this.handleSubredditClick()}>/r/{this.props.postSubreddit}</span>
+//     </div>
+// }

@@ -2,6 +2,10 @@ p {
     margin: 0;
 }
 
+b {
+    color: rgb(99, 99, 99);
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
@@ -339,7 +343,7 @@ p {
 }
 
 .author-link {
-    text-decoration: underline;
+    text-decoration: none;
     color: black;
 }
 
@@ -359,7 +363,7 @@ p {
     color: black;
     font-size: 0.7em;
     display: inline-block;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .comments:hover {
@@ -374,13 +378,14 @@ p {
 .subreddit {
     font-size: 0.7em;
     display: inline-block;
+    margin-right: 0.5%;
 }
 
 .subreddit-link {
     font-size: 0.7em;
     display: inline-block;
-    margin-left: 3%;
-    text-decoration: underline;
+    margin-right: 1%;
+    /* text-decoration: underline; */
 }
 
 .subreddit-link:hover {
