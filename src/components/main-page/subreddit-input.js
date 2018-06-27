@@ -1,4 +1,5 @@
 import React from 'react';
+import { defaultSubreddit } from '../../api/subreddit-api';
 
 export class SubredditInput extends React.Component {
 
@@ -9,7 +10,7 @@ export class SubredditInput extends React.Component {
             rStyle: {}
         };
         this.input = React.createRef();
-        this.subreddit = 'all';
+        this.subreddit = defaultSubreddit;
     }
 
     handleInputChange(e) {
@@ -32,7 +33,7 @@ export class SubredditInput extends React.Component {
     }
 
     handleBlur() {
-        this.setState({rStyle: {color: 'grey'}})
+        this.setState({rStyle: {color: 'rgb(99, 99, 99)'}})
     }
 
     render() {
@@ -44,10 +45,10 @@ export class SubredditInput extends React.Component {
         return (
             <div className='subreddit-form-container'>
                 <form onSubmit={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        this.handleSubmit();
-                    }}>
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.handleSubmit();
+                }}>
                     <p className='floating-r' style={this.state.rStyle}><b>/r/</b></p>
                     <input 
                         ref={this.input}

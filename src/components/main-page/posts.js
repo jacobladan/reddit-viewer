@@ -1,5 +1,5 @@
 import React from 'react';
-import { SubredditAPI } from '../../api/subreddit-api';
+import { SubredditAPI, defaultSubreddit } from '../../api/subreddit-api';
 import { Thumbnail } from './thumbnail';
 import { PostInfo } from './post-info';
 import { Points } from './points';
@@ -19,7 +19,7 @@ export class Posts extends React.Component {
         super(props);
         this.state = {
             posts: [],
-            subreddit: 'all',
+            subreddit: defaultSubreddit,
             firstPostId: '',
             lastPostId: '',
             highlightPost: '',

@@ -5,9 +5,10 @@ import { Animated } from "react-animated-css";
 import { Navigation } from './components/main-page/navigation';
 import { animateScroll as scroll } from 'react-scroll';
 import { SubredditInput } from './components/main-page/subreddit-input';
+import { SubTitle } from './components/main-page/sub-title';
+import { defaultSubreddit } from './api/subreddit-api';
 import './styles/main-page-styles.css';
 import './styles/responsive-styles.css';
-import { SubTitle } from './components/main-page/sub-title';
 // import './server';
 
 class App extends Component {
@@ -18,7 +19,7 @@ class App extends Component {
       atEnd: false,
       subNotFound: false,
       currentListing: {
-        subreddit: 'all',
+        subreddit: defaultSubreddit,
         id: '',
         filter: '',
         sortBy: 'hour',

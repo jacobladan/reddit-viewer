@@ -1,9 +1,10 @@
 import React from 'react';
+import { defaultSubreddit } from '../../api/subreddit-api';
 
 export class SubTitle extends React.Component { 
     constructor(props) {
         super(props);
-        this.subreddit = 'all';
+        this.subreddit = defaultSubreddit;
     }
     render() {
         // So the first render of title does not show undefined

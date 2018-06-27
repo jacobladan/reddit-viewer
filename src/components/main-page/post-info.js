@@ -84,11 +84,3 @@ export class PostInfo extends React.Component {
         )
     }
 }
-// <p className='comments' onClick={() => this.handleCommentsClick()}>Comments ({this.props.num_comments})</p>
-// {
-//     (this.props.passedSubreddit === 'all') && 
-//     <div className='subreddit-container'>
-//         <p className='subreddit'><b>To: </b></p>
-//         <span className='subreddit-link' onClick={() => this.handleSubredditClick()}>/r/{this.props.postSubreddit}</span>
-//     </div>
-// }
