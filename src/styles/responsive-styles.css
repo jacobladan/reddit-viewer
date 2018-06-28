@@ -56,10 +56,10 @@
         background-color: white;
         border-radius: 0px;
         box-shadow: none;
-        height: 48px;
-        font-size: 100%;
-        margin-left: 3%;
-        width: 30%;
+        height: 28px;
+        font-size: 75%;
+        margin-left: 2%;
+        width: 61%;
     }
 
     .subreddit-form-container {
@@ -81,7 +81,6 @@
     .browse-button {
         box-shadow: none;
         border-radius: 0px;
-        margin-top: 1%;
         background-color: #5adaff;
         color: white;
         height: 26px;

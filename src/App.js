@@ -42,11 +42,13 @@ class App extends Component {
     this.filter = React.createRef();
     this.posts = React.createRef();
     this.navigation = React.createRef();
+    this.optionsContainer = React.createRef();
   }
 
   componentDidMount() {
     // Assigning popstate to my own handle
     window.onpopstate = this.handlePopState.bind(this);
+    console.log(this.optionsContainer.current.offsetHeight);
   }
 
   setHistory(subreddit, firstId, lastId, filter, sortBy) {
@@ -136,7 +138,8 @@ class App extends Component {
           filter: e.state.filter,
           sortBy: e.state.sortBy,
         },
-        atEnd: false
+        atEnd: false,
+        subNotFound: false
       });
     } catch(e) {
       console.log('No more posts to load');
@@ -147,7 +150,7 @@ class App extends Component {
     return(
       <div className='page-container'>
         <SubTitle subreddit={this.state.currentListing.subreddit}/>
-        <div className='options-container'>
+        <div className='options-container' ref={this.optionsContainer}>
           <Filter 
             ref={this.filter} 
             handleFilterChange={this.handleFilterChange} 

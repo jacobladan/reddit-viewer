@@ -321,6 +321,7 @@ p {
     text-decoration: none;
     color: inherit;
     font-size: 1.2em;
+    margin-right: 1%;
 }
 
 .post-title:visited {
@@ -329,7 +330,6 @@ p {
 
 .domain {
     font-size: 0.7em;
-    padding-left: 1%;
     color: rgb(138, 138, 138);
 }
 
