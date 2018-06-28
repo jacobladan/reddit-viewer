@@ -35,33 +35,41 @@ export class PostBody extends React.Component {
 
             let body, bodyType;
             let postHint = data[0].data.children[0].data.post_hint;
+            let domain = data[0].data.children[0].data.domain;
+            let url = data[0].data.children[0].data.url;
             // console.log(postHint);
-            if (postHint === 'rich:video') { 
+            if (postHint === 'rich:video' || url.includes('.webm')) { 
                 // Filter methods. 1. Converts any special characters to their raw form.
                 // 2. Converts the html string to valid JSX that can be rendered
-                let html = ReactHtmlParser(decodeHTML(data[0].data.children[0].data.media_embed.content));
-                body = <EmbeddedVideo html={html}/>
+                let html = null;
+                if (data[0].data.children[0].data.media_embed.content) {
+                    html = ReactHtmlParser(decodeHTML(data[0].data.children[0].data.media_embed.content));
+                    body = <EmbeddedVideo html={html}/>
+                } else {
+                    // If embedded is null
+                    body = <EmbeddedLink src={url} />;
+                }
                 bodyType = 'video';
-            } else if (postHint === 'image' || data[0].data.children[0].data.domain === 'i.redd.it') {
-                body = <EmbeddedImage src={data[0].data.children[0].data.url}/>;
+            } else if (postHint === 'image' || domain === 'i.redd.it') {
+                body = <EmbeddedImage src={url}/>;
                 bodyType = 'image';
             } else if (postHint === 'link') {
-                let src = data[0].data.children[0].data.url;
+                let src = url;
                 if (src.includes('gifv')) {
-                    body = <EmbeddedLink src={src.replace('gifv', 'mp4')}/>
+                    body = <EmbeddedLink src={src.replace('gifv', 'mp4')}/>;
                 } else {
-                    body = null;
+                    body = <EmbeddedLink src={src}/>;
                 }
                 bodyType = 'link';
-            } else if (data[0].data.children[0].data.selftext_html !== null) {
+            } else if (data[0].data.children[0].data.selftext_html !== null || url.includes('/comments')) {
                 body = ReactHtmlParser(decodeHTML(data[0].data.children[0].data.selftext_html));
                 bodyType = 'text';
             } else {
                 // Catch for undefined postHint. So far it's always an image
-                body = body = <EmbeddedImage src={data[0].data.children[0].data.url}/>;
+                body = <EmbeddedImage src={url}/>;
                 bodyType= 'image';
             }
-
+            // console.log(bodyType)
             this.setState({
                 body: body,
                 bodyType: bodyType,

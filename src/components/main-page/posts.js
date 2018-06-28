@@ -81,9 +81,11 @@ export class Posts extends React.Component {
                     let body = false;
                     // Checks for post body. TODO: Try and find a more unified way of identifying post body
                     if (domain === 'i.imgur.com' || domain === 'v.reddit.com' || domain === 'gfycat.com' 
-                        || domain === `self.${post.data.subreddit}` || domain === 'i.redd.it'
-                        || post.data.media !== null || post.data.selftext_html) {
+                        || domain === 'i.redd.it' || post.data.media !== null || post.data.selftext_html 
+                        || domain === 'giant.gfycat.com') {
+
                         if (post.data.domain !== 'v.redd.it') { body = true }
+
                     }
 
                     let authorLink = 'https://www.reddit.com/user/' + post.data.author;

@@ -341,7 +341,8 @@ p {
 }
 
 .posted b{
-    color: rgb(99, 99, 99);
+    color: rgb(148, 148, 148);
+    font-weight: normal;
 }
 
 .author {
@@ -351,7 +352,8 @@ p {
 }
 
 .author b {
-    color: rgb(99, 99, 99);
+    color: rgb(148, 148, 148);
+    font-weight: normal;
 }
 
 .author-link {
@@ -371,7 +373,8 @@ p {
 }
 
 .subreddit b {
-    color: rgb(99, 99, 99);
+    color: rgb(148, 148, 148);
+    font-weight: normal;
 }
 
 .subreddit-link {
