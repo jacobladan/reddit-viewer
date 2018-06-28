@@ -14,14 +14,14 @@ export class SubredditInput extends React.Component {
     }
 
     handleInputChange(e) {
-        this.setState({input: e.target.value.replace(/[^a-zA-Z0-9_]/g, '')});
+        this.setState({input: e.target.value.replace(/[^a-zA-Z0-9_]/g, '').toLowerCase()});
     }
 
     handleSubmit() {
         if (this.state.input === '') {
             return;
         } else {
-            // Removing anything that isn't a letter or number
+            // Removing anything that isn't a letter or number -- keeps underscores
             this.props.handleSubredditChange(this.state.input.replace(/[^a-zA-Z0-9_]/,''));
         }
         this.setState({input: ''});

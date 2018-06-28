@@ -3,6 +3,7 @@
 @import url(https://fonts.googleapis.com/css?family=Teko:700);
 
 body {
+  display: table;
   margin: 0;
   padding: 0;
   height: 100%;

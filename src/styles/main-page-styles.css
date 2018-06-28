@@ -24,12 +24,10 @@ p {
 }
 
 .page-container {
-    /* background-image: url(../images/page-background2.jpg); */
     padding-top: 5%;
     padding-bottom: 5%;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+    max-width: 1440px;
+    margin: 0 auto;
 }
 
 .logo-container {
@@ -551,16 +549,19 @@ p {
 }
 
 .embedded-link {
-    max-width: 600px;
+    /* max-width: 600px; */
+    max-width: 100%;
     max-height: 600px;
 }
 
 .embedded-video {
+    max-width: 100%;
     text-align: center;
 }
 
 .embedded-image {
-    max-width: 600px;
+    /* max-width: 600px; */
+    max-width: 100%;
     max-height: 600px;
 }
 
