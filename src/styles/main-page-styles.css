@@ -537,11 +537,6 @@ p {
     /* overflow-y: scroll; */
 }
 
-.embedded-image {
-    text-align: center;
-    max-width: 800px;
-}
-
 .post-body-container p {
     margin-top: 1%;
     margin-bottom: 1%;
@@ -554,6 +549,25 @@ p {
 .post-body-container a:visited {
     color: #4562cc;
 }
+
+.embedded-link {
+    max-width: 600px;
+    max-height: 600px;
+}
+
+.embedded-video {
+    text-align: center;
+}
+
+.embedded-image {
+    max-width: 600px;
+    max-height: 600px;
+}
+
+/* .embedded-image {
+    text-align: center;
+    max-width: 800px;
+} */
 
 .nav-container {
     position: relative;

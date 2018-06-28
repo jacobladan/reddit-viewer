@@ -89,7 +89,7 @@ export class Posts extends React.Component {
                     }
 
                     let authorLink = 'https://www.reddit.com/user/' + post.data.author;
-                    if (numPosts < 15) { this.props.removeForwardArrows(); }
+                    if (numPosts < 25) { this.props.removeForwardArrows(); }
                     lastPostId = post.data.id;
                     // Thumbnail checks
                     if (typeof(post.data.preview) !== 'undefined'){
@@ -165,8 +165,8 @@ export class Posts extends React.Component {
         } else if (!this.state.postsWereFetched) {
             return (
                 <div className='no-posts-container'>
-                    <p>There doesn't seem to be anything here...</p>
                     <img src={SadFace} alt='sad face' className='sad-face-img'/>
+                    <p className='no-posts-message'>There doesn't seem to be anything here...</p>
                 </div>
             );
         } else {

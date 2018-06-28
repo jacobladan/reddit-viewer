@@ -4,7 +4,7 @@ export class EmbeddedLink extends React.Component {
     render() {
         return (
             <div style={{textAlign: 'center'}}>
-                <video autoPlay loop style={{maxHeight: '600px', maxWidth: '600px'}}>
+                <video autoPlay loop className='embedded-link'>
                     <source src={this.props.src} type='video/mp4'/>
                 </video>
             </div>

@@ -1,5 +1,4 @@
-@media only screen and (max-width: 375px) {
-
+@media only screen and (max-width: 450px) {
     .page-container {
         padding-top: 3%;
     }
@@ -59,14 +58,33 @@
     }
 
     .browse-button {
-        padding-top: 4%;
-        border-radius: 0px;
         box-shadow: none;
-
+        background-color: #c3f1ff;
+        color: black;
+        margin-top: 1%;
     }
 
     .content-container .post-container:nth-child(even) {
         background-color: #f5f5f5;
+    }
+
+    .no-posts-container {
+        width: 100%;
+        box-shadow: none;
+        padding: 0%;
+        margin: 0%;
+    }
+
+    .sad-face-img {
+        width: 20%;
+    }
+
+    .no-posts-message {
+        font-size: 75%;
+    }
+
+    .sub-suggestion {
+        font-size: 50%;
     }
 
     .post-container {
@@ -150,6 +168,25 @@
         height: 25px;
     }
 
+    .post-body-container {
+        font-size: 50%;
+    }
+
+    .embedded-link {
+        max-width: 370px;
+        max-height: 370px;
+    }
+    
+    .embedded-image {
+        max-width: 370px;
+        max-height: 370px;
+    }
+
+    .embedded-video iframe {
+        max-width: 370px;
+        max-height: 370px;
+    }
+
     .page-number-container {
         margin-right: 30%;
         margin-left: 0%;
@@ -159,5 +196,57 @@
         font-size: 1.4em;
         bottom: -9%;
         left: 48.8%;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .embedded-link {
+        max-width: 340px;
+        max-height: 340px;
+    }
+    
+    .embedded-image {
+        max-width: 340px;
+        max-height: 340px;
+    }
+
+    .embedded-video iframe {
+        max-width: 340px;
+        max-height: 340px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .browse-button {
+        margin-right: 3%;
+        width: 34%;
+    }
+
+    .subreddit-input {
+        width: 40%;
+        padding-left: 10%;
+    }
+
+    .post-info {
+        width: 61%;
+    }
+
+    .post-body-container {
+        font-size: 50%;
+    }
+
+    .embedded-link {
+        max-width: 290px;
+        max-height: 290px;
+    }
+    
+    .embedded-image {
+        max-width: 290px;
+        max-height: 290px;
+    }
+
+    .embedded-video iframe {
+        max-width: 290px;
+        max-height: 290px;
     }
 }
