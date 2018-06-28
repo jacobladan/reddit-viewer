@@ -79,11 +79,13 @@
     }
 
     .browse-button {
-        /* box-shadow: none; */
-        background-color: #c3f1ff;
-        color: black;
+        box-shadow: none;
+        border-radius: 0px;
         margin-top: 1%;
-        margin-right: 1%;
+        background-color: #5adaff;
+        color: white;
+        height: 26px;
+        font-size: 75%;
     }
 
     .content-container .post-container:nth-child(even) {
@@ -229,7 +231,6 @@
 
 @media only screen and (max-width: 320px) {
     .browse-button {
-        margin-right: 3%;
         width: 34%;
     }
 
