@@ -9,6 +9,7 @@ import { SubTitle } from './components/main-page/sub-title';
 import { defaultSubreddit } from './api/subreddit-api';
 import './styles/main-page-styles.css';
 import './styles/responsive-styles.css';
+import { SettingsMenu } from './components/main-page/settings-menu';
 // import './server';
 
 class App extends Component {
@@ -18,6 +19,7 @@ class App extends Component {
     this.state = {
       atEnd: false,
       subNotFound: false,
+      nsfwFilter: true,
       currentListing: {
         subreddit: defaultSubreddit,
         id: '',
@@ -39,6 +41,7 @@ class App extends Component {
     this.removeForwardArrows = this.removeForwardArrows.bind(this);
     this.handleSubredditChange = this.handleSubredditChange.bind(this);
     this.setHistory = this.setHistory.bind(this);
+    this.toggleNSFW = this.toggleNSFW.bind(this);
     this.filter = React.createRef();
     this.posts = React.createRef();
     this.navigation = React.createRef();
@@ -48,7 +51,6 @@ class App extends Component {
   componentDidMount() {
     // Assigning popstate to my own handle
     window.onpopstate = this.handlePopState.bind(this);
-    console.log(this.optionsContainer.current.offsetHeight);
   }
 
   setHistory(subreddit, firstId, lastId, filter, sortBy) {
@@ -119,6 +121,10 @@ class App extends Component {
       this.setState({atEnd: true});
     }
   }
+    
+  toggleNSFW() {
+    this.setState({nsfwFilter: !this.state.nsfwFilter});
+  }
 
   handlePopState(e) {
     this.navigation.current.resetPageCounter();
@@ -159,6 +165,7 @@ class App extends Component {
           <SubredditInput 
             handleSubredditChange={this.handleSubredditChange} 
             subreddit={this.state.currentListing.subreddit}/>
+          <SettingsMenu toggleNSFW={this.toggleNSFW} nsfwFilter={this.state.nsfwFilter}/>
         </div>
         <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
           <Posts 
@@ -167,7 +174,8 @@ class App extends Component {
             removeForwardArrows={this.removeForwardArrows}
             subreddit={this.state.subreddit}
             handleSubredditChange={this.handleSubredditChange}
-            setHistory={this.setHistory}/>
+            setHistory={this.setHistory}
+            nsfwFilter={this.state.nsfwFilter}/>
         </Animated>
         <Navigation 
           ref={this.navigation} 

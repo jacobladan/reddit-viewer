@@ -62,8 +62,9 @@ p {
 }
 
 .filter-container {
-    float: left;
+    /* float: left; */
     -webkit-box-sizing: border-box;
+    display: inline-block;
     box-sizing: border-box;
     width: 40%;
     margin-left: 15%;
@@ -123,9 +124,11 @@ p {
 
 .subreddit-form-container {
     position: relative;
-    float: right;
+    /* float: right; */
+    display: inline-block;
     width: 25%;
-    margin-right: 15%;
+    margin-right: 2%;
+    margin-left: 1%;
     text-align: right;
 }
 
@@ -177,6 +180,78 @@ p {
     cursor: pointer;
 }
 
+.settings-container {
+    display: inline-block;
+    position: relative;
+}
+
+.settings-cog {
+    display: inline-block;
+    margin-top: 0.1%;
+    vertical-align: top;
+    transform-origin: 50% 50%;
+}
+
+.settings-cog:hover {
+    cursor: pointer;
+}
+
+.hvr-grow {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+  }
+  .hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+.settings-menu {
+    position: absolute;
+    width: 721%;
+    z-index: 999;
+    padding: 50%;
+    padding-bottom: 25%;
+    left: -720%;
+    top: -250%;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 2px 0 rgba(221, 115, 115, 0.14), 
+                0 3px 1px -2px rgba(0,0,0,.12), 
+                0 1px 5px 0 rgba(0,0,0,.2);
+}
+.menu-item-container {
+    display: inline-block;
+    width: 100%;
+}
+.menu-item-label {
+    font-size: 75%;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.toggle-switch-container {
+    vertical-align: top;
+    margin-left: 20%;
+    display: inline-block;
+}
+
+.react-switch-bg {
+    border-radius: 4px !important;
+}
+
+.react-switch-handle {
+    border-radius: 4px !important;
+    outline: none;
+    /* transform: translateX(30px) !important; */
+}
+
 .post-loader-container {
     width: 57px;
     font-size: 0;
@@ -188,10 +263,10 @@ p {
 .no-posts-container {
     display: block;
     position: relative;
-    width: 40%;
+    width: 46%;
     margin: 0 auto;
     padding: 1%;
-    padding-bottom: 1%;
+    padding-bottom: 2%;
     margin-bottom: 20%;
     margin-top: 2%;
     overflow: hidden;
@@ -202,7 +277,7 @@ p {
     /* transition: 500ms ease-in-out; */
     text-align: center;
     font-size: 150%;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
+    box-shadow: 0 2px 2px 0 rgba(221, 115, 115, 0.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
 }
 
 .no-posts-message {
@@ -321,6 +396,7 @@ p {
     text-decoration: none;
     color: inherit;
     font-size: 1.2em;
+    line-height: 1.3em;
     margin-right: 1%;
 }
 

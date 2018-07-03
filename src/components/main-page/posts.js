@@ -34,7 +34,7 @@ export class Posts extends React.Component {
     }
 
     componentDidMount() {
-        this.generatePosts(this.state.subreddit, '', '', 'hot', 'hour')
+        this.generatePosts(this.state.subreddit, '', '', 'hot', 'hour');
     }
 
     scrollToTopOfPost(id) {
@@ -65,6 +65,7 @@ export class Posts extends React.Component {
         const fetch = new SubredditAPI(subreddit, direction, id, filter, sortBy);
         fetch.then(data => {
             // console.log(data);
+            let i = 0;
             if (typeof(data) === 'undefined') {
                 this.setState({subredditWasFound: false, fetchInProgress: false});
                 this.SubredditSuggestion.current.getSuggestions(subreddit); 
@@ -74,11 +75,12 @@ export class Posts extends React.Component {
                 this.props.removeForwardArrows(true);
             } else { 
                 firstPostId = data.data.children[0].data.id;
-                let numPosts = data.data.children.length;
+                if (data.data.children.length < 25) { this.props.removeForwardArrows(); }
                 posts = data.data.children.map(post => {
 
                     let previewUrl, domain = post.data.domain;
                     let body = false;
+                    if (this.props.nsfwFilter && post.data.over_18) { return null }
                     // Checks for post body. TODO: Try and find a more unified way of identifying post body
                     if (domain === 'i.imgur.com' || domain === 'v.reddit.com' || domain === 'gfycat.com' 
                         || domain === 'i.redd.it' || post.data.media !== null || post.data.selftext_html 
@@ -89,7 +91,6 @@ export class Posts extends React.Component {
                     }
 
                     let authorLink = 'https://www.reddit.com/user/' + post.data.author;
-                    if (numPosts < 25) { this.props.removeForwardArrows(); }
                     lastPostId = post.data.id;
                     // Thumbnail checks
                     if (typeof(post.data.preview) !== 'undefined'){
@@ -102,6 +103,7 @@ export class Posts extends React.Component {
                     } else { 
                         previewUrl = 'default'; 
                     }
+                    i++;
                     return (
                             <div className='post-container' key={post.data.id} ref={node => { this.postBodyRefs[post.data.id] = node; }}>
                                 <div className='post-header'>
@@ -143,8 +145,10 @@ export class Posts extends React.Component {
                         lastPostId: lastPostId,
                         fetchInProgress: false,
                         subredditWasFound: true,
+                        postsWereFetched: (i !== 0)
                     });
                 }
+            if (i === 0) {this.props.removeForwardArrows(true)}
             if (!isFromHistory) { this.props.setHistory(subreddit, firstPostId, lastPostId, filter, sortBy) }
         })
     }
