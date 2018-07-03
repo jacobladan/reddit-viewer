@@ -42,15 +42,22 @@ export class SubredditAPI {
 
 export class PostAPI {
     constructor(subreddit, id) {
+        let url = `https://www.reddit.com/r/${subreddit}/comments/${id}.json`;
         try {
-            return fetch(`https://www.reddit.com/r/${subreddit}/comments/${id}.json`).then(this.handleErrors)
+            return fetch(url).then(this.handleErrors)
             .then(results => {
+                caches.open('post-cache').then(cache => {
+                    cache.add(url);
+                    // cache.keys().then(function(cachedRequests) { 
+                    //     console.log(cachedRequests); // [Request, Request]
+                    // });
+                })
                 return results.json();
             }).catch(() => {
                 console.log('Failed to fetch posts.');
             });
         } catch(e) {
-            console.log('Could not fetch posts.')
+            console.log('Failed to fetch posts.');
         }
     }
     handleErrors(response) {
@@ -63,8 +70,9 @@ export class PostAPI {
 
 export class SubredditSearchAPI {
     constructor(subreddit) {
+        let url = `https://www.reddit.com/subreddits/search.json?q=${subreddit}&limit=10`;
         try {
-           return fetch(`https://www.reddit.com/subreddits/search.json?q=${subreddit}&limit=10`).then(this.handleErrors)
+           return fetch(url).then(this.handleErrors)
            .then(results => {
                return results.json();
            }).catch(() => {
