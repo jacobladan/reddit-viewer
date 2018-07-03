@@ -62,9 +62,8 @@ p {
 }
 
 .filter-container {
-    /* float: left; */
+    float: left;
     -webkit-box-sizing: border-box;
-    display: inline-block;
     box-sizing: border-box;
     width: 40%;
     margin-left: 15%;
@@ -122,14 +121,23 @@ p {
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
 }
 
-.subreddit-form-container {
+.right-options-container {
+    float: right;
+    width: 40%;
+    margin-right: 0%;
+}
+
+.subreddit-form-container-desktop {
     position: relative;
-    /* float: right; */
     display: inline-block;
-    width: 25%;
+    width: 56%;
     margin-right: 2%;
     margin-left: 1%;
     text-align: right;
+}
+
+.subreddit-form-container-mobile {
+    display: none;
 }
 
 .floating-r {
@@ -182,6 +190,7 @@ p {
 
 .settings-container {
     display: inline-block;
+    z-index: 999999999;
     position: relative;
 }
 

@@ -4,10 +4,6 @@
         margin-left: 10%;
     }
 
-    .subreddit-form-container {
-        margin-right: 10%;
-    }
-
     .subreddit-input {
         width: 48%;
     }
@@ -16,6 +12,17 @@
         top: 15%;
     }
 }
+
+/* TABLET */ 
+/* @media only screen and (max-width: 768px) {
+    .filter-container {
+        margin-left: 5%;
+    }
+
+    .right-options-container {
+        margin-right: -9%;
+    }
+} */
 
 /* MOBILE */
 /* Changed from 450px */
@@ -30,14 +37,14 @@
 
     .filter-container {
         margin-left: 0%;
-        width: 50%;
+        width: 90%;
     }
 
     .filter-button {
         background-color: white;
         font-size: 75%;
         margin-right: 0%;
-        width: 25%;
+        width: 17%;
         height: 28px;
         border: none;
         border-radius: 0px;
@@ -54,21 +61,45 @@
 
     .top-sort {
         background-color: white;
-        border-radius: 0px;
-        box-shadow: none;
         height: 28px;
         font-size: 75%;
         margin-left: 2%;
-        width: 61%;
+        width: 30%;
+        padding-right: 7%;
     }
 
-    .subreddit-form-container {
-        width: 50%;
+    .right-options-container {
+        width: 0%;
+        margin-right: 2%;
+    }
+
+    .settings-container {
+        float: right;
+        margin-right: 2%;
+    }
+
+    .settings-menu {
+        width: 1200%;
+        left: -1350%;
+        top: -40%;
+    }
+
+    .subreddit-form-container-desktop {
+        display: none;
+    }
+
+    .subreddit-form-container-mobile {
+        display: inline-block;
+        width: 100%;
         margin-right: 0%;
     }
 
     .floating-r b {
         font-weight: normal;
+    }
+
+    .floating-r {
+        top: 18%;
     }
 
     .subreddit-input {
@@ -87,6 +118,15 @@
         font-size: 75%;
     }
 
+    .menu-item-container {
+        margin-top: 5%;
+        padding-left: 2%;
+    }
+
+    .toggle-switch-container {
+        margin-left: 37%;
+    }
+    
     .content-container .post-container:nth-child(even) {
         background-color: #f5f5f5;
     }
@@ -136,11 +176,12 @@
     }
 
     .title-container {
-        line-height: 0.9em;
+        /* line-height: 0.9em; */
     }
 
     .post-title {
-        font-size: 0.8em;
+        font-size: 1em;
+        line-height: 0.9em;
     }
 
     .domain {
@@ -148,7 +189,7 @@
     }
 
     .info-container {
-        font-size: 0.5em;
+        font-size: 0.9em;
         margin-top: 3%;
     }
 
@@ -167,6 +208,10 @@
 
     .subreddit b {
         display: none;
+    }
+
+    .subreddit-link {
+        margin-right: 2%;
     }
 
     .points-container {

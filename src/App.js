@@ -162,10 +162,15 @@ class App extends Component {
             handleFilterChange={this.handleFilterChange} 
             handleSortByChange={this.handleSortByChange} 
             sortBy={this.state.currentListing.sortBy}/>
-          <SubredditInput 
+          <div className='right-options-container' >
+            <SubredditInput 
             handleSubredditChange={this.handleSubredditChange} 
-            subreddit={this.state.currentListing.subreddit}/>
-          <SettingsMenu toggleNSFW={this.toggleNSFW} nsfwFilter={this.state.nsfwFilter}/>
+            subreddit={this.state.currentListing.subreddit}
+            className='subreddit-form-container-desktop'/>
+            <SettingsMenu toggleNSFW={this.toggleNSFW} 
+                        nsfwFilter={this.state.nsfwFilter} 
+                        handleSubredditChange={this.handleSubredditChange}/>
+          </div>
         </div>
         <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
           <Posts 

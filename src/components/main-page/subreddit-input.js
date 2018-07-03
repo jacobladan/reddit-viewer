@@ -43,7 +43,7 @@ export class SubredditInput extends React.Component {
         }
 
         return (
-            <div className='subreddit-form-container'>
+            <div className={this.props.className}>
                 <form onSubmit={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
