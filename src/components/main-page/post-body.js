@@ -1,6 +1,6 @@
 import React from 'react';
 import { PostAPI } from "../../api/subreddit-api";
-import { ExpandedPost } from '../main-page/expand-post';
+import { ExpandedPostButton } from '../main-page/expand-post-button';
 import { GridLoader } from 'react-spinners';
 import ReactHtmlParser from 'react-html-parser';
 import { EmbeddedImage } from './embedded-image';
@@ -103,10 +103,11 @@ export class PostBody extends React.Component {
     render() {
         // Toggles display: block and display: none for the post body
         if (this.state.isPostExpanded) {
-            let text = '•••';
+            // let text = '•••';
+            let text = '-';
             return (
                 <div className='expanded-post-container' >
-                    <ExpandedPost onClick={this.handleClicked} text={text}/>
+                    <ExpandedPostButton onClick={this.handleClicked} text={text}/>
                     <div className='expanded'>
                         <div className='post-body-container' >{
                                 // Displays loader icon while post body is fetched
@@ -115,15 +116,16 @@ export class PostBody extends React.Component {
                                 :   <div>{this.state.body}</div>
                             }
                         </div>
-                        <ExpandedPost onClick={this.handleClicked} text={text} isInPost='in-post' />
+                        <ExpandedPostButton onClick={this.handleClicked} text={text} isInPost='in-post' />
                     </div>
                 </div>
             )
         } else {
-            let text = '•••';
+            // let text = '•••';
+            let text = '+';
             return(
                 <div className='expanded-post-container'>
-                <ExpandedPost onClick={this.handleClicked} text={text}/>
+                <ExpandedPostButton onClick={this.handleClicked} text={text}/>
                     <div className='not-expanded'>
                         <div className='post-body-container'>
                         </div>

@@ -1,7 +1,7 @@
 /* DESKTOP */
 @media only screen and (max-width: 884px) {
-    .filter-container {
-        margin-left: 10%;
+    .right-options-container {
+        width: 45%;
     }
 
     .subreddit-input {
@@ -13,19 +13,6 @@
     }
 }
 
-/* TABLET */ 
-/* @media only screen and (max-width: 768px) {
-    .filter-container {
-        margin-left: 5%;
-    }
-
-    .right-options-container {
-        margin-right: -9%;
-    }
-} */
-
-/* MOBILE */
-/* Changed from 450px */
 @media only screen and (max-width: 740px) {
     .page-container {
         padding-top: 3%;
@@ -70,7 +57,7 @@
 
     .right-options-container {
         width: 0%;
-        margin-right: 2%;
+        margin-right: 4.5%;
     }
 
     .settings-container {
@@ -173,10 +160,6 @@
     .thumbnail-img {
         width: 50px;
         height: 50px;
-    }
-
-    .title-container {
-        /* line-height: 0.9em; */
     }
 
     .post-title {

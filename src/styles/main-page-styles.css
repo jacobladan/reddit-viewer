@@ -85,6 +85,7 @@ p {
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 
                 0 3px 1px -2px rgba(0,0,0,.12), 
                 0 1px 5px 0 rgba(0,0,0,.2);
+    font-weight: bold;
 }
 
 .filter-button:hover {
@@ -118,7 +119,10 @@ p {
     background-size: 20%;
     background-repeat: no-repeat;
     background-position: right center;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 
+                0 3px 1px -2px rgba(0,0,0,.12), 
+                0 1px 5px 0 rgba(0,0,0,.2);
+    font-weight: bold;
 }
 
 .right-options-container {
@@ -167,7 +171,6 @@ p {
 
 .browse-button {
     background-color: white;
-    /* background-color: #f1f1f1; */
     border-color: rgba(0, 0, 0, 0);
     color: black;
     border-radius: 3px;
@@ -180,7 +183,10 @@ p {
     width: 30%;
     margin-left: 4%;
     vertical-align: top;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 
+                0 3px 1px -2px rgba(0,0,0,.12), 
+                0 1px 5px 0 rgba(0,0,0,.2);
+    font-weight: bold;
 }
 
 .browse-button:hover {
@@ -357,7 +363,9 @@ p {
     color: black;
     /* background: #f1f1f1; */
     background: white;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 
+                0 3px 1px -2px rgba(0,0,0,.12), 
+                0 1px 5px 0 rgba(0,0,0,.2);
 }
 
 .highlighted-post {
@@ -566,27 +574,22 @@ p {
     bottom: 0;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
-    font-size: 150%;
+    font-size: 125%;
     transition: 200ms ease-in-out;
-
-    /* background-image: linear-gradient(#00000000, #bbbbbb4f);
-    background-position: 50% 50%;
+    /* background-image: url(../images/expand-post-arrow2.svg);
     background-repeat: no-repeat;
-    background-size: 0% 100%;
-    transition: background-size .5s, color .5s;     */
+    background-position: 50% 80%;
+    background-size: 2%; */
 }
 
 .expand-post-button:hover {
     cursor: pointer;
-    /* color: #5ddb63; */
     color: #ffb500;
-    /* background-size: 100% 100%; */
 }
 
 .expand-post-button.in-post {
     margin: 0 auto;
     margin-top: 2%;
-    /* color: #5ddb63; */
     color: #ffb500;
 }
 

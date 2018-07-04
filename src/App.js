@@ -20,6 +20,7 @@ class App extends Component {
       atEnd: false,
       subNotFound: false,
       nsfwFilter: true,
+      menuIsOpen: false,
       currentListing: {
         subreddit: defaultSubreddit,
         id: '',
@@ -42,10 +43,13 @@ class App extends Component {
     this.handleSubredditChange = this.handleSubredditChange.bind(this);
     this.setHistory = this.setHistory.bind(this);
     this.toggleNSFW = this.toggleNSFW.bind(this);
+    this.openSettingsMenu = this.openSettingsMenu.bind(this);
+    this.closeSettingsMenu = this.closeSettingsMenu.bind(this);
     this.filter = React.createRef();
     this.posts = React.createRef();
     this.navigation = React.createRef();
     this.optionsContainer = React.createRef();
+    this.settingsMenu = React.createRef();
   }
 
   componentDidMount() {
@@ -152,6 +156,15 @@ class App extends Component {
     }
   }
 
+  openSettingsMenu(e) {
+    e.stopPropagation();
+    this.setState({menuIsOpen: true});
+  }
+
+  closeSettingsMenu() {
+    this.setState({menuIsOpen: false});
+  }
+
   render() {
     return(
       <div className='page-container'>
@@ -169,7 +182,11 @@ class App extends Component {
             className='subreddit-form-container-desktop'/>
             <SettingsMenu toggleNSFW={this.toggleNSFW} 
                         nsfwFilter={this.state.nsfwFilter} 
-                        handleSubredditChange={this.handleSubredditChange}/>
+                        handleSubredditChange={this.handleSubredditChange}
+                        openSettingsMenu={this.openSettingsMenu}
+                        closeSettingsMenu={this.closeSettingsMenu}
+                        menuIsOpen={this.state.menuIsOpen} 
+                        ref={this.settingsMenu}/>
           </div>
         </div>
         <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export class ExpandedPost extends React.Component {
+export class ExpandedPostButton extends React.Component {
     render() {
         // Work around to add additional class to a button if parent needs
         let buttonClasses = `expand-post-button ${this.props.isInPost}`;

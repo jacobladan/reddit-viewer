@@ -9,28 +9,32 @@ export class SettingsMenu extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            menuIsOpen: false,
             nsfwFilter: true,
         };
-        this.settingsCog = React.createRef();
     }
 
-    handleClick() {
-        this.setState({menuIsOpen: !this.state.menuIsOpen});
+    handleMouseEnter(e) {
+        this.props.openSettingsMenu(e);
+    }
+
+    handleMouseLeave() {
+        this.props.closeSettingsMenu();
     }
 
     render() {
         return (
             <div className='settings-container'>
                 <img 
-                ref={this.settingsCog}
                 src={SettingsCog} 
                 alt="settings" 
-                className='settings-cog hvr-grow' 
-                onClick={() => this.handleClick()}/>
-                <Animated animationIn='fadeIn' isVisible={this.state.menuIsOpen} animateOnMount={false} style={{animationDuration: '.3s'}}>
-                    <div className='settings-menu'>
-                        <SubredditInput className='subreddit-form-container-mobile' handleSubredditChange={this.props.handleSubredditChange} />
+                className='settings-cog hvr-grow'
+                onMouseEnter={(e) => this.handleMouseEnter(e)}
+                />
+                <Animated animationIn='fadeIn' isVisible={this.props.menuIsOpen} animateOnMount={false} style={{animationDuration: '.3s'}}>
+                    <div className='settings-menu' onMouseLeave={(e) => this.handleMouseLeave(e)}>
+                        <SubredditInput className='subreddit-form-container-mobile' 
+                                        handleSubredditChange={this.props.handleSubredditChange}
+                                        subreddit={''}/>
                         <div className='menu-item-container'>
                             <label className='menu-item-label'>NSFW Filter</label>
                             <div className='toggle-switch-container'>
