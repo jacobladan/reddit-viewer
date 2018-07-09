@@ -8,9 +8,9 @@ import { SubredditInput } from './components/main-page/subreddit-input';
 import { SubTitle } from './components/main-page/sub-title';
 import { defaultSubreddit } from './api/subreddit-api';
 import './styles/main-page-styles.css';
-import './styles/responsive-styles.css';
 import './styles/themes/dark-theme.css';
 import './styles/themes/light-theme.css';
+import './styles/responsive-styles.css';
 import { SettingsMenu } from './components/main-page/settings-menu';
 
 // TODO: Convert generatePosts param to object

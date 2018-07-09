@@ -58,7 +58,7 @@ export class Navigation extends React.Component {
             pageCountVisible = {visibility: 'visible'};
         }
         return (
-            <div className='nav-container'>
+            <div className={`nav-container nav-container-${this.props.theme}`}>
                 <div className='nav-icon-container'>
                     <img src={NavArrows} alt="Previous Page" onClick={() => this.handleBackwardClick()} className='nav-icon left' style={leftArrowsVisible}/>
                 </div>
