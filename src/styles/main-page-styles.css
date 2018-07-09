@@ -28,6 +28,7 @@ p {
     padding-bottom: 5%;
     max-width: 1440px;
     margin: 0 auto;
+    transition: 150ms ease-in-out;
 }
 
 .logo-container {
@@ -53,6 +54,7 @@ p {
     font-weight: 600;
     text-decoration: none;
     color: black;
+    transition: 150ms ease-in-out;
 }
 
 .options-container {
@@ -70,10 +72,8 @@ p {
 }
 
 .filter-button {
-    background-color: white;
     padding: 0%;
     text-align: center;
-    color: black;
     margin-right: 2%;
     width: 15%;
     height: 23px;
@@ -89,12 +89,10 @@ p {
 }
 
 .filter-button:hover {
-    background-color: #c3f1ff;
     cursor: pointer;
 }
 
 .filter-button.selected {
-    background-color: #5adaff;
     color: white;
 }
 
@@ -106,9 +104,6 @@ p {
     appearance: none;
     -webkit-appearance: none;
     border-radius: 3px;
-    /* background-color: #f1f1f1; */
-    background-color: white;
-    color: black;
     border-color: rgba(0, 0, 0, 0);
     width: 22%;
     height: 23px;
@@ -149,16 +144,13 @@ p {
     left: 9%;
     top: 14%;
     font-size: 75%;
-    color: rgb(99, 99, 99);
+    transition: 150ms ease-in-out;
 }
 
 .subreddit-input {
     -webkit-appearance: none;
     border-radius: 4px;
-    background-color: #f1f1f1;
-    background-color: white;
     border-color: rgba(0, 0, 0, 0);
-    color: black;
     outline: none;
     height: 17px;
     padding-left: 8%;
@@ -167,16 +159,15 @@ p {
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 
     0 3px 1px -2px rgba(0,0,0,.12), 
     0 1px 5px 0 rgba(0,0,0,.2);
+    transition: 150ms ease-in-out;
 }
 
 .browse-button {
-    background-color: white;
     border-color: rgba(0, 0, 0, 0);
-    color: black;
     border-radius: 3px;
     border-color: rgba(0, 0, 0, 0);
-    -webkit-transition: 100ms ease-in-out;
-    -o-transition: 100ms ease-in-out;
+    -webkit-transition: 150ms ease-in-out;
+    -o-transition: 150ms ease-in-out;
     transition: 150ms ease-in-out;
     outline: none;
     height: 23px;
@@ -234,12 +225,12 @@ p {
     padding: 50%;
     padding-bottom: 25%;
     left: -720%;
-    top: -250%;
-    background: white;
+    top: -390%;
     border-radius: 4px;
     box-shadow: 0 2px 2px 0 rgba(221, 115, 115, 0.14), 
                 0 3px 1px -2px rgba(0,0,0,.12), 
                 0 1px 5px 0 rgba(0,0,0,.2);
+    transition: 150ms ease-in-out;
 }
 .menu-item-container {
     display: inline-block;
@@ -248,13 +239,12 @@ p {
 .menu-item-label {
     font-size: 75%;
     font-weight: bold;
-    display: inline-block;
+    padding-top: 2%;
+    float: left;
 }
 
 .toggle-switch-container {
-    vertical-align: top;
-    margin-left: 20%;
-    display: inline-block;
+    float: right;
 }
 
 .react-switch-bg {
@@ -287,12 +277,12 @@ p {
     overflow: hidden;
     background-color: white;
     border-radius: 4px;
-    color: black;
-    background: white;
-    /* transition: 500ms ease-in-out; */
+    transition: 150ms ease-in-out;
     text-align: center;
     font-size: 150%;
-    box-shadow: 0 2px 2px 0 rgba(221, 115, 115, 0.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
+    box-shadow: 0 2px 2px 0 rgba(221, 115, 115, 0.14), 
+                0 3px 1px -2px rgba(0,0,0,.12), 
+                0 1px 5px 0 rgba(0,0,0,.2);
 }
 
 .no-posts-message {
@@ -338,7 +328,6 @@ p {
 }
 
 .sub-suggestion-container:hover {
-    background-color: #c3f1ff;
     cursor: pointer;
     transition: 150ms ease-in-out;
 }
@@ -360,8 +349,6 @@ p {
     margin-bottom: 1%;
     overflow: hidden;
     border-radius: 4px;
-    color: black;
-    /* background: #f1f1f1; */
     background: white;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 
                 0 3px 1px -2px rgba(0,0,0,.12), 
@@ -369,8 +356,6 @@ p {
 }
 
 .highlighted-post {
-    /* box-shadow: 0 4px 8px 0 rgba(0,0,0,.55); */
-    box-shadow: 0 4px 8px 0 #28bbe850;
     transition: 300ms ease-in-out;
 }
 
@@ -423,7 +408,6 @@ p {
 
 .domain {
     font-size: 0.7em;
-    color: rgb(138, 138, 138);
 }
 
 .posted {
@@ -433,7 +417,6 @@ p {
 }
 
 .posted b{
-    color: rgb(148, 148, 148);
     font-weight: normal;
 }
 
@@ -444,13 +427,11 @@ p {
 }
 
 .author b {
-    color: rgb(148, 148, 148);
     font-weight: normal;
 }
 
 .author-link {
     text-decoration: none;
-    color: black;
 }
 
 .author-link:hover {
@@ -545,7 +526,6 @@ p {
     width: 76px;
     text-align: center;
     margin-top: 0.5%;
-    color: black;
     border-radius: 4px;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.2);
 }
@@ -553,7 +533,6 @@ p {
 .points-label {
     font-family: 'Teko', sans-serif;
     font-size: 150%;
-    color: rgb(138, 138, 138);
 }
 
 .points {
@@ -614,14 +593,10 @@ p {
 .post-body-container {
     padding: 2%;
     width: 91%;
-    color: black;
     margin: 0 auto;
     border-radius: 4px;
-    /* border: 2px solid white; */
     margin-bottom: 4%;
     margin-top: 2%;
-    /* max-height: 340px; */
-    /* overflow-y: scroll; */
 }
 
 .post-body-container p {
@@ -700,7 +675,6 @@ p {
     font-size: 2em;
     bottom: -26%;
     left: 49.5%;
-    color: black;
 }
 
 .md-spoiler-text {

@@ -36,15 +36,6 @@ export class Filter extends React.Component {
         this.props.handleFilterChange(value);
     }
 
-    // resetFilter() {
-    //     this.setState({
-    //         hotSelected: true,
-    //         newSelected: false,
-    //         risingSelected: false,
-    //         topSelected: false
-    //     });
-    // }
-
     setFilter(filter) {
         if (filter === 'hot') {
             this.setState({
@@ -90,11 +81,22 @@ export class Filter extends React.Component {
         }
         return(
             <div className='filter-container'>
-                <button className={hotButtonStyle} onClick={(e) => this.handleClick(e)} value='hot' ref='hotButton'>Hot</button>
-                <button className={newButtonStyle} onClick={(e) => this.handleClick(e)} value='new'>New</button>
-                <button className={risingButtonStyle} onClick={(e) => this.handleClick(e)} value='rising'>Rising</button>
-                <button className={topButtonStyle} onClick={(e) => this.handleClick(e)} value='top'>Top</button>
-                <TopFilter isTopSelected={this.state.topSelected} handleSortByChange={this.props.handleSortByChange} sortBy={this.props.sortBy}/>
+                <button className={`${hotButtonStyle} filter-button-${this.props.theme}`} 
+                        onClick={(e) => this.handleClick(e)} 
+                        value='hot'>Hot</button>
+                <button className={`${newButtonStyle} filter-button-${this.props.theme}`} 
+                        onClick={(e) => this.handleClick(e)} 
+                        value='new'>New</button>
+                <button className={`${risingButtonStyle} filter-button-${this.props.theme}`} 
+                        onClick={(e) => this.handleClick(e)} 
+                        value='rising'>Rising</button>
+                <button className={`${topButtonStyle} filter-button-${this.props.theme}`} 
+                        onClick={(e) => this.handleClick(e)} 
+                        value='top'>Top</button>
+                <TopFilter isTopSelected={this.state.topSelected} 
+                        handleSortByChange={this.props.handleSortByChange} 
+                        sortBy={this.props.sortBy}
+                        theme={this.props.theme}/>
             </div>
         );
     }

@@ -1,0 +1,116 @@
+.page-container-dark {
+    /* background-color: black; */
+    background-color: #1f1f1f;
+}
+
+.sub-title-dark {
+    color: lightgray;
+    /* color: white; */
+}
+
+.filter-button-dark {
+    background-color: #525252;
+    color: white;
+}
+
+.filter-button-dark:hover {
+    background-color: #85a7b1;
+}
+
+.filter-button-dark.selected {
+    background-color: #3590ab;
+}
+
+.top-sort-dark {
+    background-color: #525252;
+    color: white;
+}
+
+.floating-r-dark {
+    color: rgb(99, 99, 99);
+}
+
+.subreddit-input-dark {
+    background-color: #525252;
+    color: white;
+}
+
+.browse-button-dark {
+    background-color: #525252;
+    color: white;
+}
+
+.browse-button-dark:hover {
+    background-color: #85a7b1;
+}
+
+.settings-menu-dark {
+    background-color: #525252;
+    color: white;
+}
+
+.no-posts-container-dark {
+    background-color: #525252;
+    color: white;
+}
+
+.sub-suggestion-container-dark {
+    background-color: #808080;
+}
+
+.sub-suggestion-container-dark:hover {
+    background-color: #85a7b1;
+}
+
+.post-container-dark {
+    background-color: #525252;
+    color: white;
+}
+
+.highlighted-post-dark {
+    box-shadow: 0 4px 8px 0 #28bbe8ad;
+}
+
+.domain-dark {
+    color: rgba(180, 180, 180);
+}
+
+.posted-dark b {
+    color: rgba(180, 180, 180);
+}
+
+.author-dark b {
+    color: rgba(180, 180, 180);
+}
+
+.author-link-dark {
+    color: white;
+}
+
+.subreddit-dark b {
+    color: rgba(180, 180, 180);
+}
+
+.comments-dark {
+    color: white;
+}
+
+.points-container-dark {
+    background-color: #717171;
+}
+
+.points-label-dark {
+    color: #b7b7b7;
+}
+
+.points-dark {
+    color: white;
+}
+
+.post-body-container-dark {
+    color: white;
+}
+
+.page-number-dark {
+    color: lightgray;
+}

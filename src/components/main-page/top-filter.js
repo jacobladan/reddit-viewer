@@ -18,7 +18,7 @@ export class TopFilter extends React.Component {
     render() {
         if (this.props.isTopSelected) {
             return (
-                <select className='top-sort' onChange={(e) => this.handleChange(e)} value={this.props.sortBy}>
+                <select className={`top-sort top-sort-${this.props.theme}`} onChange={(e) => this.handleChange(e)} value={this.props.sortBy}>
                     <option value="hour">Past Hour</option>
                     <option value="day">Past 24 Hours</option>
                     <option value="week">Past Week</option>

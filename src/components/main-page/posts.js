@@ -31,6 +31,7 @@ export class Posts extends React.Component {
         this.scrollToTopOfPost = this.scrollToTopOfPost.bind(this);
         this.highlightPost = this.highlightPost.bind(this);
         this.SubredditSuggestion = React.createRef();
+        this.theme = 'light';
     }
 
     componentDidMount() {
@@ -48,7 +49,7 @@ export class Posts extends React.Component {
         if (this.state.highlightPost !== '') {
             this.postBodyRefs[this.state.highlightPost].classList.remove('highlighted-post');
         }
-        this.postBodyRefs[id].classList.add('highlighted-post');
+        this.postBodyRefs[id].classList.add('highlighted-post', `highlighted-post-${this.props.theme}`);
         this.setState({highlightPost: id});
     }
 
@@ -57,6 +58,15 @@ export class Posts extends React.Component {
             delete this.postBodyRefs[prop];
         }
     }
+
+    // componentWillReceiveProps() {
+    //     // Logic is backwards due to generatePosts() not seeing darkTheme prop until after returning 
+    //     if (this.props.darkTheme) {
+    //         this.theme = 'light';
+    //     } else {
+    //         this.theme = 'dark';
+    //     }
+    // }
 
     generatePosts(subreddit, direction, id, filter, sortBy, isFromHistory) {
         // first and lastIds are being used to track page navigation. See ../../api/subreddit-api.js
@@ -105,7 +115,7 @@ export class Posts extends React.Component {
                     }
                     i++;
                     return (
-                            <div className='post-container' key={post.data.id} ref={node => { this.postBodyRefs[post.data.id] = node; }}>
+                            <div className={`post-container post-container-${this.props.theme}`} key={post.data.id} ref={node => { this.postBodyRefs[post.data.id] = node; }}>
                                 <div className='post-header'>
                                     <Thumbnail href={post.data.url} src={previewUrl} over_18={post.data.over_18}/>
                                     <PostInfo 
@@ -123,8 +133,9 @@ export class Posts extends React.Component {
                                     permaLink={post.data.permalink}
                                     over_18={post.data.over_18}
                                     num_comments={post.data.num_comments}
+                                    theme={this.props.theme}
                                     />
-                                    <Points points={post.data.score}/>
+                                    <Points theme={this.props.theme} points={post.data.score}/>
                                 </div>{
                                         // Checking if post has a body. If not, then no expand button or
                                         // post body place holder is rendered
@@ -132,7 +143,8 @@ export class Posts extends React.Component {
                                         ? <PostBody postId={post.data.id}
                                             subreddit={post.data.subreddit}
                                             scrollToTopOfPost={this.scrollToTopOfPost}
-                                            highlightPost={this.highlightPost}/>
+                                            highlightPost={this.highlightPost}
+                                            theme={this.props.theme}/>
                                         : null
                                     }
                             </div>
@@ -156,26 +168,27 @@ export class Posts extends React.Component {
     render() {
         if (!this.state.subredditWasFound){
             return (
-                <div className='no-posts-container'>
+                <div className={`no-posts-container no-posts-container-${this.props.theme}`}>
                     <img src={SadFace} alt='sad face' className='sad-face-img'/>
                     <p className='no-posts-message'>That subreddit doesn't exist</p>
                     <div className='horizontal-line'></div>
                     <SubredditSuggestion 
                         ref={this.SubredditSuggestion}
                         subreddit={this.state.subreddit} 
-                        handleSubredditChange={this.props.handleSubredditChange}/>
+                        handleSubredditChange={this.props.handleSubredditChange}
+                        theme={this.props.theme}/>
                 </div>
             );
         } else if (!this.state.postsWereFetched) {
             return (
-                <div className='no-posts-container'>
+                <div className={`no-posts-container no-posts-container-${this.props.theme}`}>
                     <img src={SadFace} alt='sad face' className='sad-face-img'/>
                     <p className='no-posts-message'>There doesn't seem to be anything here...</p>
                 </div>
             );
         } else {
             return (
-                <div className='content-container' >{
+                <div className='content-container'> {
                     // Adds loader icon until the posts are fetched
                     this.state.fetchInProgress
                     ? <div className='post-loader-container'><GridLoader loading={true} color={"#44def3"}/></div>

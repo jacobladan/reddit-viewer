@@ -9,8 +9,11 @@ import { SubTitle } from './components/main-page/sub-title';
 import { defaultSubreddit } from './api/subreddit-api';
 import './styles/main-page-styles.css';
 import './styles/responsive-styles.css';
+import './styles/themes/dark-theme.css';
+import './styles/themes/light-theme.css';
 import { SettingsMenu } from './components/main-page/settings-menu';
-// import './server';
+
+// TODO: Convert generatePosts param to object
 
 class App extends Component {
 
@@ -20,13 +23,13 @@ class App extends Component {
       atEnd: false,
       subNotFound: false,
       nsfwFilter: true,
-      menuIsOpen: false,
+      isDarkTheme: false,
       currentListing: {
         subreddit: defaultSubreddit,
         id: '',
         filter: '',
         sortBy: 'hour',
-      }
+      },
     };
 
     // Used to update GUI for next generatePosts when using popstate
@@ -43,18 +46,32 @@ class App extends Component {
     this.handleSubredditChange = this.handleSubredditChange.bind(this);
     this.setHistory = this.setHistory.bind(this);
     this.toggleNSFW = this.toggleNSFW.bind(this);
-    this.openSettingsMenu = this.openSettingsMenu.bind(this);
-    this.closeSettingsMenu = this.closeSettingsMenu.bind(this);
+    this.toggleTheme = this.toggleDarkTheme.bind(this);
     this.filter = React.createRef();
     this.posts = React.createRef();
     this.navigation = React.createRef();
     this.optionsContainer = React.createRef();
-    this.settingsMenu = React.createRef();
+    this.theme = 'light';
+  }
+
+  componentWillMount() {
+    if (typeof(Storage) !== 'undefined') { 
+      if (localStorage.getItem('theme') === 'dark') {
+        this.theme = localStorage.getItem('theme');
+        this.setState({isDarkTheme: true}); 
+      }
+    }
   }
 
   componentDidMount() {
     // Assigning popstate to my own handle
     window.onpopstate = this.handlePopState.bind(this);
+    // Assigning onbeforeunload to my own handle
+    window.onbeforeunload = this.saveThemeToLocalStorage.bind(this);
+  }
+
+  saveThemeToLocalStorage() {
+    localStorage.setItem('theme', sessionStorage.theme);
   }
 
   setHistory(subreddit, firstId, lastId, filter, sortBy) {
@@ -130,6 +147,18 @@ class App extends Component {
     this.setState({nsfwFilter: !this.state.nsfwFilter});
   }
 
+  toggleDarkTheme(isDarkTheme) {
+    if (!isDarkTheme) {
+      this.theme = 'dark';
+    } else {
+      this.theme = 'light';
+    }
+    sessionStorage.setItem('theme', this.theme);
+    this.setState({isDarkTheme: !this.state.isDarkTheme, atEnd: false, subNotFound: false});
+    this.navigation.current.resetPageCounter();
+    this.posts.current.generatePosts(this.state.currentListing.subreddit, 'after', this.state.currentListing.id, this.state.currentListing.filter, this.state.currentListing.sortBy);
+  }
+
   handlePopState(e) {
     this.navigation.current.resetPageCounter();
     try {
@@ -156,37 +185,29 @@ class App extends Component {
     }
   }
 
-  openSettingsMenu(e) {
-    e.stopPropagation();
-    this.setState({menuIsOpen: true});
-  }
-
-  closeSettingsMenu() {
-    this.setState({menuIsOpen: false});
-  }
-
   render() {
     return(
-      <div className='page-container'>
-        <SubTitle subreddit={this.state.currentListing.subreddit}/>
+      <div className={`page-container page-container-${this.theme}`}>
+        <SubTitle subreddit={this.state.currentListing.subreddit} theme={this.theme}/>
         <div className='options-container' ref={this.optionsContainer}>
           <Filter 
             ref={this.filter} 
             handleFilterChange={this.handleFilterChange} 
             handleSortByChange={this.handleSortByChange} 
-            sortBy={this.state.currentListing.sortBy}/>
+            sortBy={this.state.currentListing.sortBy}
+            theme={this.theme}/>
           <div className='right-options-container' >
             <SubredditInput 
             handleSubredditChange={this.handleSubredditChange} 
             subreddit={this.state.currentListing.subreddit}
-            className='subreddit-form-container-desktop'/>
+            className='subreddit-form-container-desktop'
+            theme={this.theme}/>
             <SettingsMenu toggleNSFW={this.toggleNSFW} 
                         nsfwFilter={this.state.nsfwFilter} 
                         handleSubredditChange={this.handleSubredditChange}
-                        openSettingsMenu={this.openSettingsMenu}
-                        closeSettingsMenu={this.closeSettingsMenu}
-                        menuIsOpen={this.state.menuIsOpen} 
-                        ref={this.settingsMenu}/>
+                        toggleDarkTheme={this.toggleTheme}
+                        theme={this.theme}
+                        isDarkTheme={this.state.isDarkTheme}/>
           </div>
         </div>
         <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
@@ -197,14 +218,16 @@ class App extends Component {
             subreddit={this.state.subreddit}
             handleSubredditChange={this.handleSubredditChange}
             setHistory={this.setHistory}
-            nsfwFilter={this.state.nsfwFilter}/>
+            nsfwFilter={this.state.nsfwFilter}
+            theme={this.theme}/>
         </Animated>
         <Navigation 
           ref={this.navigation} 
           onForwardClick={this.handleForwardClick} 
           onBackwardClick={this.handleBackwardClick}
           atEnd={this.state.atEnd}
-          subNotFound={this.state.subNotFound}/>
+          subNotFound={this.state.subNotFound}
+          theme={this.theme}/>
       </div>
     );
   }

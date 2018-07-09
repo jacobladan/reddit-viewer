@@ -1,0 +1,114 @@
+.page-container-light {
+    background-color: white;
+}
+
+.sub-title-light {
+    color: black;
+}
+
+.filter-button-light {
+    background-color: white;
+    color: black;
+}
+
+.filter-button-light:hover {
+    background-color: #c3f1ff;
+}
+
+.filter-button-light.selected {
+    background-color: #5adaff;
+}
+
+.top-sort-light {
+    background-color: white;
+    color: black;
+}
+
+.floating-r-light {
+    color: rgb(138, 138, 138);
+}
+
+.subreddit-input-light {
+    background-color: white;
+    color: black;
+}
+
+.browse-button-light {
+    background-color: white;
+    color: black;
+}
+
+.browse-button-light:hover {
+    background-color: #c3f1ff;
+}
+
+.settings-menu-light {
+    background: white;
+    color: black;
+}
+
+.no-posts-container-light {
+    color: black;
+    background-color: white;
+}
+
+.sub-suggestion-container-light {
+    background-color: white;
+}
+
+.sub-suggestion-container-light:hover {
+    background-color: #c3f1ff;
+}
+
+.post-container-light {
+    background-color: white;
+    color: black;
+}
+
+.highlighted-post-light {
+    box-shadow: 0 4px 8px 0 #28bbe850;
+}
+
+.domain-light {
+    color: rgba(138, 138, 138);
+}
+
+.posted-light b {
+    color: rgba(138, 138, 138);
+}
+
+.author-light b {
+    color: rgba(138, 138, 138);
+}
+
+.author-link-light {
+    color: black;
+}
+
+.subreddit-light b {
+    color: rgba(138, 138, 138);
+}
+
+.comments-light {
+    color: black;
+}
+
+.points-container-light {
+    background-color: white;
+}
+
+.points-label-light {
+    color: rgb(138, 138, 138);
+}
+
+.points-light {
+    color: black;
+}
+
+.post-body-container-light {
+    color: black;
+}
+
+.page-number-light {
+    color: black;
+}

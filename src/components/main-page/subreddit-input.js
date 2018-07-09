@@ -29,11 +29,19 @@ export class SubredditInput extends React.Component {
     }
 
     handleFocus() {
-        this.setState({rStyle: {color: 'black'}});
+        if (this.props.theme === 'dark') {
+            this.setState({rStyle: {color: 'white'}});
+        } else {
+            this.setState({rStyle: {color: 'black'}});
+        }
     }
 
     handleBlur() {
-        this.setState({rStyle: {color: 'rgb(99, 99, 99)'}})
+        if (this.props.theme === 'dark') {
+            this.setState({rStyle: {color: 'rgb(107, 107, 107)'}})
+        } else {
+            this.setState({rStyle: {color: 'rgb(138, 138, 138)'}})
+        }
     }
 
     render() {
@@ -41,7 +49,6 @@ export class SubredditInput extends React.Component {
         if (this.props.subreddit !== undefined) {
             this.subreddit = this.props.subreddit;
         }
-
         return (
             <div className={this.props.className}>
                 <form onSubmit={(e) => {
@@ -49,17 +56,17 @@ export class SubredditInput extends React.Component {
                     e.stopPropagation();
                     this.handleSubmit();
                 }}>
-                    <p className='floating-r' style={this.state.rStyle}><b>/r/</b></p>
+                    <p className={`floating-r floating-r-${this.props.theme}`} style={this.state.rStyle}><b>/r/</b></p>
                     <input 
                         ref={this.input}
                         type="text" 
-                        className='subreddit-input' 
+                        className={`subreddit-input subreddit-input-${this.props.theme}`}
                         onChange={(e) => this.handleInputChange(e)}
                         placeholder={this.subreddit}
                         value={this.state.input}
                         onFocus={() => this.handleFocus()}
                         onBlur={() => this.handleBlur()}/>
-                    <input type='submit' className='browse-button' value='Browse' />
+                    <input type='submit' className={`browse-button browse-button-${this.props.theme}`} value='Browse' />
                 </form>
             </div>
         );

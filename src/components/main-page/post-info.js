@@ -64,7 +64,7 @@ export class PostInfo extends React.Component {
             <div className='post-info'>
                 <p className='title-container'>
                     <a href={this.props.link} className={titleClass} target='_blank'>{this.props.title}</a>
-                    <span className='domain'>({this.props.domain})</span>
+                    <span className={`domain domain-${this.props.theme}`}>({this.props.domain})</span>
                 </p>
                 <div>
                     {this.props.stickied && <p className='pinned'>pinned</p>}
@@ -72,11 +72,11 @@ export class PostInfo extends React.Component {
                     {this.props.over_18 && <p className='nsfw' style={nsfwMargin}>nsfw</p>}
                 </div>
                 <div className='info-container'>
-                    <p className='posted'><b>Posted: </b>{this.timeSincePost}</p>
-                    <p className='author'><b>By: </b><a href={this.props.authorLink} className='author-link' target='_blank'>{this.props.author}</a></p>
-                    {(this.props.passedSubreddit === 'all') && <p className='subreddit'><b>To: </b></p>}
+                    <p className={`posted posted-${this.props.theme}`}><b>Posted: </b>{this.timeSincePost}</p>
+                    <p className={`author author-${this.props.theme}`}><b>By: </b><a href={this.props.authorLink} className={`author-link author-link-${this.props.theme}`} target='_blank'>{this.props.author}</a></p>
+                    {(this.props.passedSubreddit === 'all') && <p className={`subreddit subreddit-${this.props.theme}`}><b>To: </b></p>}
                     {(this.props.passedSubreddit === 'all') && <p className='subreddit-link' onClick={() => this.handleSubredditClick()}>/r/{this.props.postSubreddit}</p>}
-                    <a href={'https://reddit.com' + this.props.permaLink} target='_blank' className='comments'>Comments ({this.props.num_comments})</a>
+                    <a href={'https://reddit.com' + this.props.permaLink} target='_blank' className={`comments comments-${this.props.theme}`}>Comments ({this.props.num_comments})</a>
                 </div>
                 <div className='info-container'>
                 </div>

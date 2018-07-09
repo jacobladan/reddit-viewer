@@ -13,7 +13,9 @@ export class SubTitle extends React.Component {
         }
         return (
             <div className='sub-title-container'>
-                <a className='sub-title' href={'https://www.reddit.com/r/' + this.props.subreddit} target='_blank'>
+                <a className={`sub-title sub-title-${this.props.theme}`}
+                    href={'https://www.reddit.com/r/' + this.props.subreddit} 
+                    target='_blank'>
                     {'/r/' + this.subreddit}
                 </a>
             </div>

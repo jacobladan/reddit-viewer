@@ -9,7 +9,7 @@ export class Navigation extends React.Component {
         this.state ={
             pageCount: 1,
             atEnd: false
-        }
+        };
     }
 
     handleForwardClick() {
@@ -57,14 +57,13 @@ export class Navigation extends React.Component {
         } else {
             pageCountVisible = {visibility: 'visible'};
         }
-
         return (
             <div className='nav-container'>
                 <div className='nav-icon-container'>
                     <img src={NavArrows} alt="Previous Page" onClick={() => this.handleBackwardClick()} className='nav-icon left' style={leftArrowsVisible}/>
                 </div>
                 <div className='page-number-container'>
-                    <p className='page-number' style={pageCountVisible}>{this.state.pageCount}</p>
+                    <p className={`page-number page-number-${this.props.theme}`} style={pageCountVisible}>{this.state.pageCount}</p>
                 </div>
                 <div className='nav-icon-container'>
                     <img src={NavArrows} alt="Next Page" onClick={() => this.handleForwardClick()} className='nav-icon right' style={rightArrowsVisible}/>

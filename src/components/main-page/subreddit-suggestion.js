@@ -26,7 +26,7 @@ export class SubredditSuggestion extends React.Component {
                     else { rightMargin = {marginRight: '2%'} }
                     i++;
                     return(
-                        <div className='sub-suggestion-container' style={rightMargin}
+                        <div className={`sub-suggestion-container sub-suggestion-container-${this.props.theme}`} style={rightMargin}
                             key={subreddit.data.id} 
                             onClick={() => this.handleClick(subreddit.data.display_name)}>
                             <p className='sub-suggestion'>{subreddit.data.display_name}</p>
