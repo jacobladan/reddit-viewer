@@ -5,6 +5,8 @@ import { GridLoader } from 'react-spinners';
 import { PostInfo } from './post-info';
 import { Thumbnail } from './thumbnail';
 import { Points } from './points';
+import { convertDate } from '../../utils/date-converter';
+import { Animated } from "react-animated-css";
 import ReactHtmlParser from 'react-html-parser';
 import '../../styles/comments.css';
 
@@ -31,7 +33,7 @@ export class CommentsContainer extends React.Component {
         this.setState({fetchInProgress: true, isCommentsExpanded: true});
         fetch.then(data => {
             let previewUrl, postInfo = data[0].data.children[0].data;
-            console.log(postInfo);
+            // console.log(postInfo);
             if (typeof(postInfo.preview) !== 'undefined'){
                 if (data[0].thumbnail === 'self') {
                     previewUrl = postInfo.preview.images[0].source.url;
@@ -62,13 +64,22 @@ export class CommentsContainer extends React.Component {
                 score: postInfo.score,
             }
             let comments = data[1].data.children.map(comment => {
-                // console.log(comment.data);
-                let commentBody = ReactHtmlParser(decodeHTML(comment.data.body_html));
-                return (
-                    <div key={comment.data.id} className={`parent-comment parent-comment-${this.props.theme}`}>
-                        {commentBody}
-                    </div>
-                );
+                console.log(comment.data);
+                if (typeof(comment.data.body_html) !== 'undefined') {
+                    let commentBody = ReactHtmlParser(decodeHTML(comment.data.body_html));
+                    return (
+                        <div key={comment.data.id} className={`parent-comment parent-comment-${this.props.theme}`}>
+                            <div className={`comment-info-container comment-info-container-${this.props.theme}`}>
+                            <p className='comment-date'><b>Posted:</b> {convertDate(comment.data.created_utc)}</p>
+                            <p className='comment-author'><b>By:</b> <a className={`comment-author-link comment-author-link-${this.props.theme}`} href={comment.data.authorLink} target='_blank'>{comment.data.author}</a></p>
+                            <p className='comment-points'><b>Points:</b> {comment.data.score}</p>
+                            </div>
+                            {commentBody}
+                        </div>
+                    ); 
+                } else {
+                    return null;
+                }
             });
             this.setState({comments: comments, fetchInProgress: false});
         });
@@ -81,29 +92,31 @@ export class CommentsContainer extends React.Component {
                 {
                     this.state.fetchInProgress
                     ?<div className='comments-loader-container'><GridLoader loading={true} color={"#44def3"} /></div>
-                    :<div>
-                        <Thumbnail href={this.postInfo.url} src={this.postInfo.previewUrl} over_18={this.postInfo.over_18}/>
-                        <PostInfo 
-                        link={this.postInfo.url} 
-                        title={decodeHTML(this.postInfo.title)}
-                        authorLink={this.postInfo.authorLink}
-                        author={this.postInfo.author} 
-                        domain={this.postInfo.domain}
-                        created={this.postInfo.created_utc}
-                        stickied={this.postInfo.stickied}
-                        spoiler={this.postInfo.spoiler}
-                        postSubreddit={this.postInfo.subreddit}
-                        passedSubreddit={this.postInfo.passedSubreddit}
-                        permaLink={this.postInfo.permalink}
-                        over_18={this.postInfo.over_18}
-                        num_comments={this.postInfo.num_comments}
-                        postId={this.postInfo.id}
-                        theme={this.props.theme}
-                        isFromComments={true}
-                        handleSubredditChange={this.props.handleSubredditChange}/>
-                        <Points theme={this.props.theme} points={this.postInfo.score}/>
-                        <Comments ref={this.comments} comments={this.state.comments}/>
-                    </div> 
+                    :<Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
+                        <div>
+                            <Thumbnail href={this.postInfo.url} src={this.postInfo.previewUrl} over_18={this.postInfo.over_18}/>
+                            <PostInfo 
+                            link={this.postInfo.url} 
+                            title={decodeHTML(this.postInfo.title)}
+                            authorLink={this.postInfo.authorLink}
+                            author={this.postInfo.author} 
+                            domain={this.postInfo.domain}
+                            created={this.postInfo.created_utc}
+                            stickied={this.postInfo.stickied}
+                            spoiler={this.postInfo.spoiler}
+                            postSubreddit={this.postInfo.subreddit}
+                            passedSubreddit={this.postInfo.passedSubreddit}
+                            permaLink={this.postInfo.permalink}
+                            over_18={this.postInfo.over_18}
+                            num_comments={this.postInfo.num_comments}
+                            postId={this.postInfo.id}
+                            theme={this.props.theme}
+                            isFromComments={true}
+                            handleSubredditChange={this.props.handleSubredditChange}/>
+                            <Points theme={this.props.theme} points={this.postInfo.score}/>
+                            <Comments ref={this.comments} comments={this.state.comments}/>
+                        </div> 
+                    </Animated>
                 }
             </div>
         );

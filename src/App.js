@@ -212,10 +212,12 @@ class App extends Component {
   render() {
     return(
       <div className={`page-background page-background-${this.theme}`}>
-        <CommentsContainer ref={this.commentsContainer} 
-        display={this.commentsContainerDisplay} 
-        theme={this.theme}
-        handleSubredditChange={this.handleSubredditChange}/>
+        <Animated animationIn='fadeIn' isVisible={this.state.isCommentsVisible} className='animation-styles'>
+          <CommentsContainer ref={this.commentsContainer} 
+          display={this.commentsContainerDisplay} 
+          theme={this.theme}
+          handleSubredditChange={this.handleSubredditChange}/>
+        </Animated>
         <div className={`page-container page-container-${this.theme}`} style={this.pageContainerDisplay}>
           <SubTitle subreddit={this.state.currentListing.subreddit} theme={this.theme}/>
           <div className='options-container' ref={this.optionsContainer}>

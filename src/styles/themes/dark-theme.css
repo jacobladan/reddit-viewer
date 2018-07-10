@@ -8,7 +8,15 @@
 }
 
 .parent-comment-dark {
-    border: 2px solid white;
+    background-color: #717171;
+}
+
+.comment-info-container-dark {
+    color: #b7b7b7;
+}
+
+.comment-author-link-dark {
+    color: #b7b7b7;
 }
 
 .comments-comments-dark {

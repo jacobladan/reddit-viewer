@@ -8,7 +8,15 @@
 }
 
 .parent-comment-light {
-    border: 2px solid black;
+    background-color: white;
+}
+
+.comment-info-container-light {
+    color: grey;
+}
+
+.comment-author-link-light {
+    color: grey;
 }
 
 .comments-comments-light {

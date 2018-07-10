@@ -350,13 +350,13 @@ p {
 }
 
 .highlighted-post {
-    transition: 300ms ease-in-out;
+    transition: 150ms ease-in-out;
 }
 
 .animation-styles {
-    animation-duration: 1s;
-    -webkit-animation-duration: 1s;
-    -moz-animation-duration: 1s;
+    animation-duration: 0.5s;
+    -webkit-animation-duration: 0.5s;
+    -moz-animation-duration: 0.5s;
 }
 
 .thumbnail {
@@ -429,7 +429,6 @@ p {
 }
 
 .author-link:hover {
-    /* color: #28bce8 */
     color: #ffb500;
 }
 

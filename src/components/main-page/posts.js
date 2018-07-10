@@ -6,6 +6,7 @@ import { Points } from './points';
 import { PostBody } from './post-body';
 import { GridLoader } from 'react-spinners';
 import { SubredditSuggestion } from './subreddit-suggestion';
+import { Animated } from "react-animated-css";
 import SadFace from '../../images/sad-face.svg';
 
 let decodeHTML = function (html) {
@@ -168,23 +169,27 @@ export class Posts extends React.Component {
     render() {
         if (!this.state.subredditWasFound){
             return (
-                <div className={`no-posts-container no-posts-container-${this.props.theme}`}>
-                    <img src={SadFace} alt='sad face' className='sad-face-img'/>
-                    <p className='no-posts-message'>That subreddit doesn't exist</p>
-                    <div className='horizontal-line'></div>
-                    <SubredditSuggestion 
-                        ref={this.SubredditSuggestion}
-                        subreddit={this.state.subreddit} 
-                        handleSubredditChange={this.props.handleSubredditChange}
-                        theme={this.props.theme}/>
-                </div>
+                <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
+                    <div className={`no-posts-container no-posts-container-${this.props.theme}`}>
+                        <img src={SadFace} alt='sad face' className='sad-face-img'/>
+                        <p className='no-posts-message'>That subreddit doesn't exist</p>
+                        <div className='horizontal-line'></div>
+                        <SubredditSuggestion 
+                            ref={this.SubredditSuggestion}
+                            subreddit={this.state.subreddit} 
+                            handleSubredditChange={this.props.handleSubredditChange}
+                            theme={this.props.theme}/>
+                    </div>
+                </Animated>
             );
         } else if (!this.state.postsWereFetched) {
             return (
-                <div className={`no-posts-container no-posts-container-${this.props.theme}`}>
-                    <img src={SadFace} alt='sad face' className='sad-face-img'/>
-                    <p className='no-posts-message'>There doesn't seem to be anything here...</p>
-                </div>
+                <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
+                    <div className={`no-posts-container no-posts-container-${this.props.theme}`}>
+                        <img src={SadFace} alt='sad face' className='sad-face-img'/>
+                        <p className='no-posts-message'>There doesn't seem to be anything here...</p>
+                    </div>
+                </Animated>
             );
         } else {
             return (
@@ -192,7 +197,7 @@ export class Posts extends React.Component {
                     // Adds loader icon until the posts are fetched
                     this.state.fetchInProgress
                     ? <div className='post-loader-container'><GridLoader loading={true} color={"#44def3"}/></div>
-                    : this.state.posts
+                    : <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>{this.state.posts}</Animated>
                 }
                 </div>
             ) 
