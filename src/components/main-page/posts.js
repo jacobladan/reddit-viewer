@@ -6,6 +6,7 @@ import { Points } from './points';
 import { PostBody } from './post-body';
 import { GridLoader } from 'react-spinners';
 import { SubredditSuggestion } from './subreddit-suggestion';
+import { Comments } from './comments';
 import SadFace from '../../images/sad-face.svg';
 
 let decodeHTML = function (html) {
@@ -28,8 +29,10 @@ export class Posts extends React.Component {
             subredditWasFound: true,
         };
         this.postBodyRefs = {};
+        this.postCommentRefs = {};
         this.scrollToTopOfPost = this.scrollToTopOfPost.bind(this);
         this.highlightPost = this.highlightPost.bind(this);
+        this.generateComments = this.generateComments.bind(this);
         this.SubredditSuggestion = React.createRef();
         this.theme = 'light';
     }
@@ -47,7 +50,7 @@ export class Posts extends React.Component {
 
     highlightPost(id) {
         if (this.state.highlightPost !== '') {
-            this.postBodyRefs[this.state.highlightPost].classList.remove('highlighted-post');
+            this.postBodyRefs[this.state.highlightPost].classList.remove('highlighted-post', `highlighted-post-${this.props.theme}`);
         }
         this.postBodyRefs[id].classList.add('highlighted-post', `highlighted-post-${this.props.theme}`);
         this.setState({highlightPost: id});
@@ -59,14 +62,9 @@ export class Posts extends React.Component {
         }
     }
 
-    // componentWillReceiveProps() {
-    //     // Logic is backwards due to generatePosts() not seeing darkTheme prop until after returning 
-    //     if (this.props.darkTheme) {
-    //         this.theme = 'light';
-    //     } else {
-    //         this.theme = 'dark';
-    //     }
-    // }
+    generateComments(subreddit, id) {
+        this.postCommentRefs[id].generateComments(subreddit, id);
+    }
 
     generatePosts(subreddit, direction, id, filter, sortBy, isFromHistory) {
         // first and lastIds are being used to track page navigation. See ../../api/subreddit-api.js
@@ -134,19 +132,23 @@ export class Posts extends React.Component {
                                     over_18={post.data.over_18}
                                     num_comments={post.data.num_comments}
                                     theme={this.props.theme}
+                                    generateComments={this.generateComments}
+                                    postId={post.data.id}
                                     />
                                     <Points theme={this.props.theme} points={post.data.score}/>
-                                </div>{
-                                        // Checking if post has a body. If not, then no expand button or
-                                        // post body place holder is rendered
-                                        body
-                                        ? <PostBody postId={post.data.id}
-                                            subreddit={post.data.subreddit}
-                                            scrollToTopOfPost={this.scrollToTopOfPost}
-                                            highlightPost={this.highlightPost}
-                                            theme={this.props.theme}/>
-                                        : null
-                                    }
+                                </div>
+                                {
+                                    // Checking if post has a body. If not, then no expand button or
+                                    // post body place holder is rendered
+                                    body
+                                    ? <PostBody postId={post.data.id}
+                                        subreddit={post.data.subreddit}
+                                        scrollToTopOfPost={this.scrollToTopOfPost}
+                                        highlightPost={this.highlightPost}
+                                        theme={this.props.theme}/>
+                                    : null
+                                }
+                                <Comments ref={node => { this.postCommentRefs[post.data.id] = node; }} subreddit={post.data.subreddit} id={post.data.id} />
                             </div>
                         );
                     })
@@ -199,3 +201,4 @@ export class Posts extends React.Component {
         }
     }
 }
+
