@@ -49,7 +49,7 @@ export class PostInfo extends React.Component {
     }
 
     handleCommentsClick() {
-        this.props.generateComments(this.props.passedSubreddit, this.props.postId);
+        this.props.generateComments(this.props.postId);
     }
     
     render() {

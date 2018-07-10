@@ -42,7 +42,7 @@ export class Comments  extends React.Component {
         } else {
             return (
                 this.state.fetchInProgress
-                ? <div className='comment-loader-container'><GridLoader loading={true} color={"#44def3"} /></div>
+                ? <div className='comments-loader-container'><GridLoader loading={true} color={"#44def3"} /></div>
                 :<div className='post-comments-container'>
                 {this.state.comments}
                 </div>

@@ -6,7 +6,6 @@ import { Points } from './points';
 import { PostBody } from './post-body';
 import { GridLoader } from 'react-spinners';
 import { SubredditSuggestion } from './subreddit-suggestion';
-import { Comments } from './comments';
 import SadFace from '../../images/sad-face.svg';
 
 let decodeHTML = function (html) {
@@ -28,7 +27,7 @@ export class Posts extends React.Component {
             postsWereFetched: true,
             subredditWasFound: true,
         };
-        this.postBodyRefs = {};
+        this.postRefs = {};
         this.postCommentRefs = {};
         this.scrollToTopOfPost = this.scrollToTopOfPost.bind(this);
         this.highlightPost = this.highlightPost.bind(this);
@@ -42,7 +41,7 @@ export class Posts extends React.Component {
     }
 
     scrollToTopOfPost(id) {
-        let height = this.postBodyRefs[id].clientHeight;
+        let height = this.postRefs[id].clientHeight;
         if (height > 600) {
             window.scrollBy(0, (height * -1) + 200);
         }
@@ -50,20 +49,20 @@ export class Posts extends React.Component {
 
     highlightPost(id) {
         if (this.state.highlightPost !== '') {
-            this.postBodyRefs[this.state.highlightPost].classList.remove('highlighted-post', `highlighted-post-${this.props.theme}`);
+            this.postRefs[this.state.highlightPost].classList.remove('highlighted-post', `highlighted-post-${this.props.theme}`);
         }
-        this.postBodyRefs[id].classList.add('highlighted-post', `highlighted-post-${this.props.theme}`);
+        this.postRefs[id].classList.add('highlighted-post', `highlighted-post-${this.props.theme}`);
         this.setState({highlightPost: id});
     }
 
     clearPostRefs() {
-        for (const prop of Object.getOwnPropertyNames(this.postBodyRefs)) {
-            delete this.postBodyRefs[prop];
+        for (const prop of Object.getOwnPropertyNames(this.postRefs)) {
+            delete this.postRefs[prop];
         }
     }
 
-    generateComments(subreddit, id) {
-        this.postCommentRefs[id].generateComments(subreddit, id);
+    generateComments(id) {
+        this.props.generateComments(id);
     }
 
     generatePosts(subreddit, direction, id, filter, sortBy, isFromHistory) {
@@ -113,7 +112,7 @@ export class Posts extends React.Component {
                     }
                     i++;
                     return (
-                            <div className={`post-container post-container-${this.props.theme}`} key={post.data.id} ref={node => { this.postBodyRefs[post.data.id] = node; }}>
+                            <div className={`post-container post-container-${this.props.theme}`} key={post.data.id} ref={node => { this.postRefs[post.data.id] = node; }}>
                                 <div className='post-header'>
                                     <Thumbnail href={post.data.url} src={previewUrl} over_18={post.data.over_18}/>
                                     <PostInfo 
@@ -148,7 +147,6 @@ export class Posts extends React.Component {
                                         theme={this.props.theme}/>
                                     : null
                                 }
-                                <Comments ref={node => { this.postCommentRefs[post.data.id] = node; }} subreddit={post.data.subreddit} id={post.data.id} />
                             </div>
                         );
                     })
