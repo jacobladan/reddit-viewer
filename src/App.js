@@ -145,6 +145,7 @@ class App extends Component {
     
   toggleNSFW() {
     this.setState({nsfwFilter: !this.state.nsfwFilter});
+    this.posts.current.generatePosts(this.state.currentListing.subreddit, 'after', '', this.state.currentListing.filter, this.state.currentListing.sortBy);
   }
 
   toggleDarkTheme(isDarkTheme) {
