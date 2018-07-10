@@ -6,11 +6,20 @@ export class SubredditInput extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            input: '',
-            rStyle: {}
+            input: 'all',
+            rStyle: {},
+            valueStyle: {},
         };
         this.input = React.createRef();
         this.subreddit = defaultSubreddit;
+    }
+
+    componentDidMount() {
+        if (this.props.theme === 'dark') {
+            this.setState({rStyle: {color: 'rgb(107, 107, 107)'}, valueStyle: {color: 'rgb(107, 107, 107)'}});
+        } else {
+            this.setState({rStyle: {color: 'rgb(138, 138, 138)'}, valueStyle: {color: 'rgb(138, 138, 138)'}});
+        }
     }
 
     handleInputChange(e) {
@@ -24,23 +33,22 @@ export class SubredditInput extends React.Component {
             // Removing anything that isn't a letter or number -- keeps underscores
             this.props.handleSubredditChange(this.state.input.replace(/[^a-zA-Z0-9_]/,''));
         }
-        this.setState({input: ''});
         this.input.current.blur();
     }
 
     handleFocus() {
         if (this.props.theme === 'dark') {
-            this.setState({rStyle: {color: 'white'}});
+            this.setState({rStyle: {color: 'white'}, valueStyle: {color: 'white'}});
         } else {
-            this.setState({rStyle: {color: 'black'}});
+            this.setState({rStyle: {color: 'black'}, valueStyle: {color: 'black'}});
         }
     }
 
     handleBlur() {
         if (this.props.theme === 'dark') {
-            this.setState({rStyle: {color: 'rgb(107, 107, 107)'}})
+            this.setState({rStyle: {color: 'rgb(107, 107, 107)'}, valueStyle: {color: 'rgb(107, 107, 107)'}});
         } else {
-            this.setState({rStyle: {color: 'rgb(138, 138, 138)'}})
+            this.setState({rStyle: {color: 'rgb(138, 138, 138)'}, valueStyle: {color: 'rgb(138, 138, 138)'}});
         }
     }
 
@@ -61,8 +69,8 @@ export class SubredditInput extends React.Component {
                         ref={this.input}
                         type="text" 
                         className={`subreddit-input subreddit-input-${this.props.theme}`}
+                        style={this.state.valueStyle}
                         onChange={(e) => this.handleInputChange(e)}
-                        placeholder={this.subreddit}
                         value={this.state.input}
                         onFocus={() => this.handleFocus()}
                         onBlur={() => this.handleBlur()}/>

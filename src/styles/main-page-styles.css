@@ -6,10 +6,6 @@ p {
     margin: 0;
 }
 
-.page-blur {
-
-}
-
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
@@ -29,6 +25,10 @@ p {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #00d9ff; 
+}
+
+.page-background-dark {
+    height: 100%;
 }
 
 .page-container {

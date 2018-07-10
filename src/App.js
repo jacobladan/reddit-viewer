@@ -144,7 +144,8 @@ class App extends Component {
   }
     
   toggleNSFW() {
-    this.setState({nsfwFilter: !this.state.nsfwFilter});
+    this.setState({nsfwFilter: !this.state.nsfwFilter, atEnd: false, subNotFound: false});
+    this.posts.current.generatePosts(this.state.currentListing.subreddit, 'after', '', this.state.currentListing.filter, this.state.currentListing.sortBy);
   }
 
   toggleDarkTheme(isDarkTheme) {
@@ -187,47 +188,49 @@ class App extends Component {
 
   render() {
     return(
-      <div className={`page-container page-container-${this.theme}`}>
-        <SubTitle subreddit={this.state.currentListing.subreddit} theme={this.theme}/>
-        <div className='options-container' ref={this.optionsContainer}>
-          <Filter 
-            ref={this.filter} 
-            handleFilterChange={this.handleFilterChange} 
-            handleSortByChange={this.handleSortByChange} 
-            sortBy={this.state.currentListing.sortBy}
-            theme={this.theme}/>
-          <div className='right-options-container' >
-            <SubredditInput 
-            handleSubredditChange={this.handleSubredditChange} 
-            subreddit={this.state.currentListing.subreddit}
-            className='subreddit-form-container-desktop'
-            theme={this.theme}/>
-            <SettingsMenu toggleNSFW={this.toggleNSFW} 
-                        nsfwFilter={this.state.nsfwFilter} 
-                        handleSubredditChange={this.handleSubredditChange}
-                        toggleDarkTheme={this.toggleTheme}
-                        theme={this.theme}
-                        isDarkTheme={this.state.isDarkTheme}/>
+      <div className={`page-background page-background-${this.theme}`}>
+        <div className={`page-container page-container-${this.theme}`}>
+          <SubTitle subreddit={this.state.currentListing.subreddit} theme={this.theme}/>
+          <div className='options-container' ref={this.optionsContainer}>
+            <Filter 
+              ref={this.filter} 
+              handleFilterChange={this.handleFilterChange} 
+              handleSortByChange={this.handleSortByChange} 
+              sortBy={this.state.currentListing.sortBy}
+              theme={this.theme}/>
+            <div className='right-options-container' >
+              <SubredditInput 
+              handleSubredditChange={this.handleSubredditChange} 
+              subreddit={this.state.currentListing.subreddit}
+              className='subreddit-form-container-desktop'
+              theme={this.theme}/>
+              <SettingsMenu toggleNSFW={this.toggleNSFW} 
+                          nsfwFilter={this.state.nsfwFilter} 
+                          handleSubredditChange={this.handleSubredditChange}
+                          toggleDarkTheme={this.toggleTheme}
+                          theme={this.theme}
+                          isDarkTheme={this.state.isDarkTheme}/>
+            </div>
           </div>
-        </div>
-        <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
-          <Posts 
-            ref={this.posts} 
-            className='animation-props' 
-            removeForwardArrows={this.removeForwardArrows}
-            subreddit={this.state.subreddit}
-            handleSubredditChange={this.handleSubredditChange}
-            setHistory={this.setHistory}
-            nsfwFilter={this.state.nsfwFilter}
+          <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
+            <Posts 
+              ref={this.posts} 
+              className='animation-props' 
+              removeForwardArrows={this.removeForwardArrows}
+              subreddit={this.state.subreddit}
+              handleSubredditChange={this.handleSubredditChange}
+              setHistory={this.setHistory}
+              nsfwFilter={this.state.nsfwFilter}
+              theme={this.theme}/>
+          </Animated>
+          <Navigation 
+            ref={this.navigation} 
+            onForwardClick={this.handleForwardClick} 
+            onBackwardClick={this.handleBackwardClick}
+            atEnd={this.state.atEnd}
+            subNotFound={this.state.subNotFound}
             theme={this.theme}/>
-        </Animated>
-        <Navigation 
-          ref={this.navigation} 
-          onForwardClick={this.handleForwardClick} 
-          onBackwardClick={this.handleBackwardClick}
-          atEnd={this.state.atEnd}
-          subNotFound={this.state.subNotFound}
-          theme={this.theme}/>
+        </div>
       </div>
     );
   }

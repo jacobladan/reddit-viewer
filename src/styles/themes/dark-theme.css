@@ -1,11 +1,9 @@
-.page-container-dark {
-    /* background-color: black; */
+.page-background-dark {
     background-color: #1f1f1f;
 }
 
 .sub-title-dark {
     color: lightgray;
-    /* color: white; */
 }
 
 .filter-button-dark {

@@ -14,14 +14,15 @@ export class Comments  extends React.Component {
         super(props);
         this.state = {
             comments: [],
-            fetchInProgress: false,
+            fetchInProgress: true,
+            isCommentsExpanded: false,
         };
     }
     // To add to comments:
     // points, author, timestamp(use postinfo date converter/move to seperate comp), expand children button
     generateComments(subreddit, id) {
         const fetch = new PostAPI(subreddit, id);
-        this.setState({fetchInProgress: true});
+        this.setState({fetchInProgress: true, isCommentsExpanded: true});
         fetch.then(data => {
             let comments = data[1].data.children.map(comment => {
                 console.log(comment.data);
@@ -36,12 +37,16 @@ export class Comments  extends React.Component {
         });
     }
     render() {
-        return (
-            this.state.fetchInProgress
-            ? <div className='comment-loader-container'><GridLoader loading={true} color={"#44def3"} /></div>
-            :<div className='post-comments-container'>
-            {this.state.comments}
-            </div>
-        );
+        if (this.state.isCommentsExpanded === false) {
+            return null;
+        } else {
+            return (
+                this.state.fetchInProgress
+                ? <div className='comment-loader-container'><GridLoader loading={true} color={"#44def3"} /></div>
+                :<div className='post-comments-container'>
+                {this.state.comments}
+                </div>
+            );
+        }
     }
 }

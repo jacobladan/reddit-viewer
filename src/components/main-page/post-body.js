@@ -90,9 +90,9 @@ export class PostBody extends React.Component {
             this.generatePostBody(this.props.subreddit, this.props.postId);
         }
         if (this.state.isPostExpanded) {
-            this.setState({isPostExpanded: false,});
+            this.setState({isPostExpanded: false});
         } else {
-            this.setState({isPostExpanded: true,});
+            this.setState({isPostExpanded: true});
         }
     }
 
