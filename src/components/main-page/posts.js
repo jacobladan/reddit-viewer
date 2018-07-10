@@ -47,7 +47,7 @@ export class Posts extends React.Component {
 
     highlightPost(id) {
         if (this.state.highlightPost !== '') {
-            this.postBodyRefs[this.state.highlightPost].classList.remove('highlighted-post');
+            this.postBodyRefs[this.state.highlightPost].classList.remove('highlighted-post', `highlighted-post-${this.props.theme}`);
         }
         this.postBodyRefs[id].classList.add('highlighted-post', `highlighted-post-${this.props.theme}`);
         this.setState({highlightPost: id});

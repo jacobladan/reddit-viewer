@@ -104,7 +104,7 @@ export class PostBody extends React.Component {
         // Toggles display: block and display: none for the post body
         if (this.state.isPostExpanded) {
             // let text = '•••';
-            let text = '-';
+            let text = 'x';
             return (
                 <div className='expanded-post-container' >
                     <ExpandedPostButton onClick={this.handleClicked} text={text}/>
