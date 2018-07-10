@@ -2,6 +2,19 @@
     background-color: white;
 }
 
+.comments-expanded-container-light {
+    background-color: white;
+    color: black;
+}
+
+.parent-comment-light {
+    border: 2px solid black;
+}
+
+.comments-comments-light {
+    color: black;
+}
+
 .sub-title-light {
     color: black;
 }

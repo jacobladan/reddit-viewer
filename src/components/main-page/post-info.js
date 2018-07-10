@@ -76,7 +76,12 @@ export class PostInfo extends React.Component {
                     <p className={`author author-${this.props.theme}`}><b>By: </b><a href={this.props.authorLink} className={`author-link author-link-${this.props.theme}`} target='_blank'>{this.props.author}</a></p>
                     {(this.props.passedSubreddit === 'all') && <p className={`subreddit subreddit-${this.props.theme}`}><b>To: </b></p>}
                     {(this.props.passedSubreddit === 'all') && <p className='subreddit-link' onClick={() => this.handleSubredditClick()}>/r/{this.props.postSubreddit}</p>}
-                    <p onClick={() => this.handleCommentsClick()} className={`comments comments-${this.props.theme}`}>Comments ({this.props.num_comments})</p>
+                    {
+                        this.props.isFromComments
+                        ? <p className={`comments-comments comments-comments-${this.props.theme}`}>Comments ({this.props.num_comments})</p>
+                        : <p onClick={() => this.handleCommentsClick()} className={`comments comments-${this.props.theme}`}>Comments ({this.props.num_comments})</p>
+
+                    }
                 </div>
                 <div className='info-container'>
                 </div>
@@ -84,5 +89,3 @@ export class PostInfo extends React.Component {
         )
     }
 }
-// <a href={'https://reddit.com' + this.props.permaLink} target='_blank' className={`comments comments-${this.props.theme}`}>Comments ({this.props.num_comments})</a>
-

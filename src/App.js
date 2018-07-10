@@ -100,7 +100,9 @@ class App extends Component {
   }
 
   handleSubredditChange(subreddit) {
-    this.setState({ atEnd: false, subreddit: subreddit, subNotFound: false });
+    this.setState({ atEnd: false, subreddit: subreddit, subNotFound: false, isCommentsVisible: false });
+    this.pageContainerDisplay = {display: 'block'};
+    this.commentsContainerDisplay = {display: 'none'};
     this.posts.current.generatePosts(subreddit, 'after', '', this.state.currentListing.filter, this.state.currentListing.sortBy);
     this.navigation.current.resetPageCounter();
     scroll.scrollToTop({duration: 500, smooth: true});
@@ -169,6 +171,7 @@ class App extends Component {
   generateComments(id) {
     scroll.scrollToTop({duration: 500, smooth: true});
     this.commentsContainer.current.generateComments(this.state.currentListing.subreddit, id);
+    this.posts.current.highlightPost(id);
     this.setState({isCommentsVisible: true});
     this.pageContainerDisplay = {display: 'none'};
     this.commentsContainerDisplay = {display: 'block'};
@@ -209,7 +212,10 @@ class App extends Component {
   render() {
     return(
       <div className={`page-background page-background-${this.theme}`}>
-        <CommentsContainer ref={this.commentsContainer} display={this.commentsContainerDisplay}/>
+        <CommentsContainer ref={this.commentsContainer} 
+        display={this.commentsContainerDisplay} 
+        theme={this.theme}
+        handleSubredditChange={this.handleSubredditChange}/>
         <div className={`page-container page-container-${this.theme}`} style={this.pageContainerDisplay}>
           <SubTitle subreddit={this.state.currentListing.subreddit} theme={this.theme}/>
           <div className='options-container' ref={this.optionsContainer}>
