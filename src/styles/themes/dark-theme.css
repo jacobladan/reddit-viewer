@@ -23,6 +23,10 @@
     color: white;
 }
 
+.child-comment-dark {
+    background-color: #525252;
+}
+
 .sub-title-dark {
     color: lightgray;
 }

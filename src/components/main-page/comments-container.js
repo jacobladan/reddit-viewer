@@ -1,5 +1,4 @@
 import React from 'react';
-import { Comments } from './comments';
 import { PostAPI } from '../../api/subreddit-api';
 import { GridLoader } from 'react-spinners';
 import { PostInfo } from './post-info';
@@ -8,6 +7,7 @@ import { Points } from './points';
 import { convertDate } from '../../utils/date-converter';
 import { Animated } from "react-animated-css";
 import ReactHtmlParser from 'react-html-parser';
+import { Comment } from './comment';
 import '../../styles/comments.css';
 
 
@@ -34,6 +34,7 @@ export class CommentsContainer extends React.Component {
         fetch.then(data => {
             let previewUrl, postInfo = data[0].data.children[0].data;
             // console.log(postInfo);
+            // console.log(data)
             if (typeof(postInfo.preview) !== 'undefined'){
                 if (data[0].thumbnail === 'self') {
                     previewUrl = postInfo.preview.images[0].source.url;
@@ -64,17 +65,47 @@ export class CommentsContainer extends React.Component {
                 score: postInfo.score,
             }
             let comments = data[1].data.children.map(comment => {
-                console.log(comment.data);
+                // console.log(comment);
                 if (typeof(comment.data.body_html) !== 'undefined') {
-                    let commentBody = ReactHtmlParser(decodeHTML(comment.data.body_html));
+                    let childCommentInfo = {};
+                    let childComments = [];
+                    let parentCommentInfo = {
+                        created_utc: convertDate(comment.data.created_utc),
+                        author: ' ' + comment.data.author,
+                        authorLink: 'https://www.reddit.com/user/' + comment.data.author,
+                        score: comment.data.score_hidden ? '[hidden]' : comment.data.score,
+                        body: ReactHtmlParser(decodeHTML(comment.data.body_html))
+                    };
+                    console.log(comment.data);
+                    if (comment.kind === 't1') {
+                        if (comment.data.replies !== '') {
+                            if (comment.data.replies.data.children.length > 0) {
+                                for (let i = 0; i < comment.data.replies.data.children.length; i++) {
+                                    if (comment.data.replies.data.children[i].kind !== 'more'){
+                                        let data = comment.data.replies.data.children[i].data;
+                                        childCommentInfo = {
+                                            created_utc: convertDate(data.created_utc),
+                                            author: ' ' + data.author,
+                                            authorLink: 'https://www.reddit.com/user/' + data.author,
+                                            score: data.score_hidden ? '[hidden]' : data.score,
+                                            body: ReactHtmlParser(decodeHTML(data.body_html))
+                                        }
+                                        childComments[i] = <Comment 
+                                                            commentInfo={childCommentInfo} 
+                                                            theme={this.props.theme} 
+                                                            key={data.id}
+                                                            isParent={false}/>;
+                                    }
+                                }
+                            }
+                        }
+                    }
                     return (
-                        <div key={comment.data.id} className={`parent-comment parent-comment-${this.props.theme}`}>
-                            <div className={`comment-info-container comment-info-container-${this.props.theme}`}>
-                            <p className='comment-date'><b>Posted:</b> {convertDate(comment.data.created_utc)}</p>
-                            <p className='comment-author'><b>By:</b> <a className={`comment-author-link comment-author-link-${this.props.theme}`} href={comment.data.authorLink} target='_blank'>{comment.data.author}</a></p>
-                            <p className='comment-points'><b>Points:</b> {comment.data.score}</p>
-                            </div>
-                            {commentBody}
+                        <div key={comment.data.id} id='commentContainer'>
+                            <Comment commentInfo={parentCommentInfo} 
+                                    theme={this.props.theme} 
+                                    children={childComments}
+                                    isParent={true}/>
                         </div>
                     ); 
                 } else {
@@ -86,7 +117,6 @@ export class CommentsContainer extends React.Component {
     }
 
     render() {
-        // Fix comment links to subreddits 
         return (
             <div className={`comments-expanded-container comments-expanded-container-${this.props.theme}`} style={this.props.display}>
                 {
@@ -95,7 +125,7 @@ export class CommentsContainer extends React.Component {
                     :<Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
                         <div>
                             <Thumbnail href={this.postInfo.url} src={this.postInfo.previewUrl} over_18={this.postInfo.over_18}/>
-                            <PostInfo 
+                            <PostInfo
                             link={this.postInfo.url} 
                             title={decodeHTML(this.postInfo.title)}
                             authorLink={this.postInfo.authorLink}
@@ -114,7 +144,7 @@ export class CommentsContainer extends React.Component {
                             isFromComments={true}
                             handleSubredditChange={this.props.handleSubredditChange}/>
                             <Points theme={this.props.theme} points={this.postInfo.score}/>
-                            <Comments ref={this.comments} comments={this.state.comments}/>
+                            <div className='post-comments-container'>{this.state.comments}</div>
                         </div> 
                     </Animated>
                 }

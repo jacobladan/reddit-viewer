@@ -41,6 +41,7 @@ export class SubredditAPI {
 }
 
 export class PostAPI {
+    // &sort=
     constructor(subreddit, id) {
         let url = `https://www.reddit.com/r/${subreddit}/comments/${id}.json`;
         try {
