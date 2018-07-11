@@ -14,7 +14,8 @@ import './styles/themes/dark-theme.css';
 import './styles/themes/light-theme.css';
 import './styles/responsive-styles.css';
 
-// TODO: Convert generatePosts param to object
+// TODO: Convert generatePosts param to object 
+// TODO: Convert components with a lot of props to use a single prop object
 
 class App extends Component {
 
