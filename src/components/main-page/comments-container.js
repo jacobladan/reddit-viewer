@@ -25,7 +25,9 @@ export class CommentsContainer extends React.Component {
             fetchInProgress: true,
         };
         this.comments = React.createRef();
+        this.commentIds = [];
         this.postInfo = {};
+
     }
 
     generateComments(subreddit, id) {
@@ -81,7 +83,6 @@ export class CommentsContainer extends React.Component {
                 score: comment.data.score_hidden ? '[hidden]' : comment.data.score,
                 body: ReactHtmlParser(decodeHTML(comment.data.body_html))
             };
-            // console.log(comment.data);
             // If it's a comment
             if (comment.kind === 't1') {
                 // If it has replies
@@ -104,27 +105,29 @@ export class CommentsContainer extends React.Component {
             return null;
         }
     }
-
+    // Recurring function for generating children, grandchildren, great grandchildren...etc.
     generateChildComments(comment) {
         let childCommentInfo = {};
         let childComments = [];
-        let grandChildComments = [];
+        // For every child in the calling parent comment
         for (let i = 0; i < comment.data.replies.data.children.length; i++) {
-            // As long as it is a reply and not a list of IDs
+            // If the reply list is populated with comments and not just a list of IDs
             if (comment.data.replies.data.children[i].kind !== 'more'){
+                // Initializing grandChildCommments here as it was not clearing up above
+                let grandChildComments = [];
                 let data = comment.data.replies.data.children[i].data;
                 childCommentInfo = {
                     created_utc: convertDate(data.created_utc),
-                    author: ' ' + data.author,
+                    author: ' ' + data.author + ' ' + data.id,
                     authorLink: 'https://www.reddit.com/user/' + data.author,
                     score: data.score_hidden ? '[hidden]' : data.score,
                     body: ReactHtmlParser(decodeHTML(data.body_html))
                 };
-                if (comment.data.replies.data.children[i].data.replies !== '') {
-                    // If the replies have been populated and aren't just IDs
-                    // console.log(comment.data.replies.data.children[i].data.replies.data.children.length);
-                    if (comment.data.replies.data.children[i].data.replies.data.children.length > 0) {
-                        grandChildComments = this.generateGrandChildComments(comment.data.replies.data.children[i]);
+                // Checking if the comment has children that need to be populated
+                if (data.replies !== '') {
+                    // If the reply list is populated with comments and not just a list of IDs
+                    if (data.replies.data.children.length > 0) {
+                        grandChildComments = this.generateChildComments(comment.data.replies.data.children[i]);
                     }
                 }
                 childComments[i] = <Comment 
@@ -138,32 +141,8 @@ export class CommentsContainer extends React.Component {
         return childComments;
     }
 
-    generateGrandChildComments(comment) {
-        let childCommentInfo = {};
-        let childComments = [];
-        for (let i = 0; i < comment.data.replies.data.children.length; i++) {
-            // As long as it is a reply and not a list of IDs
-            if (comment.data.replies.data.children[i].kind !== 'more'){
-                let data = comment.data.replies.data.children[i].data;
-                childCommentInfo = {
-                    created_utc: convertDate(data.created_utc),
-                    author: ' ' + data.author,
-                    authorLink: 'https://www.reddit.com/user/' + data.author,
-                    score: data.score_hidden ? '[hidden]' : data.score,
-                    body: ReactHtmlParser(decodeHTML(data.body_html))
-                };
-                
-                childComments[i] = <Comment 
-                                    commentInfo={childCommentInfo} 
-                                    theme={this.props.theme} 
-                                    key={data.id}
-                                    isGrandChild={true}/>;
-            }
-        }
-        return childComments;
-    }
-
     render() {
+        console.log(this.commentIds)
         return (
             <div className={`comments-expanded-container comments-expanded-container-${this.props.theme}`} style={this.props.display}>
                 {
