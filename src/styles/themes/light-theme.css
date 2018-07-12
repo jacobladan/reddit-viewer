@@ -11,6 +11,14 @@
     background-color: #f5f5f5;
 }
 
+.odd-comment-light {
+    background-color: #f5f5f5;
+}
+
+.even-comment-light {
+    background-color: white;
+}
+
 .comment-info-container-light {
     color: grey;
 }
@@ -21,10 +29,6 @@
 
 .comments-comments-light {
     color: black;
-}
-
-.child-comment-light {
-    background-color: white;
 }
 
 .sub-title-light {

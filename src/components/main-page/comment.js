@@ -4,13 +4,13 @@ export class Comment extends React.Component {
     render() {
         let className;
         if (this.props.isParent) {
-            className = `parent-comment parent-comment-${this.props.theme}`;
-        } 
-        if (this.props.isChild) {
-            className = `child-comment child-comment-${this.props.theme}`
-        } 
-        if (this.props.isGrandChild) {
-            className = `parent-comment parent-comment-${this.props.theme}`;
+            className = `parent-comment parent-comment-${this.props.theme}`
+        } else {
+            if (this.props.colour) {
+                className = `odd-comment odd-comment-${this.props.theme}`
+            }  else {
+                className = `even-comment even-comment-${this.props.theme}`;
+            }
         }
         return (
             <div className={className}>
