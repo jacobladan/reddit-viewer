@@ -12,7 +12,7 @@ import '../../styles/comments.css';
 import { CommentsFilter } from './comments-filter';
 
 
-let decodeHTML = function (html) {
+let decodeHTML = (html) => {
 	var txt = document.createElement('textarea');
 	txt.innerHTML = html;
 	return txt.value;
@@ -32,7 +32,6 @@ export class CommentsContainer extends React.Component {
         this.comments = React.createRef();
         this.commentsFilter = React.createRef();
         this.postInfo = {};
-
     }
 
     generateComments(subreddit, id, filter) {

@@ -16,6 +16,8 @@ import './styles/responsive-styles.css';
 
 // TODO: Convert generatePosts param to object 
 // TODO: Convert components with a lot of props to use a single prop object
+// TODO: Add dialog for no comments
+// **** CHANGE Mobile input to reflect subreddit currently on
 
 class App extends Component {
 
@@ -64,7 +66,6 @@ class App extends Component {
   componentWillMount() {
     let isDarkTheme = false, nsfwFilter = false, subreddit;
     if (typeof(Storage) !== 'undefined') { 
-      console.log(localStorage);
       // Checking if theme is set in storage
       if (typeof(localStorage.getItem('theme') !== 'undefined')) {
         // Checking if it's value is defined or not
@@ -195,6 +196,7 @@ class App extends Component {
   toggleNSFW() {
     sessionStorage.setItem('nsfwFilter', !this.state.nsfwFilter);
     this.setState({nsfwFilter: !this.state.nsfwFilter, atEnd: false, subNotFound: false});
+    this.navigation.current.resetPageCounter();
     this.posts.current.generatePosts(this.state.currentListing.subreddit, 'after', '', this.state.currentListing.filter, this.state.currentListing.sortBy);
   }
 

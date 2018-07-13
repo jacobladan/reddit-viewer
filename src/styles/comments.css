@@ -15,7 +15,7 @@ blockquote {
     width: 70%;
     min-width: 710px;
     max-width: 1440px;
-    min-height: 250px;
+    min-height: 200px;
     margin: 0 auto;
     padding: 1%;
     padding-bottom: 1%;
@@ -64,6 +64,7 @@ blockquote {
     padding: 2%;
     padding-bottom: 1%;
     margin-bottom: 2%;
+    min-width: 476px;
 }
 
 .even-comment {
@@ -71,6 +72,7 @@ blockquote {
     padding: 2%;
     padding-bottom: 1%;
     margin-bottom: 2%;
+    min-width: 476px;
 }
 
 .comment-info-container {

@@ -55,7 +55,7 @@
 
     .right-options-container {
         width: 0%;
-        margin-right: 2.1%;
+        margin-right: 3%;
     }
 
     .settings-container {
@@ -162,6 +162,7 @@
     .post-title {
         font-size: 1em;
         line-height: 0.9em;
+        word-wrap: break-word;
     }
 
     .domain {
