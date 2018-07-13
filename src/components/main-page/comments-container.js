@@ -9,6 +9,7 @@ import { Animated } from "react-animated-css";
 import ReactHtmlParser from 'react-html-parser';
 import { Comment } from './comment';
 import '../../styles/comments.css';
+import { CommentsFilter } from './comments-filter';
 
 
 let decodeHTML = function (html) {
@@ -21,17 +22,22 @@ export class CommentsContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            subreddit: '',
+            id: '',
+            filter: 'top',
             comments: [],
             fetchInProgress: true,
         };
+        this.handleFilterChange = this.handleFilterChange.bind(this);
         this.comments = React.createRef();
+        this.commentsFilter = React.createRef();
         this.postInfo = {};
 
     }
 
-    generateComments(subreddit, id) {
-        const fetch = new PostAPI(subreddit, id);
-        this.setState({fetchInProgress: true, isCommentsExpanded: true});
+    generateComments(subreddit, id, filter) {
+        const fetch = new PostAPI(subreddit, id, filter);
+        this.setState({subreddit: subreddit, id: id, filter: filter, fetchInProgress: true, isCommentsExpanded: true});
         fetch.then(data => {
             let previewUrl, postInfo = data[0].data.children[0].data;
             // console.log(postInfo);
@@ -104,17 +110,17 @@ export class CommentsContainer extends React.Component {
             return null;
         }
     }
+
     // Recurring function for generating children, grandchildren, great grandchildren...etc.
     generateChildComments(comment, colour) {
         let childCommentInfo = {};
         let childComments = [];
-        console.log(comment)
         colour = !colour;
         // For every child in the calling parent comment
         for (let i = 0; i < comment.data.replies.data.children.length; i++) {
             // If the reply list is populated with comments and not just a list of IDs
             if (comment.data.replies.data.children[i].kind !== 'more'){
-                // Initializing grandChildCommments here as it was not clearing up above
+                // Initializing grandChildCommments here as it was not clearing up above from previous comments
                 let grandChildComments = [];
                 let data = comment.data.replies.data.children[i].data;
                 childCommentInfo = {
@@ -140,6 +146,10 @@ export class CommentsContainer extends React.Component {
             }
         }
         return childComments;
+    }
+
+    handleFilterChange(filter) {
+        this.generateComments(this.state.subreddit, this.state.id, filter);
     }
 
     render() {
@@ -169,7 +179,10 @@ export class CommentsContainer extends React.Component {
                             theme={this.props.theme}
                             isFromComments={true}
                             handleSubredditChange={this.props.handleSubredditChange}/>
-                            <Points theme={this.props.theme} points={this.postInfo.score}/>
+                            <Points theme={this.props.theme} points={this.postInfo.score} />
+                            <CommentsFilter theme={this.props.theme} 
+                                            handleFilterChange={this.handleFilterChange}
+                                            filter={this.state.filter}/>
                             <div className='post-comments-container'>{this.state.comments}</div>
                         </div> 
                     </Animated>
@@ -178,3 +191,4 @@ export class CommentsContainer extends React.Component {
         );
     }
 }
+

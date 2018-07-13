@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Posts } from './components/main-page/posts';
-import { Filter } from './components/main-page/filter';
+import { PostFilter } from './components/main-page/post-filter';
 import { Animated } from "react-animated-css";
 import { Navigation } from './components/main-page/navigation';
 import { animateScroll as scroll } from 'react-scroll';
@@ -171,7 +171,7 @@ class App extends Component {
 
   generateComments(id) {
     scroll.scrollToTop({duration: 500, smooth: true});
-    this.commentsContainer.current.generateComments(this.state.currentListing.subreddit, id);
+    this.commentsContainer.current.generateComments(this.state.currentListing.subreddit, id, 'top');
     this.posts.current.highlightPost(id);
     this.setState({isCommentsVisible: true});
     this.pageContainerDisplay = {display: 'none'};
@@ -222,7 +222,7 @@ class App extends Component {
         <div className={`page-container page-container-${this.theme}`} style={this.pageContainerDisplay}>
           <SubTitle subreddit={this.state.currentListing.subreddit} theme={this.theme}/>
           <div className='options-container' ref={this.optionsContainer}>
-            <Filter 
+            <PostFilter 
               ref={this.filter} 
               handleFilterChange={this.handleFilterChange} 
               handleSortByChange={this.handleSortByChange} 

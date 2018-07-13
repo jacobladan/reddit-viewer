@@ -133,8 +133,7 @@ export class Posts extends React.Component {
                                     num_comments={post.data.num_comments}
                                     theme={this.props.theme}
                                     generateComments={this.generateComments}
-                                    postId={post.data.id}
-                                    />
+                                    postId={post.data.id}/>
                                     <Points theme={this.props.theme} points={post.data.score}/>
                                 </div>
                                 {
