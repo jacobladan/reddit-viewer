@@ -5,7 +5,7 @@ let selectedClasses = 'filter-button selected';
 let notSelectedClass = 'filter-button';
 let hotButtonStyle, newButtonStyle, risingButtonStyle, topButtonStyle;
 
-export class Filter extends React.Component {
+export class PostFilter extends React.Component {
 
     constructor(props) {
         super(props);

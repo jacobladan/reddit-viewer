@@ -6,6 +6,7 @@ import { Points } from './points';
 import { PostBody } from './post-body';
 import { GridLoader } from 'react-spinners';
 import { SubredditSuggestion } from './subreddit-suggestion';
+import { Animated } from "react-animated-css";
 import SadFace from '../../images/sad-face.svg';
 
 let decodeHTML = function (html) {
@@ -27,9 +28,11 @@ export class Posts extends React.Component {
             postsWereFetched: true,
             subredditWasFound: true,
         };
-        this.postBodyRefs = {};
+        this.postRefs = {};
+        this.postCommentRefs = {};
         this.scrollToTopOfPost = this.scrollToTopOfPost.bind(this);
         this.highlightPost = this.highlightPost.bind(this);
+        this.generateComments = this.generateComments.bind(this);
         this.SubredditSuggestion = React.createRef();
         this.theme = 'light';
     }
@@ -39,7 +42,7 @@ export class Posts extends React.Component {
     }
 
     scrollToTopOfPost(id) {
-        let height = this.postBodyRefs[id].clientHeight;
+        let height = this.postRefs[id].clientHeight;
         if (height > 600) {
             window.scrollBy(0, (height * -1) + 200);
         }
@@ -47,26 +50,21 @@ export class Posts extends React.Component {
 
     highlightPost(id) {
         if (this.state.highlightPost !== '') {
-            this.postBodyRefs[this.state.highlightPost].classList.remove('highlighted-post', `highlighted-post-${this.props.theme}`);
+            this.postRefs[this.state.highlightPost].classList.remove('highlighted-post', `highlighted-post-${this.props.theme}`);
         }
-        this.postBodyRefs[id].classList.add('highlighted-post', `highlighted-post-${this.props.theme}`);
+        this.postRefs[id].classList.add('highlighted-post', `highlighted-post-${this.props.theme}`);
         this.setState({highlightPost: id});
     }
 
     clearPostRefs() {
-        for (const prop of Object.getOwnPropertyNames(this.postBodyRefs)) {
-            delete this.postBodyRefs[prop];
+        for (const prop of Object.getOwnPropertyNames(this.postRefs)) {
+            delete this.postRefs[prop];
         }
     }
 
-    // componentWillReceiveProps() {
-    //     // Logic is backwards due to generatePosts() not seeing darkTheme prop until after returning 
-    //     if (this.props.darkTheme) {
-    //         this.theme = 'light';
-    //     } else {
-    //         this.theme = 'dark';
-    //     }
-    // }
+    generateComments(id) {
+        this.props.generateComments(id);
+    }
 
     generatePosts(subreddit, direction, id, filter, sortBy, isFromHistory) {
         // first and lastIds are being used to track page navigation. See ../../api/subreddit-api.js
@@ -115,7 +113,7 @@ export class Posts extends React.Component {
                     }
                     i++;
                     return (
-                            <div className={`post-container post-container-${this.props.theme}`} key={post.data.id} ref={node => { this.postBodyRefs[post.data.id] = node; }}>
+                            <div className={`post-container post-container-${this.props.theme}`} key={post.data.id} ref={node => { this.postRefs[post.data.id] = node; }}>
                                 <div className='post-header'>
                                     <Thumbnail href={post.data.url} src={previewUrl} over_18={post.data.over_18}/>
                                     <PostInfo 
@@ -134,19 +132,21 @@ export class Posts extends React.Component {
                                     over_18={post.data.over_18}
                                     num_comments={post.data.num_comments}
                                     theme={this.props.theme}
-                                    />
+                                    generateComments={this.generateComments}
+                                    postId={post.data.id}/>
                                     <Points theme={this.props.theme} points={post.data.score}/>
-                                </div>{
-                                        // Checking if post has a body. If not, then no expand button or
-                                        // post body place holder is rendered
-                                        body
-                                        ? <PostBody postId={post.data.id}
-                                            subreddit={post.data.subreddit}
-                                            scrollToTopOfPost={this.scrollToTopOfPost}
-                                            highlightPost={this.highlightPost}
-                                            theme={this.props.theme}/>
-                                        : null
-                                    }
+                                </div>
+                                {
+                                    // Checking if post has a body. If not, then no expand button or
+                                    // post body place holder is rendered
+                                    body
+                                    ? <PostBody postId={post.data.id}
+                                        subreddit={post.data.subreddit}
+                                        scrollToTopOfPost={this.scrollToTopOfPost}
+                                        highlightPost={this.highlightPost}
+                                        theme={this.props.theme}/>
+                                    : null
+                                }
                             </div>
                         );
                     })
@@ -168,23 +168,27 @@ export class Posts extends React.Component {
     render() {
         if (!this.state.subredditWasFound){
             return (
-                <div className={`no-posts-container no-posts-container-${this.props.theme}`}>
-                    <img src={SadFace} alt='sad face' className='sad-face-img'/>
-                    <p className='no-posts-message'>That subreddit doesn't exist</p>
-                    <div className='horizontal-line'></div>
-                    <SubredditSuggestion 
-                        ref={this.SubredditSuggestion}
-                        subreddit={this.state.subreddit} 
-                        handleSubredditChange={this.props.handleSubredditChange}
-                        theme={this.props.theme}/>
-                </div>
+                <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
+                    <div className={`no-posts-container no-posts-container-${this.props.theme}`}>
+                        <img src={SadFace} alt='sad face' className='sad-face-img'/>
+                        <p className='no-posts-message'>That subreddit doesn't exist</p>
+                        <div className='horizontal-line'></div>
+                        <SubredditSuggestion 
+                            ref={this.SubredditSuggestion}
+                            subreddit={this.state.subreddit} 
+                            handleSubredditChange={this.props.handleSubredditChange}
+                            theme={this.props.theme}/>
+                    </div>
+                </Animated>
             );
         } else if (!this.state.postsWereFetched) {
             return (
-                <div className={`no-posts-container no-posts-container-${this.props.theme}`}>
-                    <img src={SadFace} alt='sad face' className='sad-face-img'/>
-                    <p className='no-posts-message'>There doesn't seem to be anything here...</p>
-                </div>
+                <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
+                    <div className={`no-posts-container no-posts-container-${this.props.theme}`}>
+                        <img src={SadFace} alt='sad face' className='sad-face-img'/>
+                        <p className='no-posts-message'>There doesn't seem to be anything here...</p>
+                    </div>
+                </Animated>
             );
         } else {
             return (
@@ -192,10 +196,11 @@ export class Posts extends React.Component {
                     // Adds loader icon until the posts are fetched
                     this.state.fetchInProgress
                     ? <div className='post-loader-container'><GridLoader loading={true} color={"#44def3"}/></div>
-                    : this.state.posts
+                    : <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>{this.state.posts}</Animated>
                 }
                 </div>
             ) 
         }
     }
 }
+

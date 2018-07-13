@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import { Posts } from './components/main-page/posts';
-import { Filter } from './components/main-page/filter';
+import { PostFilter } from './components/main-page/post-filter';
 import { Animated } from "react-animated-css";
 import { Navigation } from './components/main-page/navigation';
 import { animateScroll as scroll } from 'react-scroll';
 import { SubredditInput } from './components/main-page/subreddit-input';
 import { SubTitle } from './components/main-page/sub-title';
 import { defaultSubreddit } from './api/subreddit-api';
+import { SettingsMenu } from './components/main-page/settings-menu';
+import { CommentsContainer } from './components/main-page/comments-container';
 import './styles/main-page-styles.css';
 import './styles/themes/dark-theme.css';
 import './styles/themes/light-theme.css';
 import './styles/responsive-styles.css';
-import { SettingsMenu } from './components/main-page/settings-menu';
 
-// TODO: Convert generatePosts param to object
+// TODO: Convert generatePosts param to object 
+// TODO: Convert components with a lot of props to use a single prop object
 
 class App extends Component {
 
@@ -24,6 +26,7 @@ class App extends Component {
       subNotFound: false,
       nsfwFilter: true,
       isDarkTheme: false,
+      isCommentsVisible: false,
       currentListing: {
         subreddit: defaultSubreddit,
         id: '',
@@ -46,12 +49,16 @@ class App extends Component {
     this.handleSubredditChange = this.handleSubredditChange.bind(this);
     this.setHistory = this.setHistory.bind(this);
     this.toggleNSFW = this.toggleNSFW.bind(this);
-    this.toggleTheme = this.toggleDarkTheme.bind(this);
+    this.toggleTheme = this.toggleTheme.bind(this);
+    this.generateComments = this.generateComments.bind(this);
     this.filter = React.createRef();
     this.posts = React.createRef();
     this.navigation = React.createRef();
     this.optionsContainer = React.createRef();
+    this.commentsContainer = React.createRef();
     this.theme = 'light';
+    this.pageContainerDisplay = {display: 'block'};
+    this.commentsContainerDisplay = {display: 'none'};
   }
 
   componentWillMount() {
@@ -94,7 +101,9 @@ class App extends Component {
   }
 
   handleSubredditChange(subreddit) {
-    this.setState({ atEnd: false, subreddit: subreddit, subNotFound: false });
+    this.setState({ atEnd: false, subreddit: subreddit, subNotFound: false, isCommentsVisible: false });
+    this.pageContainerDisplay = {display: 'block'};
+    this.commentsContainerDisplay = {display: 'none'};
     this.posts.current.generatePosts(subreddit, 'after', '', this.state.currentListing.filter, this.state.currentListing.sortBy);
     this.navigation.current.resetPageCounter();
     scroll.scrollToTop({duration: 500, smooth: true});
@@ -144,11 +153,11 @@ class App extends Component {
   }
     
   toggleNSFW() {
-    this.setState({nsfwFilter: !this.state.nsfwFilter});
+    this.setState({nsfwFilter: !this.state.nsfwFilter, atEnd: false, subNotFound: false});
     this.posts.current.generatePosts(this.state.currentListing.subreddit, 'after', '', this.state.currentListing.filter, this.state.currentListing.sortBy);
   }
 
-  toggleDarkTheme(isDarkTheme) {
+  toggleTheme(isDarkTheme) {
     if (!isDarkTheme) {
       this.theme = 'dark';
     } else {
@@ -160,45 +169,66 @@ class App extends Component {
     this.posts.current.generatePosts(this.state.currentListing.subreddit, 'after', this.state.currentListing.id, this.state.currentListing.filter, this.state.currentListing.sortBy);
   }
 
+  generateComments(id) {
+    scroll.scrollToTop({duration: 500, smooth: true});
+    this.commentsContainer.current.generateComments(this.state.currentListing.subreddit, id, 'top');
+    this.posts.current.highlightPost(id);
+    this.setState({isCommentsVisible: true});
+    this.pageContainerDisplay = {display: 'none'};
+    this.commentsContainerDisplay = {display: 'block'};
+  }
+
   handlePopState(e) {
-    this.navigation.current.resetPageCounter();
-    try {
-      this.nextListing = {
-        subreddit: e.state.subreddit,
-        filter: e.state.filter,
-        sortBy: e.state.sortBy,
-      }
-      // Used to set proper filter
-      if (this.state.currentListing.filter !== e.state.filter) { this.filter.current.setFilter(e.state.filter); }
-  
-      this.posts.current.generatePosts(e.state.subreddit, 'after', '', e.state.filter, e.state.sortBy, true);
-      this.setState({
-        currentListing: {
+    if (this.state.isCommentsVisible === true) {
+      this.pageContainerDisplay = {display: 'block'};
+      this.commentsContainerDisplay = {display: 'none'};
+      this.setState({isCommentsVisible: false});
+    } else {
+      this.navigation.current.resetPageCounter();
+      try {
+        this.nextListing = {
           subreddit: e.state.subreddit,
           filter: e.state.filter,
           sortBy: e.state.sortBy,
-        },
-        atEnd: false,
-        subNotFound: false
-      });
-    } catch(e) {
-      console.log('No more posts to load');
+        }
+        // Used to set proper filter
+        if (this.state.currentListing.filter !== e.state.filter) { this.filter.current.setFilter(e.state.filter); }
+    
+        this.posts.current.generatePosts(e.state.subreddit, 'after', '', e.state.filter, e.state.sortBy, true);
+        this.setState({
+          currentListing: {
+            subreddit: e.state.subreddit,
+            filter: e.state.filter,
+            sortBy: e.state.sortBy,
+          },
+          atEnd: false,
+          subNotFound: false
+        });
+      } catch(e) {
+        console.log('No more posts to load');
+      }
     }
   }
 
   render() {
     return(
       <div className={`page-background page-background-${this.theme}`}>
-        <div className={`page-container page-container-${this.theme}`}>
+        <Animated animationIn='fadeIn' isVisible={this.state.isCommentsVisible} className='animation-styles'>
+          <CommentsContainer ref={this.commentsContainer} 
+          display={this.commentsContainerDisplay} 
+          theme={this.theme}
+          handleSubredditChange={this.handleSubredditChange}/>
+        </Animated>
+        <div className={`page-container page-container-${this.theme}`} style={this.pageContainerDisplay}>
           <SubTitle subreddit={this.state.currentListing.subreddit} theme={this.theme}/>
           <div className='options-container' ref={this.optionsContainer}>
-            <Filter 
+            <PostFilter 
               ref={this.filter} 
               handleFilterChange={this.handleFilterChange} 
               handleSortByChange={this.handleSortByChange} 
               sortBy={this.state.currentListing.sortBy}
               theme={this.theme}/>
-            <div className='right-options-container' >
+            <div className='right-options-container'>
               <SubredditInput 
               handleSubredditChange={this.handleSubredditChange} 
               subreddit={this.state.currentListing.subreddit}
@@ -207,7 +237,7 @@ class App extends Component {
               <SettingsMenu toggleNSFW={this.toggleNSFW} 
                           nsfwFilter={this.state.nsfwFilter} 
                           handleSubredditChange={this.handleSubredditChange}
-                          toggleDarkTheme={this.toggleTheme}
+                          toggleTheme={this.toggleTheme}
                           theme={this.theme}
                           isDarkTheme={this.state.isDarkTheme}/>
             </div>
@@ -221,7 +251,8 @@ class App extends Component {
               handleSubredditChange={this.handleSubredditChange}
               setHistory={this.setHistory}
               nsfwFilter={this.state.nsfwFilter}
-              theme={this.theme}/>
+              theme={this.theme}
+              generateComments={this.generateComments}/>
           </Animated>
           <Navigation 
             ref={this.navigation} 

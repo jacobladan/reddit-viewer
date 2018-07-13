@@ -13,7 +13,7 @@ p {
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #1f1f1f; 
 }
  
 /* Handle */
@@ -27,25 +27,16 @@ p {
     background: #00d9ff; 
 }
 
-.page-container {
+.page-background {
     padding-top: 5%;
     padding-bottom: 5%;
+    height: 100%;
+}
+
+.page-container {
     max-width: 1440px;
     margin: 0 auto;
     transition: 150ms ease-in-out;
-}
-
-.logo-container {
-    text-align: center;
-    margin-bottom: 2%;
-}
-
-.logo-link {
-    display: inline;
-}
-
-.logo {
-    width: 30%;
 }
 
 .sub-title-container {
@@ -85,7 +76,7 @@ p {
     border-color: rgba(0, 0, 0, 0);
     transition: 150ms ease-in-out;
     outline: none;
-    max-width: 76px;
+    max-width: 90px;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 
                 0 3px 1px -2px rgba(0,0,0,.12), 
                 0 1px 5px 0 rgba(0,0,0,.2);
@@ -281,7 +272,6 @@ p {
     overflow: hidden;
     background-color: white;
     border-radius: 4px;
-    transition: 150ms ease-in-out;
     text-align: center;
     font-size: 150%;
     box-shadow: 0 2px 2px 0 rgba(221, 115, 115, 0.14), 
@@ -360,13 +350,13 @@ p {
 }
 
 .highlighted-post {
-    transition: 300ms ease-in-out;
+    transition: 150ms ease-in-out;
 }
 
 .animation-styles {
-    animation-duration: 1s;
-    -webkit-animation-duration: 1s;
-    -moz-animation-duration: 1s;
+    animation-duration: 0.5s;
+    -webkit-animation-duration: 0.5s;
+    -moz-animation-duration: 0.5s;
 }
 
 .thumbnail {
@@ -439,7 +429,6 @@ p {
 }
 
 .author-link:hover {
-    /* color: #28bce8 */
     color: #ffb500;
 }
 
@@ -461,19 +450,6 @@ p {
 }
 
 .subreddit-link:hover {
-    cursor: pointer;
-    /* color: #28bce8; */
-    color: #ffb500;
-}
-
-.comments {
-    color: black;
-    font-size: 0.7em;
-    display: inline-block;
-    text-decoration: none;
-}
-
-.comments:hover {
     cursor: pointer;
     /* color: #28bce8; */
     color: #ffb500;
@@ -501,6 +477,19 @@ p {
 }
 
 .subreddit-link:hover {
+    cursor: pointer;
+    /* color: #28bce8; */
+    color: #ffb500;
+}
+
+.comments {
+    color: black;
+    font-size: 0.7em;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.comments:hover {
     cursor: pointer;
     /* color: #28bce8; */
     color: #ffb500;
@@ -580,18 +569,18 @@ p {
     color: #28bce8;
 }
 
-.comment-loader-container {
-    width: 57px;
-    font-size: 0;
-    margin: 0 auto;
-}
-
 .not-expanded {
     display: none;
 }
 
 .expanded {
     display: block;
+}
+
+.body-loader-container {
+    width: 57px;
+    font-size: 0;
+    margin: 0 auto;
 }
 
 .post-body-container {

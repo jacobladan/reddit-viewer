@@ -2,6 +2,35 @@
     background-color: #1f1f1f;
 }
 
+.comments-expanded-container-dark {
+    background-color: #525252;
+    color: white;
+}
+
+.parent-comment-dark {
+    background-color: #717171;
+}
+
+.odd-comment-dark {
+    background-color: #717171;
+}
+
+.even-comment-dark {
+    background-color: #525252;
+}
+
+.comment-info-container-dark {
+    color: #b7b7b7;
+}
+
+.comment-author-link-dark {
+    color: #b7b7b7;
+}
+
+.comments-comments-dark {
+    color: white;
+}
+
 .sub-title-dark {
     color: lightgray;
 }

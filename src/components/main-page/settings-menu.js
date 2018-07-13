@@ -63,7 +63,7 @@ export class SettingsMenu extends React.Component {
                                 height={20}
                                 onColor={this.onColor}
                                 checked={this.props.isDarkTheme}
-                                onChange={() => this.props.toggleDarkTheme(this.props.isDarkTheme)}/>
+                                onChange={() => this.props.toggleTheme(this.props.isDarkTheme)}/>
                             </div>
                         </div>
                     </div>

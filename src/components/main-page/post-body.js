@@ -90,13 +90,9 @@ export class PostBody extends React.Component {
             this.generatePostBody(this.props.subreddit, this.props.postId);
         }
         if (this.state.isPostExpanded) {
-            this.setState({
-                isPostExpanded: false,
-            });
+            this.setState({isPostExpanded: false});
         } else {
-            this.setState({
-                isPostExpanded: true,
-            });
+            this.setState({isPostExpanded: true});
         }
     }
 
@@ -112,7 +108,7 @@ export class PostBody extends React.Component {
                         <div className={`post-body-container post-body-container-${this.props.theme}`}>{
                                 // Displays loader icon while post body is fetched
                                 this.state.fetchInProgress
-                                ? <div className='comment-loader-container'><GridLoader loading={true} color={"#44def3"} /></div>
+                                ? <div className='body-loader-container'><GridLoader loading={true} color={"#44def3"} /></div>
                                 :   <div>{this.state.body}</div>
                             }
                         </div>

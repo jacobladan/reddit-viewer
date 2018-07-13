@@ -1,47 +1,15 @@
 import React from 'react';
+import { convertDate } from '../../utils/date-converter';
 
 export class PostInfo extends React.Component {
 
     constructor(props) {
         super(props);
-        this.timeSincePost = 0;
+        this.timeSincePost = '';
     }
 
     componentWillMount() {
-        let timeNow = Math.round(Date.now() / 1000);
-        let timeDif = (timeNow - (this.props.created)) / 60;
-        // console.log(this.props.title + ': ' + timeDif)
-        if (timeDif >= 2 && timeDif <= 60) {
-            // Between 2 minutes and an hour
-            this.timeSincePost = Math.floor(timeDif) + ' minutes ago';
-        } else if (timeDif > 60 && timeDif < 120) {
-            // One hour
-            this.timeSincePost = ' an hour ago';
-        } else if (timeDif >= 120 && timeDif <= 1440) {
-            // Betwen 2 hours and one day
-            this.timeSincePost = Math.floor((timeDif) / 60) + ' hours ago';
-        } else if (timeDif > 1440 && timeDif <= 2880) {
-            // One day
-            this.timeSincePost = ' one day ago';
-        } else if (timeDif > 2880 && timeDif <= 43800) {
-            // Between 2 days and one month
-            this.timeSincePost = Math.floor((timeDif) / (60 * 24)) + ' days ago';
-        } else if (timeDif > 43800 && timeDif <= 87600) {
-            // One month
-            this.timeSincePost = ' one month ago';
-        } else if (timeDif > 87600 && timeDif <= 525600) {
-            // Between 2 months and a year
-            this.timeSincePost = Math.floor((timeDif) / (60 * 24 * 30)) + ' months ago';
-        } else if (timeDif > 525600 && timeDif <= 1036800) {
-            // One year
-            this.timeSincePost = ' one year ago';
-        } else if (timeDif > 1036800) {
-            // Over one year
-            this.timeSincePost = Math.floor((timeDif) / (60 * 24 * 30 * 12)) + ' years ago';
-        } else {
-            // Less than a minute
-            this.timeSincePost = 'now';
-        }
+        this.timeSincePost = convertDate(this.props.created);
     }
 
     handleSubredditClick() {
@@ -49,7 +17,7 @@ export class PostInfo extends React.Component {
     }
 
     handleCommentsClick() {
-        console.log('clicked')
+        this.props.generateComments(this.props.postId);
     }
     
     render() {
@@ -76,7 +44,12 @@ export class PostInfo extends React.Component {
                     <p className={`author author-${this.props.theme}`}><b>By: </b><a href={this.props.authorLink} className={`author-link author-link-${this.props.theme}`} target='_blank'>{this.props.author}</a></p>
                     {(this.props.passedSubreddit === 'all') && <p className={`subreddit subreddit-${this.props.theme}`}><b>To: </b></p>}
                     {(this.props.passedSubreddit === 'all') && <p className='subreddit-link' onClick={() => this.handleSubredditClick()}>/r/{this.props.postSubreddit}</p>}
-                    <a href={'https://reddit.com' + this.props.permaLink} target='_blank' className={`comments comments-${this.props.theme}`}>Comments ({this.props.num_comments})</a>
+                    {
+                        this.props.isFromComments
+                        ? <p className={`comments-comments comments-comments-${this.props.theme}`}>Comments ({this.props.num_comments})</p>
+                        : <p onClick={() => this.handleCommentsClick()} className={`comments comments-${this.props.theme}`}>Comments ({this.props.num_comments})</p>
+
+                    }
                 </div>
                 <div className='info-container'>
                 </div>
