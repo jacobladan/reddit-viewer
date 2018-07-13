@@ -6,12 +6,16 @@ export class SubredditInput extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            input: 'all',
+            input: '',
             rStyle: {},
             valueStyle: {},
         };
         this.input = React.createRef();
         this.subreddit = defaultSubreddit;
+    }
+
+    componentWillMount() {
+        this.setState({input: this.props.subreddit});
     }
 
     componentDidMount() {

@@ -125,7 +125,7 @@ export class CommentsContainer extends React.Component {
                 let data = comment.data.replies.data.children[i].data;
                 childCommentInfo = {
                     created_utc: convertDate(data.created_utc),
-                    author: ' ' + data.author + ' ' + colour,
+                    author: ' ' + data.author,
                     authorLink: 'https://www.reddit.com/user/' + data.author,
                     score: data.score_hidden ? '[hidden]' : data.score,
                     body: ReactHtmlParser(decodeHTML(data.body_html))

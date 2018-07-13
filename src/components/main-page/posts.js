@@ -38,7 +38,7 @@ export class Posts extends React.Component {
     }
 
     componentDidMount() {
-        this.generatePosts(this.state.subreddit, '', '', 'hot', 'hour');
+        this.generatePosts(this.props.subreddit, '', '', 'hot', 'hour');
     }
 
     scrollToTopOfPost(id) {

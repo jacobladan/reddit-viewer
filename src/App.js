@@ -62,11 +62,34 @@ class App extends Component {
   }
 
   componentWillMount() {
+    let isDarkTheme = false, nsfwFilter = false, subreddit;
     if (typeof(Storage) !== 'undefined') { 
-      if (localStorage.getItem('theme') === 'dark') {
-        this.theme = localStorage.getItem('theme');
-        this.setState({isDarkTheme: true}); 
+      console.log(localStorage);
+      // Checking if theme is set in storage
+      if (typeof(localStorage.getItem('theme') !== 'undefined')) {
+        // Checking if it's value is defined or not
+        if (localStorage.getItem('theme') !== 'undefined') {
+          // If it has a value, set the theme to it
+          this.theme = localStorage.getItem('theme');
+          if (this.theme === 'dark') { isDarkTheme = true; }
+        } else {
+          this.theme = 'light';
+        }
       }
+      if (typeof(localStorage.getItem('nsfwFilter') !== 'undefined')) {
+        if (localStorage.getItem('nsfwFilter') !== 'undefined') {
+          if (localStorage.getItem('nsfwFilter') === 'false') { nsfwFilter = false }
+          else { nsfwFilter = true }
+        } else {
+          nsfwFilter = true;
+        }
+      }
+      if (typeof(localStorage.getItem('subreddit') !== 'undefined')) {
+        if (localStorage.getItem('subreddit') !== 'undefined') {
+          subreddit = localStorage.getItem('subreddit');
+        } else { subreddit = defaultSubreddit }
+      }
+      this.setState({isDarkTheme: isDarkTheme, nsfwFilter: nsfwFilter, currentListing: {subreddit: subreddit}});
     }
   }
 
@@ -78,7 +101,23 @@ class App extends Component {
   }
 
   saveThemeToLocalStorage() {
-    localStorage.setItem('theme', sessionStorage.theme);
+    if (typeof(sessionStorage.theme) !== 'undefined') {
+      localStorage.setItem('theme', sessionStorage.theme);
+    } else {
+      localStorage.setItem('theme', this.theme);
+    }
+
+    if (typeof(sessionStorage.nsfwFilter) !== 'undefined') {
+      localStorage.setItem('nsfwFilter', sessionStorage.nsfwFilter);
+    } else {
+      localStorage.setItem('nsfwFilter', this.state.nsfwFilter);
+    }
+
+    if (typeof(sessionStorage.subreddit) !== 'undefined') {
+      localStorage.setItem('subreddit', sessionStorage.subreddit);
+    } else {
+      localStorage.setItem('subreddit', this.state.currentListing.subreddit);
+    }
   }
 
   setHistory(subreddit, firstId, lastId, filter, sortBy) {
@@ -102,6 +141,7 @@ class App extends Component {
 
   handleSubredditChange(subreddit) {
     this.setState({ atEnd: false, subreddit: subreddit, subNotFound: false, isCommentsVisible: false });
+    sessionStorage.setItem('subreddit', subreddit);
     this.pageContainerDisplay = {display: 'block'};
     this.commentsContainerDisplay = {display: 'none'};
     this.posts.current.generatePosts(subreddit, 'after', '', this.state.currentListing.filter, this.state.currentListing.sortBy);
@@ -153,6 +193,7 @@ class App extends Component {
   }
     
   toggleNSFW() {
+    sessionStorage.setItem('nsfwFilter', !this.state.nsfwFilter);
     this.setState({nsfwFilter: !this.state.nsfwFilter, atEnd: false, subNotFound: false});
     this.posts.current.generatePosts(this.state.currentListing.subreddit, 'after', '', this.state.currentListing.filter, this.state.currentListing.sortBy);
   }
@@ -247,7 +288,7 @@ class App extends Component {
               ref={this.posts} 
               className='animation-props' 
               removeForwardArrows={this.removeForwardArrows}
-              subreddit={this.state.subreddit}
+              subreddit={this.state.currentListing.subreddit}
               handleSubredditChange={this.handleSubredditChange}
               setHistory={this.setHistory}
               nsfwFilter={this.state.nsfwFilter}
