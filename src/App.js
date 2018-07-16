@@ -64,37 +64,52 @@ class App extends Component {
   }
 
   componentWillMount() {
-    let isDarkTheme = false, nsfwFilter = false, subreddit;
+    let isDarkTheme = false, nsfwFilter = false, subreddit = 'all';
     if (typeof(Storage) !== 'undefined') { 
       // Checking if theme is set in storage
       if (typeof(localStorage.getItem('theme') !== 'undefined')) {
         // Checking if it's value is defined or not
-        if (localStorage.getItem('theme') !== 'undefined') {
+        if (localStorage.getItem('theme') !== null) {
           // If it has a value, set the theme to it
           this.theme = localStorage.getItem('theme');
-          if (this.theme === 'dark') { isDarkTheme = true; }
+          if (this.theme === 'dark') { 
+            isDarkTheme = true; 
+          }
         } else {
           this.theme = 'light';
         }
+      } else {
+        this.theme = 'light;'
+        this.isDarkTheme = false;
       }
       if (typeof(localStorage.getItem('nsfwFilter') !== 'undefined')) {
         if (localStorage.getItem('nsfwFilter') !== 'undefined') {
-          if (localStorage.getItem('nsfwFilter') === 'false') { nsfwFilter = false }
-          else { nsfwFilter = true }
+          if (localStorage.getItem('nsfwFilter') === 'false') { 
+            nsfwFilter = false; 
+          }
+          else { 
+            nsfwFilter = true; 
+          }
         } else {
           nsfwFilter = true;
         }
+      } else {
+        nsfwFilter = false;
       }
       if (typeof(localStorage.getItem('subreddit') !== 'undefined')) {
-        if (localStorage.getItem('subreddit') !== 'undefined') {
+        if (typeof(localStorage.getItem('subreddit')) === 'string') {
           subreddit = localStorage.getItem('subreddit');
-        } else { subreddit = defaultSubreddit }
+        } else { 
+          subreddit = defaultSubreddit;
+        }
+      } else {
+        subreddit = defaultSubreddit;
       }
+      sessionStorage.setItem('nsfwFilter', nsfwFilter);
+      sessionStorage.setItem('subreddit', subreddit);
+      sessionStorage.setItem('theme', this.theme);
       this.setState({isDarkTheme: isDarkTheme, nsfwFilter: nsfwFilter, currentListing: {subreddit: subreddit}});
-    } else {
-      this.theme = 'light';
-      this.setState({isDarkTheme: false, nsfwFilter: true, currentListing: {subreddit: 'all'}});
-    }
+    } 
   }
 
   componentDidMount() {
@@ -144,7 +159,7 @@ class App extends Component {
   }
 
   handleSubredditChange(subreddit) {
-    this.setState({ atEnd: false, subreddit: subreddit, subNotFound: false, isCommentsVisible: false });
+    this.setState({ atEnd: false, subreddit: {currentListing: subreddit}, subNotFound: false, isCommentsVisible: false });
     sessionStorage.setItem('subreddit', subreddit);
     this.pageContainerDisplay = {display: 'block'};
     this.commentsContainerDisplay = {display: 'none'};
