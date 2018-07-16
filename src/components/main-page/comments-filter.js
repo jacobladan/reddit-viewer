@@ -17,7 +17,6 @@ export class CommentsFilter extends React.Component {
     }
 
     render() {
-        console.log(this.props.filter);
         topButtonStyle = notSelectedClass;
         newButtonStyle = notSelectedClass;
         controversialButtonStyle = notSelectedClass;

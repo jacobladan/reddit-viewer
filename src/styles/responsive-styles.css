@@ -14,6 +14,11 @@
 }
 
 @media only screen and (max-width: 740px) {
+
+    .page-background {
+        padding-top: 2%;
+    }
+
     .page-container {
         height: 100%;
     }
@@ -312,14 +317,99 @@
         background-color: #333333;
     }
 
-    /* .nav-container-dark {
+    .comments-expanded-container-dark {
         background-color: #1f1f1f;
-    } */
+    }
+
+    .parent-comment-dark {
+        background-color: #1f1f1f;
+    }
+
+    .odd-comment-dark {
+        background-color: #1f1f1f;
+    }
+
+    .even-comment-dark {
+        background-color: #1f1f1f;
+    }
 }
 
 /* Light */
 @media only screen and (max-width: 740px) {
     .content-container .post-container-light:nth-child(even) {
         background-color: #f5f5f5;
+    }
+
+    .comments-expanded-container-light {
+        background-color: white;
+    }
+
+    .parent-comment-light {
+        background-color: white;
+    }
+
+    .odd-comment-light {
+        background-color: white;
+    }
+
+    .even-comment-light {
+        background-color: white;
+    }
+}
+
+/* Comments */
+@media only screen and (max-width: 740px) {
+    .comments-filter-container {
+        width: 100%;
+        margin-left: 0%;
+        margin-top: 0%;
+    }
+    
+    .post-comments-container {
+        width: 100%;
+        margin: 0%;
+        padding: 0%;
+    }
+
+    .comments-expanded-container {
+        min-width: 0px;
+        width: 100%;
+        padding: 0%;
+        box-shadow: none;
+    }
+
+    .parent-comment {
+        width: 100%;
+        padding: 0%;
+        border-radius: 0px;
+        box-shadow: none;
+        margin-bottom: 0%;
+        padding-left: 1%;
+        /* border-left: 2px solid black; */
+    }
+
+    .odd-comment {
+        min-width: 0px;
+        border-radius: 0px;
+        margin-bottom: 0%;
+        padding-bottom: 0%;
+        border-left: 1px solid gray;
+    }
+
+    .even-comment {
+        min-width: 0px;
+        border-radius: 0px;
+        margin-bottom: 0%;
+        padding-bottom: 0%;
+        border-left: 1px solid gray;
+    }
+
+    .md {
+        padding-bottom: 1%;
+        padding-right: 2%;
+    }
+
+    .child-comments-container {
+        margin: 0%;
     }
 }

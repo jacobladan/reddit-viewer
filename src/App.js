@@ -64,7 +64,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    let isDarkTheme = false, nsfwFilter = false, subreddit = 'all';
+    let isDarkTheme = false, nsfwFilter = false, subreddit = defaultSubreddit;
     if (typeof(Storage) !== 'undefined') { 
       // Checking if theme is set in storage
       if (typeof(localStorage.getItem('theme') !== 'undefined')) {
@@ -241,6 +241,7 @@ class App extends Component {
 
   handlePopState(e) {
     if (this.state.isCommentsVisible === true) {
+      this.setHistory(this.state.currentListing.subreddit, '', '', this.state.currentListing.filter, this.state.currentListing.sortBy);
       this.pageContainerDisplay = {display: 'block'};
       this.commentsContainerDisplay = {display: 'none'};
       this.setState({isCommentsVisible: false});
