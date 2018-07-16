@@ -58,6 +58,7 @@ class App extends Component {
     this.navigation = React.createRef();
     this.optionsContainer = React.createRef();
     this.commentsContainer = React.createRef();
+    this.settingsMenu = React.createRef();
     this.theme = 'light';
     this.pageContainerDisplay = {display: 'block'};
     this.commentsContainerDisplay = {display: 'none'};
@@ -158,7 +159,7 @@ class App extends Component {
     window.history.pushState(data, null, url);
   }
 
-  handleSubredditChange(subreddit) {
+  handleSubredditChange(subreddit, isFromSttingsMenu) {
     this.setState({ atEnd: false, subreddit: {currentListing: subreddit}, subNotFound: false, isCommentsVisible: false });
     sessionStorage.setItem('subreddit', subreddit);
     this.pageContainerDisplay = {display: 'block'};
@@ -166,6 +167,9 @@ class App extends Component {
     this.posts.current.generatePosts(subreddit, 'after', '', this.state.currentListing.filter, this.state.currentListing.sortBy);
     this.navigation.current.resetPageCounter();
     scroll.scrollToTop({duration: 500, smooth: true});
+    if (isFromSttingsMenu) {
+      this.settingsMenu.current.closeMenu();
+    }
   }
 
   handleFilterChange(filter) {
@@ -303,7 +307,8 @@ class App extends Component {
                           toggleTheme={this.toggleTheme}
                           theme={this.theme}
                           isDarkTheme={this.state.isDarkTheme}
-                          subreddit={this.state.currentListing.subreddit}/>
+                          subreddit={this.state.currentListing.subreddit}
+                          ref={this.settingsMenu}/>
             </div>
           </div>
           <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>

@@ -34,7 +34,7 @@ export class SubredditInput extends React.Component {
             return;
         } else {
             // Removing anything that isn't a letter, number, or underscore
-            this.props.handleSubredditChange(this.state.input.replace(/[^a-zA-Z0-9_]/,''));
+            this.props.handleSubredditChange(this.state.input.replace(/[^a-zA-Z0-9_]/,''), true);
         }
         this.input.current.blur();
     }

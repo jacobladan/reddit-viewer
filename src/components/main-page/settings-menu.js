@@ -20,6 +20,10 @@ export class SettingsMenu extends React.Component {
         this.setState({menuIsVisible: !this.state.menuIsVisible});
     }
 
+    closeMenu() {
+        this.setState({menuIsVisible: false});
+    }
+
     render() {
         if (this.props.theme === 'dark') {
             this.onColor = '#a3cfdd';
