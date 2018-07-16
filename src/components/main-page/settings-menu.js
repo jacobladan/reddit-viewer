@@ -40,7 +40,7 @@ export class SettingsMenu extends React.Component {
                     <div className={`settings-menu settings-menu-${this.props.theme}`}>
                         <SubredditInput className='subreddit-form-container-mobile' 
                                         handleSubredditChange={this.props.handleSubredditChange}
-                                        subreddit={''}
+                                        subreddit={this.props.subreddit}
                                         theme={this.props.theme}/>
                         <div className='menu-item-container'>
                             <label className='menu-item-label'>NSFW Filter</label>

@@ -175,6 +175,10 @@ p {
     font-weight: bold;
 }
 
+.clear-text-icon {
+    display: none;
+}
+
 .browse-button:hover {
     background-color: #c3f1ff;
     cursor: pointer;

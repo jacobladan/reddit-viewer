@@ -1,5 +1,5 @@
 import React from 'react';
-import { defaultSubreddit } from '../../api/subreddit-api';
+import ClearText from '../../images/clear.svg';
 
 export class SubredditInput extends React.Component {
 
@@ -11,7 +11,6 @@ export class SubredditInput extends React.Component {
             valueStyle: {},
         };
         this.input = React.createRef();
-        this.subreddit = defaultSubreddit;
     }
 
     componentWillMount() {
@@ -56,11 +55,12 @@ export class SubredditInput extends React.Component {
         }
     }
 
+    handleClearTextClick() {
+        this.setState({input: ''});
+        this.input.current.focus();
+    }
+
     render() {
-        // So undefined does not get used as placeholder for input
-        if (this.props.subreddit !== undefined) {
-            this.subreddit = this.props.subreddit;
-        }
         return (
             <div className={this.props.className}>
                 <form onSubmit={(e) => {
@@ -78,6 +78,7 @@ export class SubredditInput extends React.Component {
                         value={this.state.input}
                         onFocus={() => this.handleFocus()}
                         onBlur={() => this.handleBlur()}/>
+                    <img className='clear-text-icon' src={ClearText} alt="clear text" onClick={() => this.handleClearTextClick()}/>
                     <input type='submit' className={`browse-button browse-button-${this.props.theme}`} value='Browse' />
                 </form>
             </div>

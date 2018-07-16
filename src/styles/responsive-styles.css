@@ -93,7 +93,18 @@
         box-shadow: none;
         border-bottom: 1px solid black;
         width: 47%;
+        width: 37%;
         padding-left: 10%;
+        padding-right: 10%;
+    }
+
+    .clear-text-icon {
+        display: block;
+        position: absolute;
+        width: 13px;
+        height: 13px;
+        right: 45%;
+        top: 11%;
     }
 
     .browse-button {
@@ -261,7 +272,7 @@
     }
 
     .subreddit-input {
-        width: 40%;
+        width: 37%;
         padding-left: 10%;
     }
 

@@ -91,6 +91,9 @@ class App extends Component {
         } else { subreddit = defaultSubreddit }
       }
       this.setState({isDarkTheme: isDarkTheme, nsfwFilter: nsfwFilter, currentListing: {subreddit: subreddit}});
+    } else {
+      this.theme = 'light';
+      this.setState({isDarkTheme: false, nsfwFilter: true, currentListing: {subreddit: 'all'}});
     }
   }
 
@@ -238,6 +241,7 @@ class App extends Component {
         if (this.state.currentListing.filter !== e.state.filter) { this.filter.current.setFilter(e.state.filter); }
     
         this.posts.current.generatePosts(e.state.subreddit, 'after', '', e.state.filter, e.state.sortBy, true);
+        sessionStorage.setItem('subreddit', e.state.subreddit);
         this.setState({
           currentListing: {
             subreddit: e.state.subreddit,
@@ -282,7 +286,8 @@ class App extends Component {
                           handleSubredditChange={this.handleSubredditChange}
                           toggleTheme={this.toggleTheme}
                           theme={this.theme}
-                          isDarkTheme={this.state.isDarkTheme}/>
+                          isDarkTheme={this.state.isDarkTheme}
+                          subreddit={this.state.currentListing.subreddit}/>
             </div>
           </div>
           <Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
