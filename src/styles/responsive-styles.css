@@ -42,8 +42,12 @@
         box-shadow: none;
     }
 
-    .filter-button:hover {
+    .filter-button-light:hover {
         background-color: white;
+    }
+
+    .filter-button-dark:hover {
+        background-color: #1f1f1f;
     }
 
     .filter-button.selected:hover {

@@ -45,7 +45,6 @@ blockquote {
     width: 91%;
     margin: 0 auto;
     border-radius: 4px;
-    margin-bottom: 4%;
     font-size: 80%;
 }
 
@@ -132,4 +131,24 @@ blockquote {
 
 .child-comments-container {
     margin-top: 2%;
+}
+
+.no-comments-container {
+    display: block;
+    width: 46%;
+    margin: 0 auto;
+    padding: 1%;
+    padding-bottom: 2%;
+    margin-top: 7%;
+    margin-bottom: 7%;
+    overflow: hidden;
+    background-color: white;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 150%;
+}
+
+.no-comments-message {
+    display: inline-block;
+    width: 86%;
 }

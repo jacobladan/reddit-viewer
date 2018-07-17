@@ -17,7 +17,6 @@ import './styles/responsive-styles.css';
 // TODO: Convert generatePosts param to object 
 // TODO: Convert components with a lot of props to use a single prop object
 // TODO: Add dialog for no comments
-// **** CHANGE Mobile input to reflect subreddit currently on
 
 class App extends Component {
 

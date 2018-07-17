@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactHtmlParser from 'react-html-parser';
+import SadFace from '../../images/sad-face.svg';
 import { PostAPI } from '../../api/subreddit-api';
 import { GridLoader } from 'react-spinners';
 import { PostInfo } from './post-info';
@@ -6,10 +8,10 @@ import { Thumbnail } from './thumbnail';
 import { Points } from './points';
 import { convertDate } from '../../utils/date-converter';
 import { Animated } from "react-animated-css";
-import ReactHtmlParser from 'react-html-parser';
 import { Comment } from './comment';
-import '../../styles/comments.css';
 import { CommentsFilter } from './comments-filter';
+import '../../styles/comments.css';
+
 
 
 let decodeHTML = (html) => {
@@ -27,6 +29,7 @@ export class CommentsContainer extends React.Component {
             filter: 'top',
             comments: [],
             fetchInProgress: true,
+            noComments: false,
         };
         this.handleFilterChange = this.handleFilterChange.bind(this);
         this.comments = React.createRef();
@@ -36,11 +39,11 @@ export class CommentsContainer extends React.Component {
 
     generateComments(subreddit, id, filter) {
         const fetch = new PostAPI(subreddit, id, filter);
-        this.setState({subreddit: subreddit, id: id, filter: filter, fetchInProgress: true, isCommentsExpanded: true});
+        this.setState({subreddit: subreddit, id: id, filter: filter, fetchInProgress: true, noCommentsExpanded: true, noComments: false});
         fetch.then(data => {
             let previewUrl, postInfo = data[0].data.children[0].data;
             // console.log(postInfo);
-            // console.log(data)
+            console.log(data)
             if (typeof(postInfo.preview) !== 'undefined'){
                 if (data[0].thumbnail === 'self') {
                     previewUrl = postInfo.preview.images[0].source.url;
@@ -70,10 +73,14 @@ export class CommentsContainer extends React.Component {
                 id: postInfo.id,
                 score: postInfo.score,
             }
-            let comments = data[1].data.children.map(comment => {
-                return this.generateParentComments(comment);
-            });
-            this.setState({comments: comments, fetchInProgress: false});
+            if (data[1].data.children.length === 0) {
+                this.setState({comments: [], fetchInProgress: false, noComments: true});
+            } else {
+                let comments = data[1].data.children.map(comment => {
+                    return this.generateParentComments(comment);
+                });
+                this.setState({comments: comments, fetchInProgress: false});
+            }
         });
     }
 
@@ -152,42 +159,79 @@ export class CommentsContainer extends React.Component {
     }
 
     render() {
-        return (
-            <div className={`comments-expanded-container comments-expanded-container-${this.props.theme}`} style={this.props.display}>
+        if (this.state.noComments) {
+            return (
+                <div className={`comments-expanded-container comments-expanded-container-${this.props.theme}`} style={this.props.display}>
                 {
                     this.state.fetchInProgress
                     ?<div className='comments-loader-container'><GridLoader loading={true} color={"#44def3"} /></div>
                     :<Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
-                        <div>
-                            <Thumbnail href={this.postInfo.url} src={this.postInfo.previewUrl} over_18={this.postInfo.over_18}/>
-                            <PostInfo
-                            link={this.postInfo.url} 
-                            title={decodeHTML(this.postInfo.title)}
-                            authorLink={this.postInfo.authorLink}
-                            author={this.postInfo.author} 
-                            domain={this.postInfo.domain}
-                            created={this.postInfo.created_utc}
-                            stickied={this.postInfo.stickied}
-                            spoiler={this.postInfo.spoiler}
-                            postSubreddit={this.postInfo.subreddit}
-                            passedSubreddit={this.postInfo.passedSubreddit}
-                            permaLink={this.postInfo.permalink}
-                            over_18={this.postInfo.over_18}
-                            num_comments={this.postInfo.num_comments}
-                            postId={this.postInfo.id}
-                            theme={this.props.theme}
-                            isFromComments={true}
-                            handleSubredditChange={this.props.handleSubredditChange}/>
-                            <Points theme={this.props.theme} points={this.postInfo.score} />
-                            <CommentsFilter theme={this.props.theme} 
-                                            handleFilterChange={this.handleFilterChange}
-                                            filter={this.state.filter}/>
-                            <div className='post-comments-container'>{this.state.comments}</div>
-                        </div> 
+                        <Thumbnail href={this.postInfo.url} src={this.postInfo.previewUrl} over_18={this.postInfo.over_18}/>
+                        <PostInfo
+                        link={this.postInfo.url} 
+                        title={decodeHTML(this.postInfo.title)}
+                        authorLink={this.postInfo.authorLink}
+                        author={this.postInfo.author} 
+                        domain={this.postInfo.domain}
+                        created={this.postInfo.created_utc}
+                        stickied={this.postInfo.stickied}
+                        spoiler={this.postInfo.spoiler}
+                        postSubreddit={this.postInfo.subreddit}
+                        passedSubreddit={this.postInfo.passedSubreddit}
+                        permaLink={this.postInfo.permalink}
+                        over_18={this.postInfo.over_18}
+                        num_comments={this.postInfo.num_comments}
+                        postId={this.postInfo.id}
+                        theme={this.props.theme}
+                        isFromComments={true}
+                        handleSubredditChange={this.props.handleSubredditChange}/>
+                        <Points theme={this.props.theme} points={this.postInfo.score} />
+                        <div className={`no-comments-container no-comments-container-${this.props.theme}`}>
+                            <img src={SadFace} alt='sad face' className='sad-face-img'/>
+                            <p className='no-comments-message'>No Comments...</p>
+                        </div>
                     </Animated>
                 }
-            </div>
-        );
+                </div>
+            );
+        } else {
+            return (
+                <div className={`comments-expanded-container comments-expanded-container-${this.props.theme}`} style={this.props.display}>
+                    {
+                        this.state.fetchInProgress
+                        ?<div className='comments-loader-container'><GridLoader loading={true} color={"#44def3"} /></div>
+                        :<Animated animationIn='fadeIn' isVisible={true} className='animation-styles'>
+                            <div>
+                                <Thumbnail href={this.postInfo.url} src={this.postInfo.previewUrl} over_18={this.postInfo.over_18}/>
+                                <PostInfo
+                                link={this.postInfo.url} 
+                                title={decodeHTML(this.postInfo.title)}
+                                authorLink={this.postInfo.authorLink}
+                                author={this.postInfo.author} 
+                                domain={this.postInfo.domain}
+                                created={this.postInfo.created_utc}
+                                stickied={this.postInfo.stickied}
+                                spoiler={this.postInfo.spoiler}
+                                postSubreddit={this.postInfo.subreddit}
+                                passedSubreddit={this.postInfo.passedSubreddit}
+                                permaLink={this.postInfo.permalink}
+                                over_18={this.postInfo.over_18}
+                                num_comments={this.postInfo.num_comments}
+                                postId={this.postInfo.id}
+                                theme={this.props.theme}
+                                isFromComments={true}
+                                handleSubredditChange={this.props.handleSubredditChange}/>
+                                <Points theme={this.props.theme} points={this.postInfo.score} />
+                                <CommentsFilter theme={this.props.theme} 
+                                                handleFilterChange={this.handleFilterChange}
+                                                filter={this.state.filter}/>
+                                <div className='post-comments-container'>{this.state.comments}</div>
+                            </div> 
+                        </Animated>
+                    }
+                </div>
+            );
+        }
     }
 }
 

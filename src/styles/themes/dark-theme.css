@@ -31,6 +31,11 @@
     color: white;
 }
 
+.no-comments-container-dark {
+    background-color: #525252;
+    color: white;
+}
+
 .sub-title-dark {
     color: lightgray;
 }
