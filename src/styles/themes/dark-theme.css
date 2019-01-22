@@ -40,6 +40,18 @@
     color: lightgray;
 }
 
+.github-text-dark {
+    color: lightgray;
+}
+
+.github-link-dark {
+    color: lightgray;
+}
+
+.github-link-dark:visited {
+    color: lightgray;
+}
+
 .filter-button-dark {
     background-color: #525252;
     color: white;

@@ -41,7 +41,7 @@ p {
 
 .sub-title-container {
     text-align: center;
-    margin-bottom: 4%;
+    margin-bottom: 2%;
 }
 
 .sub-title {
@@ -50,6 +50,20 @@ p {
     text-decoration: none;
     color: black;
     transition: 150ms ease-in-out;
+}
+
+.github-text {
+    text-align: center;
+    margin-bottom: 16px;
+    font-size: 85%;
+}
+
+.github-link {
+    color: black;
+}
+
+.github-link:visited {
+    color: black;
 }
 
 .options-container {

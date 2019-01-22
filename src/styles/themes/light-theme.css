@@ -40,6 +40,18 @@
     color: black;
 }
 
+.github-text-light {
+    color: black;
+}
+
+.github-link-light {
+    color: black;
+} 
+
+.github-link-light:visited {
+    color: black;
+}
+
 .filter-button-light {
     background-color: white;
     color: black;

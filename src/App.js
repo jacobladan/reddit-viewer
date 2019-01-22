@@ -287,6 +287,9 @@ class App extends Component {
         </Animated>
         <div className={`page-container page-container-${this.theme}`} style={this.pageContainerDisplay}>
           <SubTitle subreddit={this.state.currentListing.subreddit} theme={this.theme}/>
+          <div className={`github-text github-text-${this.theme}`}>
+            Check out the code <a className={`github-link github-link-${this.theme}`} target="_blank" href="https://github.com/jacobladan/reddit-viewer" rel="noopener noreferrer">here</a>
+          </div>
           <div className='options-container' ref={this.optionsContainer}>
             <PostFilter 
               ref={this.filter} 
